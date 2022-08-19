@@ -145,8 +145,7 @@ class Screen(
     }
     
     
-    override fun toString() =
-        """"${javaClass.simpleName}" : {
+    override fun toString() = """"${javaClass.simpleName}" : {
             |  "width":     $width,
             |  "height":    $height,
             |  "scale":     $scale,

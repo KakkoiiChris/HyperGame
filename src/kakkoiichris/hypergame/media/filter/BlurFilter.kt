@@ -64,7 +64,7 @@ class BlurFilter(private val kernel: Array<FloatArray>) : Filter {
                 newPixels[x + y * width] = floatArrayOf(1F, rt, gt, bt).toColor()
             }
         }
-        
+    
         System.arraycopy(newPixels, 0, pixels, 0, pixels.size)
     }
 }

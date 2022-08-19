@@ -112,7 +112,9 @@ class ResourceManager(rootPath: String) {
                 }
             }
             
-            files.filter { it.isDirectory }.forEach { subFolders[it.name] = Folder("$path/${it.name}", this) }
+            files.filter { it.isDirectory }.forEach {
+                subFolders[it.name] = Folder("$path/${it.name}", this)
+            }
         }
         
         fun getSound(name: String) =

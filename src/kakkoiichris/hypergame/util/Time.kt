@@ -12,4 +12,3 @@ data class Time(val delta: Double, val seconds: Double) {
     operator fun times(scale: Double) =
         Time(delta * scale, seconds * scale)
 }
-

@@ -124,9 +124,7 @@ open class Box(var x: Double = 0.0, var y: Double = 0.0, var width: Double = 0.0
     }
 
     fun intersectionOf(box: Box): Box? {
-        if (!intersects(box)) {
-            return null
-        }
+        if (!intersects(box)) return null
 
         val newLeft = max(left, box.left)
         val newRight = min(right, box.right)

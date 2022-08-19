@@ -12,6 +12,7 @@
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.Sprite
+import kakkoiichris.hypergame.util.Time
 
 /**
  * A dynamic [Filter] which applies a trippy, repetitive effect to the
@@ -20,14 +21,16 @@ import kakkoiichris.hypergame.media.Sprite
  * @author Christian Bryce Alexander
  * @since Dec 14, 2015, 4:13:30 AM
  */
-class AcidFilter : Filter {
-    private var n = 0L
+class AcidFilter : DynamicFilter {
+    private var offset = 0.0
+    
+    override fun update(time: Time) {
+        offset += time.delta
+    }
     
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            pixels[i] += pixels[((i + n) % pixels.size).toInt()] + i
+            pixels[i] += pixels[((i + offset) % pixels.size).toInt()] + i
         }
-        
-        n += (width - 1).toLong()
     }
 }

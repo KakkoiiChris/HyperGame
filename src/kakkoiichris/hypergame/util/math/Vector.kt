@@ -2,6 +2,7 @@ package kakkoiichris.hypergame.util.math
 
 import java.awt.Point
 import java.awt.geom.Point2D
+import java.util.Random
 import kotlin.math.*
 
 /**
@@ -12,8 +13,10 @@ import kotlin.math.*
  */
 open class Vector(var x: Double = 0.0, var y: Double = 0.0) {
     companion object {
-        fun random() =
-            (randomDouble() * PI * 2).let { theta -> Vector(cos(theta), sin(theta)) }
+        fun random(random: Random = Random()) =
+            random.nextDouble(PI * 2).let {
+                Vector(cos(it), sin(it))
+            }
     }
 
     var magnitude

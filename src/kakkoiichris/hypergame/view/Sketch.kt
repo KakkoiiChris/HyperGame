@@ -2,7 +2,7 @@ package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.state.State
 
-abstract class Sketch(width: Int, height: Int, title: String, frameRate:Double=60.0) : State {
+abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : State {
     private val display = Display(width, height, frameRate = frameRate, title = title)
     
     fun open() {
@@ -11,12 +11,13 @@ abstract class Sketch(width: Int, height: Int, title: String, frameRate:Double=6
         display.open()
     }
     
-    fun close() =
-        display.close()
+    fun close() = display.close()
     
     override val name get() = display.title
     
-    override fun swap(view: View, passed: List<Any>) = Unit
+    override fun swapTo(view: View, passed: List<Any>) = Unit
+    
+    override fun swapFrom(view: View) = Unit
     
     override fun halt(view: View) = Unit
 }

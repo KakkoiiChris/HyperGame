@@ -11,8 +11,6 @@ import javax.imageio.ImageIO
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:15
  */
-
-
 class Sprite : BufferedImage {
     companion object {
         val extensions = arrayOf("bmp", "gif", "jpg", "jpeg", "png", "webmp")
@@ -32,13 +30,13 @@ class Sprite : BufferedImage {
     
     val pixels: IntArray
     
-    constructor(width: Int, height: Int, rgb: IntArray) : super(width, height, BufferedImage.TYPE_INT_ARGB) {
+    constructor(width: Int, height: Int, rgb: IntArray) : super(width, height, TYPE_INT_ARGB) {
         pixels = (raster.dataBuffer as DataBufferInt).data
         
         rgb.forEachIndexed { i, c -> pixels[i] = c }
     }
     
-    constructor(width: Int, height: Int) : super(width, height, BufferedImage.TYPE_INT_ARGB) {
+    constructor(width: Int, height: Int) : super(width, height, TYPE_INT_ARGB) {
         pixels = (raster.dataBuffer as DataBufferInt).data
         
         pixels.fill(0xFF000000.toInt())

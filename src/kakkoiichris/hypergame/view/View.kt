@@ -2,7 +2,6 @@ package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.State
 import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.math.Box
 import java.awt.image.BufferedImage
@@ -32,5 +31,6 @@ interface View : Runnable {
     fun getScreenshot(): BufferedImage
     
     fun open()
+    
     fun close()
 }

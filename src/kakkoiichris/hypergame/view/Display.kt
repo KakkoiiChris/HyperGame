@@ -29,8 +29,7 @@ class Display(
     companion object {
         const val DEFAULT_TITLE = "HyperGame"
         
-        private fun loadDefaultIcon() =
-            ImageIO.read(Display::class.java.getResourceAsStream("/kakkoiichris/hypergame/img/icon.png"))
+        private fun loadDefaultIcon() = ImageIO.read(Display::class.java.getResourceAsStream("/kakkoiichris/hypergame/img/icon.png"))
     }
     
     override val manager = StateManager()
@@ -57,12 +56,12 @@ class Display(
                 running = false
             }
         })
-    
+        
         val size = Dimension(width * scale, height * scale)
-    
+        
         canvas.minimumSize = size
         canvas.preferredSize = size
-    
+        
         canvas.addKeyListener(input)
         canvas.addMouseListener(input)
         canvas.addMouseMotionListener(input)
@@ -73,7 +72,7 @@ class Display(
         frame.isResizable = false
         frame.setLocationRelativeTo(null)
         frame.isFocusable = false
-    
+        
         canvas.createBufferStrategy(2)
     }
     
@@ -89,11 +88,11 @@ class Display(
     
     override fun open() {
         frame.isVisible = true
-    
+        
         manager.init(this)
-    
+        
         canvas.requestFocus()
-    
+        
         running = true
         thread.start()
     }
@@ -179,8 +178,7 @@ class Display(
         buffer.show()
     }
     
-    override fun toString() =
-        """"${javaClass.simpleName}" : {
+    override fun toString() = """"${javaClass.simpleName}" : {
             |  "width":     $width,
             |  "height":    $height,
             |  "scale":     $scale,

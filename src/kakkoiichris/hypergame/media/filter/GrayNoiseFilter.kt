@@ -13,7 +13,7 @@ package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.*
 import kakkoiichris.hypergame.util.math.clamp
-import kakkoiichris.hypergame.util.math.randomFloat
+import kotlin.random.Random
 
 /**
  * A dynamic [Filter] which applies a colorless noise to the
@@ -36,7 +36,7 @@ class GrayNoiseFilter(intensity: Float) : Filter {
         for (i in pixels.indices) {
             val argb = pixels[i].argbF
             
-            val v = randomFloat().clamp(1F - intensity, 1F)
+            val v = Random.nextFloat().clamp(1F - intensity, 1F)
             
             argb.red *= v
             argb.green *= v

@@ -70,7 +70,9 @@ class QuadTree<X : QuadTree.Element>(val bounds: Box, val capacity: Int = 4) {
         renderer.drawRect(bounds)
         
         if (divided) {
-            quadrants.forEach { it.render(renderer) }
+            quadrants.forEach {
+                it.render(renderer)
+            }
         }
     }
     

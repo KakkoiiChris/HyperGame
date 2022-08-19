@@ -29,13 +29,16 @@ class StateManager {
     }
     
     internal fun init(view: View) {
-        currentState?.swap(view, emptyList())
+        currentState?.swapTo(view, emptyList())
     }
     
     internal fun swap(view: View) {
         if (swapRequest != null) {
+            currentState?.swapFrom(view)
+            
             currentState = states[swapRequest!!.name]
-            currentState?.swap(view, swapRequest!!.args)
+            
+            currentState?.swapTo(view, swapRequest!!.args)
             
             swapRequest = null
         }

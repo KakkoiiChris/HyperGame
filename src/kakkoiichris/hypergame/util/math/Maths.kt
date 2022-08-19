@@ -9,8 +9,6 @@ import kotlin.math.abs
  * @author Christian Bryce Alexander
  * @since 1/31/2018, 19:04
  */
-private val random = Random()
-
 fun avg(vararg values: Double) = values.average()
 
 fun avg(vararg values: Float) = values.average()
@@ -19,40 +17,42 @@ fun avg(vararg values: Int) = values.average()
 
 fun Double.clamp(min: Double, max: Double) = when {
     this < min -> min
+
     this > max -> max
+
     else       -> this
 }
 
 fun Float.clamp(min: Float, max: Float) = when {
     this < min -> min
+
     this > max -> max
+
     else       -> this
 }
 
 fun Int.clamp(min: Int, max: Int) = when {
     this < min -> min
+
     this > max -> max
+
     else       -> this
 }
 
-fun max(vararg values: Double): Double {
-    if (values.size == 1)
-        return values[0]
+fun max(vararg values: Double) = when (values.size) {
+    1    -> values[0]
     
-    if (values.size == 2)
-        return kotlin.math.max(values[0], values[1])
+    2    -> kotlin.math.max(values[0], values[1])
     
-    return values.drop(1).maxOrNull() ?: values[0]
+    else -> values.drop(1).maxOrNull() ?: values[0]
 }
 
-fun max(vararg values: Int): Int {
-    if (values.size == 1)
-        return values[0]
+fun max(vararg values: Int) = when (values.size) {
+    1    -> values[0]
     
-    if (values.size == 2)
-        return kotlin.math.max(values[0], values[1])
+    2    -> kotlin.math.max(values[0], values[1])
     
-    return values.drop(1).maxOrNull() ?: values[0]
+    else -> values.drop(1).maxOrNull() ?: values[0]
 }
 
 fun med(vararg values: Double): Double {
@@ -73,24 +73,20 @@ fun med(vararg values: Int): Double {
         values[values.size / 2].toDouble()
 }
 
-fun min(vararg values: Double): Double {
-    if (values.size == 1)
-        return values[0]
+fun min(vararg values: Double) = when (values.size) {
+    1    -> values[0]
     
-    if (values.size == 2)
-        return kotlin.math.min(values[0], values[1])
+    2    -> kotlin.math.min(values[0], values[1])
     
-    return values.drop(1).minOrNull() ?: values[0]
+    else -> values.drop(1).minOrNull() ?: values[0]
 }
 
-fun min(vararg values: Int): Int {
-    if (values.size == 1)
-        return values[0]
+fun min(vararg values: Int) = when (values.size) {
+    1    -> values[0]
     
-    if (values.size == 2)
-        return kotlin.math.min(values[0], values[1])
+    2    -> kotlin.math.min(values[0], values[1])
     
-    return values.drop(1).minOrNull() ?: values[0]
+    else -> values.drop(1).minOrNull() ?: values[0]
 }
 
 infix fun Double.sameSignAs(other: Double) =
@@ -98,28 +94,6 @@ infix fun Double.sameSignAs(other: Double) =
 
 infix fun Int.sameSignAs(other: Int) =
     this < 0 == other < 0
-
-fun randomBoolean() = random.nextBoolean()
-
-fun randomDouble() = random.nextDouble()
-
-fun randomFloat() = random.nextFloat()
-
-fun randomGaussian() = random.nextGaussian()
-
-fun randomInt() = random.nextInt()
-
-fun randomInt(bound: Int) = random.nextInt(bound)
-
-fun randomInt(min: Int, max: Int): Int = when {
-    min <= 0 && max >= 0 -> random.nextInt(abs(min) + abs(max) + 1) + min
-    
-    min <= 0 && max <= 0 -> -(random.nextInt(-min - -max + 1) + -max)
-    
-    min >= 0 && max >= 0 -> random.nextInt(max - min + 1) + min
-    
-    else                 -> randomInt(max, min)
-}
 
 fun range(vararg values: Double) =
     max(*values) - min(*values)
@@ -138,33 +112,11 @@ fun Double.tween(target: Double, amount: Double, threshold: Double) =
         this + (target - this) * amount
     }
 
-fun Double.wrap(min: Double, max: Double): Double {
-    var v = this
-    
-    val range = max - min + 1
-    
-    while (v < min)
-        v += range
-    
-    while (v > max)
-        v -= range
-    
-    return v
-}
+fun Double.wrap(min: Double, max: Double) =
+    (((this - min) + (max - min + 1)) % (max - min + 1)) + min
 
-fun Int.wrap(min: Int, max: Int): Int {
-    var v = this
-    
-    val range = max - min + 1
-    
-    while (v < min)
-        v += range
-    
-    while (v > max)
-        v -= range
-    
-    return v
-}
+fun Int.wrap(min: Int, max: Int) =
+    (((this - min) + (max - min + 1)) % (max - min + 1)) + min
 
 fun Double.map(fromMin: Double, fromMax: Double, toMin: Double, toMax: Double) =
     (this - fromMin) * (toMax - toMin) / (fromMax - fromMin) + toMin

@@ -1,7 +1,7 @@
 package kakkoiichris.hypergame.media
 
 import kakkoiichris.hypergame.util.Time
-import kakkoiichris.hypergame.util.math.randomInt
+import kotlin.random.Random
 
 /**
  * ClassDescription
@@ -37,6 +37,7 @@ class Animation(private val frames: Array<Sprite>, var speed: Double, var style:
         when (style) {
             Style.BOUNCE -> {
                 index += if (forward) 1 else -1
+                
                 if (index == 0 || index == frames.size - 1) {
                     forward = !forward
                     
@@ -48,6 +49,7 @@ class Animation(private val frames: Array<Sprite>, var speed: Double, var style:
             
             Style.LOOP   -> {
                 index += if (forward) 1 else -1
+                
                 if (index == -1) {
                     index = frames.size - 1
                     elapsed = true
@@ -60,6 +62,7 @@ class Animation(private val frames: Array<Sprite>, var speed: Double, var style:
             
             Style.ONCE   -> {
                 index += if (forward) 1 else -1
+                
                 if (index == -1) {
                     index = 0
                     elapsed = true
@@ -70,7 +73,7 @@ class Animation(private val frames: Array<Sprite>, var speed: Double, var style:
                 }
             }
             
-            Style.RANDOM -> index = randomInt(frames.size)
+            Style.RANDOM -> index = Random.nextInt(frames.size)
         }
     }
     

@@ -13,7 +13,7 @@ package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.*
 import kakkoiichris.hypergame.util.math.clamp
-import kakkoiichris.hypergame.util.math.randomFloat
+import kotlin.random.Random
 
 /**
  * A dynamic [Filter] which applies a colored noise to the [Sprite].
@@ -35,9 +35,9 @@ class ColorNoiseFilter(intensity: Float) : Filter {
         for (i in pixels.indices) {
             val argb = pixels[i].argbF
             
-            argb.red *= randomFloat().clamp(1F - intensity, 1F)
-            argb.green *= randomFloat().clamp(1F - intensity, 1F)
-            argb.blue *= randomFloat().clamp(1F - intensity, 1F)
+            argb.red *= Random.nextFloat().clamp(1F - intensity, 1F)
+            argb.green *= Random.nextFloat().clamp(1F - intensity, 1F)
+            argb.blue *= Random.nextFloat().clamp(1F - intensity, 1F)
             
             pixels[i] = argb.toColor()
         }

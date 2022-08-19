@@ -33,8 +33,7 @@ class SaturationFilter(saturation: Float) : Filter {
     }
     
     override fun apply(width: Int, height: Int, pixels: IntArray) {
-        if (saturation == 0f)
-            return
+        if (saturation == 0f) return
         
         for (i in pixels.indices) {
             val argb = pixels[i].argbF

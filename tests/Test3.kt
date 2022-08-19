@@ -38,10 +38,14 @@ class Sphere(private var velocity: Vector, private var hue: Float) : Box(width =
 object Test3 : Sketch(800, 800, "My Sketch") {
     private const val COUNT = 6
     
-    private val spheres = Array(COUNT) { i -> Sphere(Vector(i + 1.0, COUNT.toDouble() - i), i * (1F / COUNT)) }
+    private val spheres = Array(COUNT) { i ->
+        Sphere(Vector(i + 1.0, COUNT.toDouble() - i), i * (1F / COUNT))
+    }
     
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        spheres.forEach { it.update(view, manager, time, input) }
+        spheres.forEach {
+            it.update(view, manager, time, input)
+        }
     }
     
     override fun render(view: View, renderer: Renderer) {
@@ -49,6 +53,8 @@ object Test3 : Sketch(800, 800, "My Sketch") {
         
         renderer.fillRect(view.bounds)
         
-        spheres.forEach { it.render(view, renderer) }
+        spheres.forEach {
+            it.render(view, renderer)
+        }
     }
 }

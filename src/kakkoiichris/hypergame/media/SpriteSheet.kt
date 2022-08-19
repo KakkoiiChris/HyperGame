@@ -17,9 +17,11 @@ class SpriteSheet(sheet: Sprite, val spriteWidth: Int, val spriteHeight: Int) {
     init {
         val spriteList = mutableListOf<Sprite>()
         
-        for (y in 0 until rows)
-            for (x in 0 until cols)
+        for (y in 0 until rows) {
+            for (x in 0 until cols) {
                 spriteList += sheet.crop(x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight)
+            }
+        }
         
         sprites = spriteList.toTypedArray()
     }

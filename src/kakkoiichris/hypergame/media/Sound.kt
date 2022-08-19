@@ -14,7 +14,7 @@ import kotlin.concurrent.thread
 
 
 class Sound internal constructor(private val clip: Clip) {
-    companion object{
+    companion object {
         val extensions = arrayOf("wav", "mp3")
         
         fun load(path: String): Sound {
@@ -22,13 +22,23 @@ class Sound internal constructor(private val clip: Clip) {
             val baseFormat = ais.format
             val sampleRate = baseFormat.sampleRate
             val channels = baseFormat.channels
-            val decoded =
-                AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sampleRate, 16, channels, channels * 2, sampleRate, false)
+            
+            val decoded = AudioFormat(
+                AudioFormat.Encoding.PCM_SIGNED,
+                sampleRate,
+                16,
+                channels,
+                channels * 2,
+                sampleRate,
+                false
+            )
+            
             val dais = AudioSystem.getAudioInputStream(decoded, ais)
-        
+            
             val clip = AudioSystem.getClip()
+            
             clip.open(dais)
-        
+            
             return Sound(clip)
         }
     }

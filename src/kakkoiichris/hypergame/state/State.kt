@@ -15,11 +15,13 @@ import kakkoiichris.hypergame.view.View
 interface State : Renderable {
     val name: String
     
-    fun swap(view: View, passed: List<Any>)
+    fun swapTo(view: View, passed: List<Any>)
+    
+    fun swapFrom(view: View)
+    
+    fun halt(view: View)
     
     override fun update(view: View, manager: StateManager, time: Time, input: Input)
     
     override fun render(view: View, renderer: Renderer)
-    
-    fun halt(view: View)
 }

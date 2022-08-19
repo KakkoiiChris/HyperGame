@@ -8,69 +8,17 @@ import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.util.math.QuadTree
 import kakkoiichris.hypergame.util.math.Vector
-import kakkoiichris.hypergame.util.math.randomDouble
 import kakkoiichris.hypergame.view.Sketch
 import kakkoiichris.hypergame.view.View
 import java.awt.Color
 import java.awt.RenderingHints
+import kotlin.random.Random
+
+typealias Collision = Pair<Ball, Ball>
 
 fun main() {
     CircleCollisions.open()
 }
-
-class Ball(
-    override var position: Vector,
-    val radius: Double,
-    val mass: Double,
-    val color: Int,
-) : Renderable, QuadTree.Element {
-    override val bounds: Box
-        get() = Box(position.x - radius, position.y - radius, radius * 2, radius * 2)
-    
-    var velocity = Vector()
-    var acceleration = Vector()
-    
-    var collided = false
-    
-    fun distanceTo(other: Ball) =
-        position.distanceTo(other.position)
-    
-    fun reset() {
-        velocity.zero()
-        acceleration.zero()
-    }
-    
-    operator fun contains(vector: Vector) =
-        position.distanceTo(vector) <= radius
-    
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        velocity += acceleration * time.delta
-        position += velocity * time.delta
-        
-        if (position.x < 0) position.x += view.width
-        if (position.x >= view.width) position.x -= view.width
-        if (position.y < 0) position.y += view.height
-        if (position.y >= view.height) position.y -= view.height
-        
-        if (velocity.magnitude < .01) velocity.zero()
-        
-        acceleration = -velocity * .01
-    }
-    
-    override fun render(view: View, renderer: Renderer) {
-        renderer.push()
-        
-        renderer.color = Color(color)
-        
-        renderer.translate(position.x, position.y)
-        
-        renderer.fillOval(-radius.toInt(), -radius.toInt(), (radius * 2).toInt(), (radius * 2).toInt())
-        
-        renderer.pop()
-    }
-}
-
-typealias Collision = Pair<Ball, Ball>
 
 object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
     private lateinit var balls: List<Ball>
@@ -81,13 +29,15 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
     
     private var mouse = Vector()
     
-    override fun swap(view: View, passed: List<Any>) {
-        balls = List(650) {
-            val x = randomDouble() * view.width
-            val y = randomDouble() * view.height
-            val radius = (randomDouble() * 18F) + 2F
-            val mass = (randomDouble() * 25.0) + 5.0
-            val color = (randomDouble() * 0xFFFFFF).toInt()
+    override fun swapTo(view: View, passed: List<Any>) {
+        val random = Random(0xCBA)
+        
+        balls = List(600) {
+            val x = random.nextDouble() * view.width
+            val y = random.nextDouble() * view.height
+            val radius = (random.nextDouble() * 18F) + 2F
+            val mass = (random.nextDouble() * 25.0) + 5.0
+            val color = Color(random.nextInt(0x1000000))
             
             Ball(Vector(x, y), radius, mass, color)
         }
@@ -107,8 +57,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         }
         
         if (input.buttonHeld(LEFT)) {
-            held?.position?.x = input.x.toDouble()
-            held?.position?.y = input.y.toDouble()
+            held?.position = input.mousePoint
         }
         
         if (input.buttonUp(RIGHT)) {
@@ -154,33 +103,6 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
                 }
             }
         }
-
-//        var ia = 0
-//
-//        while (ia < balls.size - 1) {
-//            val a = balls[ia]
-//
-//            var ib = ia + 1
-//
-//            while (ib < balls.size) {
-//                val b = balls[ib]
-//
-//                if (collide(a, b)) {
-//                    collisions += a to b
-//
-//                    val distance = a.distanceTo(b)
-//                    val overlap = (distance - a.radius - b.radius) * .5F
-//                    val diff = (a.position - b.position) * overlap / distance
-//
-//                    a.position -= diff
-//                    b.position += diff
-//                }
-//
-//                ib++
-//            }
-//
-//            ia++
-//        }
         
         collisions.forEach { (a, b) ->
             val normal = a.position.normalTo(b.position)
@@ -201,23 +123,80 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
             b.collided = true
         }
         
-        balls.filter { it.collided }
-            .forEach {
-//                bursts += Burst(it.position.copy(), it.radius.toFloat(), it.color)
-                
-                it.collided = false
-            }
-
-//        bursts.forEach { it.update(view, manager, time, input) }
-
-//        bursts.removeIf { it.isDead }
+        balls.forEach { it.collided = false }
     }
     
     override fun render(view: View, renderer: Renderer) {
         renderer.clearRect(0, 0, view.width, view.height)
-
-//        bursts.forEach { it.render(view, renderer) }
         
         balls.forEach { it.render(view, renderer) }
+    }
+}
+
+class Ball(
+    override var position: Vector,
+    val radius: Double,
+    val mass: Double,
+    private val color: Color,
+) : Renderable, QuadTree.Element {
+    override val bounds: Box
+        get() = Box(position.x - radius, position.y - radius, radius * 2, radius * 2)
+    
+    var velocity = Vector()
+    
+    private var acceleration = Vector()
+    
+    var collided = false
+    
+    fun distanceTo(other: Ball) =
+        position.distanceTo(other.position)
+    
+    fun reset() {
+        velocity.zero()
+        acceleration.zero()
+    }
+    
+    operator fun contains(vector: Vector) =
+        position.distanceTo(vector) <= radius
+    
+    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+        velocity += acceleration * time.delta
+        position += velocity
+        
+        if (position.x < radius) {
+            position.x = radius
+            velocity.x *= -1
+        }
+        
+        if (position.x >= view.width - radius) {
+            position.x = view.width - radius
+            velocity.x *= -1
+        }
+        
+        if (position.y < radius) {
+            position.y = radius
+            velocity.y *= -1
+        }
+        
+        if (position.y >= view.height - radius) {
+            position.y = view.height - radius
+            velocity.y *= -1
+        }
+        
+        if (velocity.magnitude < .01) velocity.zero()
+        
+        acceleration = -velocity * .01
+    }
+    
+    override fun render(view: View, renderer: Renderer) {
+        renderer.push()
+        
+        renderer.color = color
+        
+        renderer.translate(position.x, position.y)
+        
+        renderer.fillOval(-radius.toInt(), -radius.toInt(), (radius * 2).toInt(), (radius * 2).toInt())
+        
+        renderer.pop()
     }
 }
