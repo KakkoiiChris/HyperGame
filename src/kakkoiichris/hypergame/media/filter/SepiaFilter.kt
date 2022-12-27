@@ -1,14 +1,13 @@
-/*  _     _       _       _   ____        _
- * | |   |_|     | |     | | |  _ \      |_|
- * | |    _  ___ | |__  _| |_| | | | ____ _ _   _  ___
- * | |   | |/ _ \|  _ \|_   _| | | |/ ___| | \ / |/ _ \
- * | |___| | |_| | | | | | | | |_| | |   | |\ V /|  ___|
- * |_____|_|\__  |_| |_| |_| |____/|_|   |_| \_/  \___|
- *  _____   ___| |  ___________________________________
- * |_____| |____/  |_________JAVA_GAME_LIBRARY_________|
- *
- * COPYRIGHT (C) 2015, CHRISTIAN BRYCE ALEXANDER
- */
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.*
@@ -25,11 +24,11 @@ class SepiaFilter : Filter {
         for (i in pixels.indices) {
             val argb = pixels[i].argbF
             
-            val or = min(argb.red * 0.393f + argb.green * 0.769f + argb.blue * 0.189f, 1f)
-            val og = min(argb.red * 0.349f + argb.green * 0.686f + argb.blue * 0.168f, 1f)
-            val ob = min(argb.red * 0.272f + argb.green * 0.534f + argb.blue * 0.131f, 1f)
+            val or = min(argb.red * 0.393 + argb.green * 0.769 + argb.blue * 0.189, 1.0)
+            val og = min(argb.red * 0.349 + argb.green * 0.686 + argb.blue * 0.168, 1.0)
+            val ob = min(argb.red * 0.272 + argb.green * 0.534 + argb.blue * 0.131, 1.0)
             
-            pixels[i] = floatArrayOf(argb.alpha, or, og, ob).toColor()
+            pixels[i] = doubleArrayOf(argb.alpha, or, og, ob).toColor()
         }
     }
 }

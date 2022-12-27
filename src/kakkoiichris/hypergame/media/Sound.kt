@@ -1,3 +1,13 @@
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media
 
 import javax.sound.sampled.AudioFormat
@@ -11,8 +21,6 @@ import kotlin.concurrent.thread
  * @author Christian Bryce Alexander
  * @since 2/23/2018, 23:48
  */
-
-
 class Sound internal constructor(private val clip: Clip) {
     companion object {
         val extensions = arrayOf("wav", "mp3")

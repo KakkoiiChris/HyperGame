@@ -1,3 +1,13 @@
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.util.math
 
 import kakkoiichris.hypergame.media.Renderer
@@ -56,11 +66,13 @@ class QuadTree<X : QuadTree.Element>(val bounds: Box, val capacity: Int = 4) {
     }
     
     private fun divide() {
+        val (a, b, c, d) = bounds.divide(2, 2)
+        
         quadrants = arrayOf(
-            QuadTree(Box(bounds.centerX, bounds.y, bounds.width / 2, bounds.height / 2), capacity),
-            QuadTree(Box(bounds.x, bounds.y, bounds.width / 2, bounds.height / 2), capacity),
-            QuadTree(Box(bounds.x, bounds.centerY, bounds.width / 2, bounds.height / 2), capacity),
-            QuadTree(Box(bounds.centerX, bounds.centerY, bounds.width / 2, bounds.height / 2), capacity),
+            QuadTree(b, capacity),
+            QuadTree(a, capacity),
+            QuadTree(c, capacity),
+            QuadTree(d, capacity),
         )
         
         divided = true

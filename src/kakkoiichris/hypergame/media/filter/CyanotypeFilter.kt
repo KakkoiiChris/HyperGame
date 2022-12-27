@@ -1,14 +1,13 @@
-/*  _     _       _       _   ____        _
- * | |   |_|     | |     | | |  _ \      |_|
- * | |    _  ___ | |__  _| |_| | | | ____ _ _   _  ___
- * | |   | |/ _ \|  _ \|_   _| | | |/ ___| | \ / |/ _ \
- * | |___| | |_| | | | | | | | |_| | |   | |\ V /|  ___|
- * |_____|_|\__  |_| |_| |_| |____/|_|   |_| \_/  \___|
- *  _____   ___| |  ___________________________________
- * |_____| |____/  |_________JAVA_GAME_LIBRARY_________|
- *
- * COPYRIGHT (C) 2015, CHRISTIAN BRYCE ALEXANDER
- */
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.GrayscaleMode
@@ -21,7 +20,7 @@ import kakkoiichris.hypergame.media.GrayscaleMode
  */
 class CyanotypeFilter(mode: GrayscaleMode) : GrayScaleFilter(mode) {
     private val cyanotype = AdjustFilter(-0xB17511)
-    private val bright = BrightnessFilter(0.1f)
+    private val bright = BrightnessFilter(0.1)
     
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         super.apply(width, height, pixels)

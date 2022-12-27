@@ -1,20 +1,17 @@
-/*  _     _       _       _   ____        _
- * | |   |_|     | |     | | |  _ \      |_|
- * | |    _  ___ | |__  _| |_| | | | ____ _ _   _  ___
- * | |   | |/ _ \|  _ \|_   _| | | |/ ___| | \ / |/ _ \
- * | |___| | |_| | | | | | | | |_| | |   | |\ V /|  ___|
- * |_____|_|\__  |_| |_| |_| |____/|_|   |_| \_/  \___|
- *  _____   ___| |  ___________________________________
- * |_____| |____/  |_________JAVA_GAME_LIBRARY_________|
- *
- * COPYRIGHT (C) 2015, CHRISTIAN BRYCE ALEXANDER
- */
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.argbF
-import kakkoiichris.hypergame.media.blue
-import kakkoiichris.hypergame.media.green
-import kakkoiichris.hypergame.media.red
+import kakkoiichris.hypergame.util.Time
 import java.awt.Color
 
 /**
@@ -23,18 +20,18 @@ import java.awt.Color
  * @author Christian Bryce Alexander
  * @since Dec 14, 2015, 6:25:07 AM
  */
-class SpectrumFilter(private val dh: Float) : AdjustFilter(1F, 0F, 0F) {
-    private var hue = 0F
+class SpectrumFilter(private val speed: Double) : DynamicFilter {
+    private var hue = 0.0
+    
+    override fun update(time: Time) {
+        hue += time.delta * speed
+    }
     
     override fun apply(width: Int, height: Int, pixels: IntArray) {
-        val argb = Color.HSBtoRGB(hue, 1F, 1F).argbF
+        val (_, r, g, b) = Color.HSBtoRGB(hue.toFloat(), 1F, 1F).argbF
         
-        red = argb.red
-        green = argb.green
-        blue = argb.blue
+        val adjustFilter = AdjustFilter(r, g, b)
         
-        super.apply(width, height, pixels)
-        
-        hue += dh
+        adjustFilter.apply(width, height, pixels)
     }
 }

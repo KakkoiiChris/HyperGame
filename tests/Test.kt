@@ -35,8 +35,8 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         balls = List(600) {
             val x = random.nextDouble() * view.width
             val y = random.nextDouble() * view.height
-            val radius = (random.nextDouble() * 18F) + 2F
-            val mass = (random.nextDouble() * 25.0) + 5.0
+            val radius = (random.nextDouble() * 18) + 2
+            val mass = (random.nextDouble() * 25) + 5
             val color = Color(random.nextInt(0x1000000))
             
             Ball(Vector(x, y), radius, mass, color)
@@ -49,7 +49,13 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         if (input.buttonDown(LEFT) || input.buttonDown(RIGHT)) {
             held = null
             
-            balls.firstOrNull { input.mousePoint in it }?.apply { reset(); held = this }
+            balls.firstOrNull {
+                input.mousePoint in it
+            }?.apply {
+                reset()
+                
+                held = this
+            }
         }
         
         if (input.buttonUp(LEFT)) {
@@ -62,8 +68,8 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         
         if (input.buttonUp(RIGHT)) {
             if (held != null) {
-                held!!.velocity.x = (held!!.position.x - input.x) * .1F
-                held!!.velocity.y = (held!!.position.y - input.y) * .1F
+                held!!.velocity.x = (held!!.position.x - input.x) * .1
+                held!!.velocity.y = (held!!.position.y - input.y) * .1
                 held = null
             }
         }
@@ -95,7 +101,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
                     collisions += a to b
                     
                     val distance = a.distanceTo(b)
-                    val overlap = (distance - a.radius - b.radius) * .5F
+                    val overlap = (distance - a.radius - b.radius) * .5
                     val diff = (a.position - b.position) * overlap / distance
                     
                     a.position -= diff
@@ -113,8 +119,8 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
             val dta = a.velocity dot tangent
             val dtb = b.velocity dot tangent
             
-            val ma = (dna * (a.mass - b.mass) + 2F * b.mass * dnb) / (a.mass + b.mass)
-            val mb = (dnb * (b.mass - a.mass) + 2F * a.mass * dna) / (a.mass + b.mass)
+            val ma = (dna * (a.mass - b.mass) + 2 * b.mass * dnb) / (a.mass + b.mass)
+            val mb = (dnb * (b.mass - a.mass) + 2 * a.mass * dna) / (a.mass + b.mass)
             
             a.velocity = tangent * dta + normal * ma
             b.velocity = tangent * dtb + normal * mb

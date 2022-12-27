@@ -1,14 +1,13 @@
-/*  _     _       _       _   ____        _
- * | |   |_|     | |     | | |  _ \      |_|
- * | |    _  ___ | |__  _| |_| | | | ____ _ _   _  ___
- * | |   | |/ _ \|  _ \|_   _| | | |/ ___| | \ / |/ _ \
- * | |___| | |_| | | | | | | | |_| | |   | |\ V /|  ___|
- * |_____|_|\__  |_| |_| |_| |____/|_|   |_| \_/  \___|
- *  _____   ___| |  ___________________________________
- * |_____| |____/  |_________JAVA_GAME_LIBRARY_________|
- *
- * COPYRIGHT (C) 2015, CHRISTIAN BRYCE ALEXANDER
- */
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.*
@@ -21,10 +20,10 @@ import kotlin.random.Random
  * @author Christian Bryce Alexander
  * @since Jan 4, 2016, 10:11:24 PM
  */
-class ColorNoiseFilter(intensity: Float) : Filter {
-    var intensity: Float = 0F
+class ColorNoiseFilter(intensity: Double) : Filter {
+    var intensity: Double = 0.0
         set(value) {
-            field = value.clamp(0F, 1F)
+            field = value.clamp(0.0, 1.0)
         }
     
     init {
@@ -35,9 +34,9 @@ class ColorNoiseFilter(intensity: Float) : Filter {
         for (i in pixels.indices) {
             val argb = pixels[i].argbF
             
-            argb.red *= Random.nextFloat().clamp(1F - intensity, 1F)
-            argb.green *= Random.nextFloat().clamp(1F - intensity, 1F)
-            argb.blue *= Random.nextFloat().clamp(1F - intensity, 1F)
+            argb.red *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
+            argb.green *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
+            argb.blue *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
             
             pixels[i] = argb.toColor()
         }

@@ -1,14 +1,13 @@
-/*  _     _       _       _   ____        _
- * | |   |_|     | |     | | |  _ \      |_|
- * | |    _  ___ | |__  _| |_| | | | ____ _ _   _  ___
- * | |   | |/ _ \|  _ \|_   _| | | |/ ___| | \ / |/ _ \
- * | |___| | |_| | | | | | | | |_| | |   | |\ V /|  ___|
- * |_____|_|\__  |_| |_| |_| |____/|_|   |_| \_/  \___|
- *  _____   ___| |  ___________________________________
- * |_____| |____/  |_________JAVA_GAME_LIBRARY_________|
- *
- * COPYRIGHT (C) 2015, CHRISTIAN BRYCE ALEXANDER
- */
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.*
@@ -22,10 +21,10 @@ import kakkoiichris.hypergame.util.math.clamp
  * @author Christian Bryce Alexander
  * @since Dec 14, 2015, 5:56:57 AM
  */
-class SaturationFilter(saturation: Float) : Filter {
-    var saturation: Float = 0F
+class SaturationFilter(saturation: Double) : Filter {
+    var saturation: Double = 0.0
         set(value) {
-            field = value.clamp(-1F, 1F)
+            field = value.clamp(-1.0, 1.0)
         }
     
     init {
@@ -33,15 +32,15 @@ class SaturationFilter(saturation: Float) : Filter {
     }
     
     override fun apply(width: Int, height: Int, pixels: IntArray) {
-        if (saturation == 0f) return
+        if (saturation == 0.0) return
         
         for (i in pixels.indices) {
             val argb = pixels[i].argbF
             
             if (saturation > 0) {
-                val rLim = if (argb.red >= 0.5f) 1f else 0f
-                val gLim = if (argb.green >= 0.5f) 1f else 0f
-                val bLim = if (argb.blue >= 0.5f) 1f else 0f
+                val rLim = if (argb.red >= 0.5) 1.0 else 0.0
+                val gLim = if (argb.green >= 0.5) 1.0 else 0.0
+                val bLim = if (argb.blue >= 0.5) 1.0 else 0.0
                 
                 val rDiff = rLim - argb.red
                 val gDiff = gLim - argb.green
@@ -52,7 +51,7 @@ class SaturationFilter(saturation: Float) : Filter {
                 argb.blue += bDiff * saturation
             }
             else {
-                val avg = avg(argb.red, argb.green, argb.blue).toFloat()
+                val avg = avg(argb.red, argb.green, argb.blue)
                 
                 val rDiff = avg - argb.red
                 val gDiff = avg - argb.green

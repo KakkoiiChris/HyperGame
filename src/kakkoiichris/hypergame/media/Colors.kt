@@ -1,3 +1,13 @@
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media
 
 import java.awt.Color
@@ -191,15 +201,15 @@ val Int.blue get() = this and 0xFF
 
 val Int.argb get() = intArrayOf(alpha, red, green, blue)
 
-val Int.alphaF get() = alpha / 255F
+val Int.alphaF get() = alpha / 255.0
 
-val Int.redF get() = red / 255F
+val Int.redF get() = red / 255.0
 
-val Int.greenF get() = green / 255F
+val Int.greenF get() = green / 255.0
 
-val Int.blueF get() = blue / 255F
+val Int.blueF get() = blue / 255.0
 
-val Int.argbF get() = floatArrayOf(alphaF, redF, greenF, blueF)
+val Int.argbF get() = doubleArrayOf(alphaF, redF, greenF, blueF)
 
 var IntArray.alpha
     get() = get(0)
@@ -220,21 +230,21 @@ var IntArray.blue
 fun IntArray.toColor() =
     (alpha shl 24) or (red shl 16) or (green shl 8) or blue
 
-var FloatArray.alpha
+var DoubleArray.alpha
     get() = get(0)
     set(v) = set(0, v)
 
-var FloatArray.red
+var DoubleArray.red
     get() = get(1)
     set(v) = set(1, v)
 
-var FloatArray.green
+var DoubleArray.green
     get() = get(2)
     set(v) = set(2, v)
 
-var FloatArray.blue
+var DoubleArray.blue
     get() = get(3)
     set(v) = set(3, v)
 
-fun FloatArray.toColor() =
+fun DoubleArray.toColor() =
     ((alpha * 255).toInt() shl 24) or ((red * 255).toInt() shl 16) or ((green * 255).toInt() shl 8) or (blue * 255).toInt()

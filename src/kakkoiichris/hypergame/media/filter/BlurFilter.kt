@@ -1,14 +1,13 @@
-/*  _     _       _       _   ____        _
- * | |   |_|     | |     | | |  _ \      |_|
- * | |    _  ___ | |__  _| |_| | | | ____ _ _   _  ___
- * | |   | |/ _ \|  _ \|_   _| | | |/ ___| | \ / |/ _ \
- * | |___| | |_| | | | | | | | |_| | |   | |\ V /|  ___|
- * |_____|_|\__  |_| |_| |_| |____/|_|   |_| \_/  \___|
- *  _____   ___| |  ___________________________________
- * |_____| |____/  |_________JAVA_GAME_LIBRARY_________|
- *
- * COPYRIGHT (C) 2015, CHRISTIAN BRYCE ALEXANDER
- */
+/***************************************************************************
+ *   ___ ___                                ________                       *
+ *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
+ * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
+ * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
+ *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
+ *        \/  \/     |__|        \/               \/     \/      \/     \/ *
+ *                    Kotlin 2D Game Development Library                   *
+ *                     Copyright (C) 2021, KakkoiiChris                    *
+ ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
 import kakkoiichris.hypergame.media.*
@@ -20,16 +19,16 @@ import kakkoiichris.hypergame.util.math.clamp
  * @author Christian Bryce Alexander
  * @since Apr 23, 2016, 9:12:14 PM
  */
-class BlurFilter(private val kernel: Array<FloatArray>) : Filter {
+class BlurFilter(private val kernel: Array<DoubleArray>) : Filter {
     companion object {
-        fun getKernel(size: Int): Array<FloatArray> {
+        fun getKernel(size: Int): Array<DoubleArray> {
             if (size % 2 == 0) {
                 return getKernel(size + 1)
             }
             
-            val v = 1F / (size * size).toFloat()
+            val v = 1F / (size * size).toDouble()
             
-            return Array(size) { FloatArray(size) { v } }
+            return Array(size) { DoubleArray(size) { v } }
         }
     }
     
@@ -38,9 +37,9 @@ class BlurFilter(private val kernel: Array<FloatArray>) : Filter {
         
         for (y in 0 until pixels.size / width) {
             for (x in 0 until width) {
-                var rt = 0f
-                var gt = 0f
-                var bt = 0f
+                var rt = 0.0
+                var gt = 0.0
+                var bt = 0.0
                 
                 for (i in kernel.indices) {
                     for (j in kernel.indices) {
@@ -57,11 +56,11 @@ class BlurFilter(private val kernel: Array<FloatArray>) : Filter {
                     }
                 }
                 
-                rt = rt.clamp(0f, 1f)
-                gt = gt.clamp(0f, 1f)
-                bt = bt.clamp(0f, 1f)
+                rt = rt.clamp(0.0, 1.0)
+                gt = gt.clamp(0.0, 1.0)
+                bt = bt.clamp(0.0, 1.0)
                 
-                newPixels[x + y * width] = floatArrayOf(1F, rt, gt, bt).toColor()
+                newPixels[x + y * width] = doubleArrayOf(1.0, rt, gt, bt).toColor()
             }
         }
     
