@@ -45,7 +45,7 @@ import kotlin.math.min
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-class Path(val ex: Equation, val ey: Equation, val start: Vector, val end: Vector, val duration: Double) {
+class Path(val ex: Equation, val ey: Equation, var start: Vector, var end: Vector, val duration: Double) {
     enum class Equation(private val calc: (t: Double, b: Double, c: Double, d: Double) -> Double) {
         BACK_IN(Back::easeIn),
         BACK_OUT(Back::easeOut),
@@ -86,6 +86,14 @@ class Path(val ex: Equation, val ey: Equation, val start: Vector, val end: Vecto
     
     private var elapsed = 0.0
         get() = min(field, duration)
+    
+    val hasElapsed get() = elapsed >= duration
+    
+    fun swapEnds() {
+        val temp = start
+        start = end
+        end = temp
+    }
     
     fun reset() {
         elapsed = 0.0

@@ -11,7 +11,9 @@
 package kakkoiichris.hypergame.input
 
 import kakkoiichris.hypergame.util.math.Vector
+import kakkoiichris.hypergame.util.math.toVector
 import kakkoiichris.hypergame.view.View
+import java.awt.Point
 import java.awt.event.*
 
 /**
@@ -27,20 +29,17 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
     
     private val pollBuffer = mutableListOf<Toggle>()
     
-    var x: Int = 0
-        private set
+    var mouse = Vector(); private set
     
-    var y: Int = 0
-        private set
+    val x get() = mouse.x.toInt()
+    
+    val y get() = mouse.y.toInt()
     
     var wheel: Int = 0
         private set
     
     var inWindow = false
         private set
-    
-    val mousePoint: Vector
-        get() = Vector(x.toDouble(), y.toDouble())
     
     internal fun poll() {
         if (pollBuffer.isNotEmpty()) {
@@ -69,6 +68,14 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
     
     fun buttonUp(button: Button) =
         buttons[button.code].isUp
+    
+    fun translate(x: Double, y: Double) {
+        mouse -= Vector(x, y)
+    }
+    
+    fun translate(vector: Vector) {
+        mouse -= vector
+    }
     
     override fun keyPressed(e: KeyEvent) {
         if (e.keyCode in keys.indices) {
@@ -124,14 +131,16 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
         inWindow = false
     }
     
+    private fun setMouse(point: Point) {
+        mouse = point.toVector() / view.scale.toDouble()
+    }
+    
     override fun mouseMoved(e: MouseEvent) {
-        x = e.x / view.scale
-        y = e.y / view.scale
+        setMouse(e.point)
     }
     
     override fun mouseDragged(e: MouseEvent) {
-        x = e.x / view.scale
-        y = e.y / view.scale
+        setMouse(e.point)
     }
     
     override fun mouseWheelMoved(e: MouseWheelEvent) {

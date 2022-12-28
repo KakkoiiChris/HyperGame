@@ -50,7 +50,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
             held = null
             
             balls.firstOrNull {
-                input.mousePoint in it
+                input.mouse in it
             }?.apply {
                 reset()
                 
@@ -63,7 +63,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         }
         
         if (input.buttonHeld(LEFT)) {
-            held?.position = input.mousePoint
+            held?.position = input.mouse
         }
         
         if (input.buttonUp(RIGHT)) {
@@ -75,7 +75,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         }
         
         mouse.zero()
-        mouse += input.mousePoint
+        mouse += input.mouse
         
         val tree = QuadTree<Ball>(view.bounds)
         

@@ -29,7 +29,7 @@ object Test4 : Sketch(640, 480, "QuadTree Test") {
     }
     
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        box.center = input.mousePoint
+        box.center = input.mouse
         
         timer += time.seconds
         
