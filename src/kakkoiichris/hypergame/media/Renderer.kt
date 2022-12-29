@@ -404,6 +404,62 @@ class Renderer(private val context: Graphics2D) {
             observer
         )
     
+    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, x: Int, y: Int) =
+        context.drawImage(
+            sheet.sprite,
+            x,
+            y,
+            x + sheet.spriteWidth,
+            y + sheet.spriteHeight,
+            column * sheet.spriteWidth,
+            row * sheet.spriteHeight,
+            (column * sheet.spriteWidth) + sheet.spriteWidth,
+            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            null
+        )
+    
+    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, vector: Vector) =
+        context.drawImage(
+            sheet.sprite,
+            vector.x.toInt(),
+            vector.y.toInt(),
+            (vector.x + sheet.spriteWidth).toInt(),
+            (vector.y + sheet.spriteHeight).toInt(),
+            column * sheet.spriteWidth,
+            row * sheet.spriteHeight,
+            (column * sheet.spriteWidth) + sheet.spriteWidth,
+            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            null
+        )
+    
+    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, x: Int, y: Int, width: Int, height: Int) =
+        context.drawImage(
+            sheet.sprite,
+            x,
+            y,
+            x + width,
+            y + height,
+            column * sheet.spriteWidth,
+            row * sheet.spriteHeight,
+            (column * sheet.spriteWidth) + sheet.spriteWidth,
+            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            null
+        )
+    
+    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, box: Box) =
+        context.drawImage(
+            sheet.sprite,
+            box.left.toInt(),
+            box.top.toInt(),
+            box.right.toInt(),
+            box.bottom.toInt(),
+            column * sheet.spriteWidth,
+            row * sheet.spriteHeight,
+            (column * sheet.spriteWidth) + sheet.spriteWidth,
+            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            null
+        )
+    
     fun drawLine(va: Vector, vb: Vector) =
         context.drawLine(va.x.toInt(), va.y.toInt(), vb.x.toInt(), vb.y.toInt())
     
@@ -434,11 +490,18 @@ class Renderer(private val context: Graphics2D) {
     fun drawString(string: String, vector: Vector) =
         context.drawString(string, vector.x.toFloat(), vector.y.toFloat())
     
-    fun drawString(string: String, box: Box, xAlign: Double = 0.5, yAlign: Double = 0.5) {
-        val x = box.x + (box.width - fontMetrics.stringWidth(string)) * xAlign
-        val y = box.y + (box.height - fontMetrics.height) * yAlign + fontMetrics.ascent
+    fun drawString(string: String, x: Int, y: Int, width: Int, height: Int, xAlign: Double = 0.5, yAlign: Double = 0.5) {
+        val sx = x + (width - fontMetrics.stringWidth(string)) * xAlign
+        val sy = y + (height - fontMetrics.height) * yAlign + fontMetrics.ascent
         
-        drawString(string, x.toInt(), y.toInt())
+        drawString(string, sx.toInt(), sy.toInt())
+    }
+    
+    fun drawString(string: String, box: Box, xAlign: Double = 0.5, yAlign: Double = 0.5) {
+        val sx = box.x + (box.width - fontMetrics.stringWidth(string)) * xAlign
+        val sy = box.y + (box.height - fontMetrics.height) * yAlign + fontMetrics.ascent
+        
+        drawString(string, sx.toInt(), sy.toInt())
     }
     
     fun addVertex(x: Int, y: Int) {
