@@ -11,6 +11,7 @@
 package kakkoiichris.hypergame.media
 
 import kakkoiichris.hypergame.media.filter.Filter
+import kakkoiichris.hypergame.util.math.Vector
 import java.awt.image.BufferedImage
 import java.awt.image.DataBufferInt
 import javax.imageio.ImageIO
@@ -39,6 +40,8 @@ class Sprite : BufferedImage {
     }
     
     val pixels: IntArray
+    
+    val size get() = Vector(width.toDouble(), height.toDouble())
     
     constructor(width: Int, height: Int, rgb: IntArray) : super(width, height, TYPE_INT_ARGB) {
         pixels = (raster.dataBuffer as DataBufferInt).data

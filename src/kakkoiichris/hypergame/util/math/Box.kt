@@ -107,6 +107,15 @@ open class Box(var x: Double = 0.0, var y: Double = 0.0, var width: Double = 0.0
     fun resize(amount: Vector) =
         resize(amount.x, amount.y)
     
+    fun resized(amountX: Double, amountY: Double) =
+        copy().apply { resize(amountX, amountY) }
+    
+    fun resized(amount: Double) =
+        copy().apply { resize(amount) }
+    
+    fun resized(amount: Vector) =
+        copy().apply { resize(amount) }
+    
     operator fun contains(vector: Vector) =
         left < vector.x && vector.x < right && top < vector.y && vector.y < bottom
     
