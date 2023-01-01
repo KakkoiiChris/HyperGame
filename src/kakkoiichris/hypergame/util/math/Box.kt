@@ -122,10 +122,6 @@ open class Box(var x: Double = 0.0, var y: Double = 0.0, var width: Double = 0.0
     operator fun component4() = height
     
     fun intersects(box: Box): Boolean {
-        if (left == right || top == bottom || box.left == box.right || box.top == box.right) {
-            return false
-        }
-        
         if (left >= box.right || box.left >= right || top >= box.bottom || box.top >= bottom) {
             return false
         }
