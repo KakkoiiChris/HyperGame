@@ -1,13 +1,3 @@
-/***************************************************************************
- *   ___ ___                                ________                       *
- *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
- * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
- * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
- *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
- *        \/  \/     |__|        \/               \/     \/      \/     \/ *
- *                    Kotlin 2D Game Development Library                   *
- *                     Copyright (C) 2021, KakkoiiChris                    *
- ***************************************************************************/
 package kakkoiichris.hypergame.util.filesystem
 
 import kakkoiichris.hypergame.media.Fonts
@@ -18,8 +8,20 @@ import kakkoiichris.hypergame.util.data.TXT
 import kakkoiichris.hypergame.util.data.XML
 import kakkoiichris.hypergame.util.data.json.JSON
 import java.io.File
+import java.nio.file.Paths
 
-class ResourceManager(rootPath: String) {
+/**
+ * HyperGame
+ *
+ * Copyright (C) 2023, KakkoiiChris
+ *
+ * File:    FileSystem.kt
+ *
+ * Created: Saturday, January 28, 2023, 20:12:42
+ *
+ * @author Christian Bryce Alexander
+ */
+class FileSystem(rootPath: String) {
     private val root = Folder(rootPath)
     
     private var cd = root
@@ -27,26 +29,50 @@ class ResourceManager(rootPath: String) {
     fun getSound(name: String) =
         cd.getSound(name)
     
+    fun getSoundOrNull(name: String) =
+        cd.getSoundOrNull(name)
+    
     fun getSprite(name: String) =
         cd.getSprite(name)
+    
+    fun getSpriteOrNull(name: String) =
+        cd.getSpriteOrNull(name)
     
     fun getFont(name: String) =
         cd.getFont(name)
     
+    fun getFontOrNull(name: String) =
+        cd.getFontOrNull(name)
+    
     fun getCSV(name: String) =
         cd.getCSV(name)
+    
+    fun getCSVOrNull(name: String) =
+        cd.getCSVOrNull(name)
     
     fun getJSON(name: String) =
         cd.getJSON(name)
     
+    fun getJSONOrNull(name: String) =
+        cd.getJSONOrNull(name)
+    
     fun getTXT(name: String) =
         cd.getTXT(name)
+    
+    fun getTXTOrNull(name: String) =
+        cd.getTXTOrNull(name)
     
     fun getXML(name: String) =
         cd.getXML(name)
     
+    fun getXMLOrNull(name: String) =
+        cd.getXMLOrNull(name)
+    
     fun getFolder(name: String) =
         cd.getFolder(name)
+    
+    fun getFolderOrNull(name: String) =
+        cd.getFolderOrNull(name)
     
     fun goBack(): Boolean {
         cd = cd.parent ?: return false
@@ -61,6 +87,8 @@ class ResourceManager(rootPath: String) {
     }
     
     class Folder(private val path: String, val parent: Folder? = null) {
+        private val root = Paths.get(path)
+        
         private val sounds = mutableMapOf<String, Sound>()
         private val sprites = mutableMapOf<String, Sprite>()
         private val fonts = mutableMapOf<String, String>()
@@ -71,7 +99,7 @@ class ResourceManager(rootPath: String) {
         private val subFolders = mutableMapOf<String, Folder>()
         
         init {
-            val resource = javaClass.getResource(path) ?: error("Unable to load resource '$path'!")
+            val resource = javaClass.getResource(path) ?: error("Unable to load resource '$root'!")
             
             val file = File(resource.toURI())
             
@@ -79,7 +107,7 @@ class ResourceManager(rootPath: String) {
             
             files.filter { it.isFile }.forEach {
                 val resourceName = it.nameWithoutExtension
-                val resourcePath = "$path/${it.name}"
+                val resourcePath = "$root/${it.name}"
                 
                 when (it.extension.lowercase()) {
                     in Sound.extensions  -> sounds[resourceName] = Sound.load(resourcePath)
@@ -99,35 +127,56 @@ class ResourceManager(rootPath: String) {
             }
             
             files.filter { it.isDirectory }.forEach {
-                subFolders[it.name] = Folder("$path/${it.name}", this)
+                subFolders[it.name] = Folder("$root/${it.name}", this)
             }
         }
         
         fun getSound(name: String) =
-            sounds[name] ?: error("Sound '$path/$name' does not exist!")
+            sounds[name] ?: error("Sound '$root/$name' does not exist!")
+        
+        fun getSoundOrNull(name: String) =
+            sounds[name]
         
         fun getSprite(name: String) =
-            sprites[name] ?: error("Sprite '$path/$name' does not exist!")
+            sprites[name] ?: error("Sprite '$root/$name' does not exist!")
+        
+        fun getSpriteOrNull(name: String) =
+            sprites[name]
         
         fun getFont(name: String) =
-            fonts[name] ?: error("Font '$path/$name' does not exist!")
+            fonts[name] ?: error("Font '$root/$name' does not exist!")
+        
+        fun getFontOrNull(name: String) =
+            fonts[name]
         
         fun getCSV(name: String) =
-            csvFiles[name] ?: error("CSV file '$path/$name' does not exist!")
+            csvFiles[name] ?: error("CSV file '$root/$name' does not exist!")
+        
+        fun getCSVOrNull(name: String) =
+            csvFiles[name]
         
         fun getJSON(name: String) =
-            jsonFiles[name] ?: error("JSON file '$path/$name' does not exist!")
+            jsonFiles[name] ?: error("JSON file '$root/$name' does not exist!")
+        
+        fun getJSONOrNull(name: String) =
+            jsonFiles[name]
         
         fun getTXT(name: String) =
-            txtFiles[name] ?: error("Text file '$path/$name' does not exist!")
+            txtFiles[name] ?: error("Text file '$root/$name' does not exist!")
+        
+        fun getTXTOrNull(name: String) =
+            txtFiles[name]
         
         fun getXML(name: String) =
-            xmlFiles[name] ?: error("XML file '$path/$name' does not exist!")
+            xmlFiles[name] ?: error("XML file '$root/$name' does not exist!")
+        
+        fun getXMLOrNull(name: String) =
+            xmlFiles[name]
         
         fun getFolder(name: String) =
-            subFolders[name] ?: error("Folder '$path/$name' does not exist!")
+            subFolders[name] ?: error("Folder '$root/$name' does not exist!")
         
-        internal fun getFolderOrNull(name: String) =
+        fun getFolderOrNull(name: String) =
             subFolders[name]
     }
 }

@@ -78,13 +78,13 @@ class Sound internal constructor(private val clip: Clip) {
     }
     
     private fun listen(listener: ((Double) -> Unit)?) {
-        if (listener != null) {
-            listening = true
-            
-            listenerThread = thread {
-                while (listening) {
-                    listener(clip.microsecondPosition / clip.microsecondLength.toDouble())
-                }
+        if (listener == null) return
+        
+        listening = true
+        
+        listenerThread = thread {
+            while (listening) {
+                listener(clip.microsecondPosition / clip.microsecondLength.toDouble())
             }
         }
     }

@@ -54,6 +54,8 @@ open class Vector(var x: Double = 0.0, var y: Double = 0.0) {
     val point2D
         get() = Point2D.Double(x, y)
     
+    constructor(other: Vector) : this(other.x, other.y)
+    
     fun zero() {
         x = 0.0
         y = 0.0

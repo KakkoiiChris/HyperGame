@@ -87,6 +87,8 @@ open class Box(var x: Double = 0.0, var y: Double = 0.0, var width: Double = 0.0
     val ellipse2D
         get() = Ellipse2D.Double(x, y, width, height)
     
+    constructor(other: Box) : this(other.x, other.y, other.width, other.height)
+    
     fun setBounds(x: Double, y: Double, width: Double, height: Double) {
         this.x = x
         this.y = y
