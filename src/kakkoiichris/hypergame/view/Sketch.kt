@@ -16,16 +16,14 @@ abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double 
     private val display = Display(width, height, frameRate = frameRate, title = title)
     
     fun open() {
-        display.manager += this
+        display.manager.push(this)
         
         display.open()
     }
     
     fun close() = display.close()
     
-    override val name get() = display.title
-    
-    override fun swapTo(view: View, passed: List<Any>) = Unit
+    override fun swapTo(view: View) = Unit
     
     override fun swapFrom(view: View) = Unit
     

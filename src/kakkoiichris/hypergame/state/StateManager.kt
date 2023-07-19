@@ -14,6 +14,7 @@ import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
+import java.util.*
 
 /**
  * ClassDescription
@@ -22,49 +23,91 @@ import kakkoiichris.hypergame.view.View
  * @since 2/22/2018, 19:17
  */
 class StateManager {
-    private val states = mutableMapOf<String, State>()
-    
-    private var currentState: State? = null
-    
-    private var swapRequest: SwapRequest? = null
-    
-    operator fun plusAssign(state: State) {
-        states[state.name] = state
-        
-        currentState = currentState ?: state
-    }
-    
-    fun goto(name: String, vararg passed: Any) {
-        swapRequest = SwapRequest(name, listOf(*passed))
-    }
-    
+    private val stack = Stack<State>()
+
+    private var nextSwap: Swap? = null
+
     internal fun init(view: View) {
-        currentState?.swapTo(view, emptyList())
-    }
-    
-    internal fun swap(view: View) {
-        if (swapRequest != null) {
-            currentState?.swapFrom(view)
-            
-            currentState = states[swapRequest!!.name]
-            
-            currentState?.swapTo(view, swapRequest!!.args)
-            
-            swapRequest = null
+        if (stack.isNotEmpty()) {
+            stack.peek().swapTo(view)
         }
     }
-    
+
+    internal fun swap(view: View) {
+        val swap = nextSwap ?: return
+
+        when (swap) {
+            is Swap.Goto -> {
+                if (stack.isNotEmpty()) {
+                    stack.pop().swapFrom(view)
+                }
+
+                stack.push(swap.state)
+
+                stack.peek().swapTo(view)
+            }
+
+            is Swap.Push -> {
+                if (stack.isNotEmpty()) {
+                    stack.peek().swapFrom(view)
+                }
+
+                stack.push(swap.state)
+
+                stack.peek().swapTo(view)
+            }
+
+            Swap.Pop     -> {
+                if (stack.isNotEmpty()) {
+                    stack.peek().swapFrom(view)
+                }
+
+                stack.pop()
+
+                if (stack.isNotEmpty()) {
+                    stack.peek().swapTo(view)
+                }
+            }
+        }
+
+        nextSwap = null
+    }
+
+    fun goto(state: State) {
+        nextSwap = Swap.Goto(state)
+    }
+
+    fun push(state: State) {
+        nextSwap = Swap.Push(state)
+    }
+
+    fun pop() {
+        nextSwap = Swap.Pop
+    }
+
     internal fun update(view: View, time: Time, input: Input) {
-        currentState?.update(view, this, time, input)
+        if (stack.isNotEmpty()) {
+            stack.peek().update(view, this, time, input)
+        }
     }
-    
+
     internal fun render(view: View, renderer: Renderer) {
-        currentState?.render(view, renderer)
+        if (stack.isNotEmpty()) {
+            stack.peek().render(view, renderer)
+        }
     }
-    
+
     internal fun halt(view: View) {
-        states.forEach { (_, state) -> state.halt(view) }
+        while (stack.isNotEmpty()) {
+            stack.pop().halt(view)
+        }
     }
-    
-    data class SwapRequest(val name: String, val args: List<Any>)
+
+    private interface Swap {
+        class Goto(val state: State) : Swap
+
+        class Push(val state: State) : Swap
+
+        object Pop : Swap
+    }
 }

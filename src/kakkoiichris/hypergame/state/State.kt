@@ -23,9 +23,7 @@ import kakkoiichris.hypergame.view.View
  * @since 2/22/2018, 19:17
  */
 interface State : Renderable {
-    val name: String
-    
-    fun swapTo(view: View, passed: List<Any>)
+    fun swapTo(view: View)
     
     fun swapFrom(view: View)
     
