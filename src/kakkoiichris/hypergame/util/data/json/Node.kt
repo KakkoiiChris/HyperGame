@@ -13,74 +13,239 @@ package kakkoiichris.hypergame.util.data.json
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
-sealed class Node(val location: Location, var value: Any) {
-    fun asValue() = (this as? Value) ?: error("Node is not a value! @ $location")
+sealed class Node(private val location: Location, var value: Any) {
+    fun asValue() = (this as? Value)
+            ?: error("Node is not a value! @ $location")
 
-    fun asBoolean() = (asValue().value as? Boolean) ?: error("Node is not a boolean value! @ $location")
+    fun asBooleanOrNull(): Boolean? {
+        val value = asValue().value
 
-    fun asByte() = ((asValue().value as? Double) ?: error("Node is not a byte value! @ $location")).toInt().toByte()
+        if (value === Null) {
+            return null
+        }
 
-    fun asShort() = ((asValue().value as? Double) ?: error("Node is not a short value! @ $location")).toInt().toShort()
+        return value as? Boolean
+                ?: error("Node is not a boolean value! @ $location")
+    }
 
-    fun asInt() = ((asValue().value as? Double) ?: error("Node is not an int value! @ $location")).toInt()
+    fun asBoolean(): Boolean {
+        val value = asValue().value
 
-    fun asLong() = ((asValue().value as? Double) ?: error("Node is not a long value! @ $location")).toLong()
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
 
-    fun asFloat() = ((asValue().value as? Double) ?: error("Node is not a float value! @ $location")).toFloat()
+        return value as? Boolean
+                ?: error("Node is not a boolean value! @ $location")
+    }
 
-    fun asDouble() = (asValue().value as? Double) ?: error("Node is not a double value! @ $location")
+    fun asByteOrNull(): Byte? {
+        val value = asValue().value
 
-    fun asChar() = (asValue().value as? Char) ?: error("Node is not a char value! @ $location")
+        if (value === Null) {
+            return null
+        }
 
-    fun asString() = (asValue().value as? String) ?: error("Node is not a string value! @ $location")
+        return (value as? Double
+                ?: error("Node is not a byte value! @ $location")).toInt().toByte()
+    }
 
-    fun asArray() = this as? Array ?: error("Node is not an array! @ $location")
+    fun asByte(): Byte {
+        val value = asValue().value
 
-    fun asBooleanArray() = asArray().map {
-        (it.asValue().value as? Boolean) ?: error("Node is not a boolean array! @ $location")
-    }.toBooleanArray()
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
 
-    fun asByteArray() = asArray().map {
-        ((it.asValue().value as? Double) ?: error("Node is not a byte array! @ $location")).toInt().toByte()
-    }.toByteArray()
+        return (value as? Double
+                ?: error("Node is not a byte value! @ $location")).toInt().toByte()
+    }
 
-    fun asShortArray() = asArray().map {
-        ((it.asValue().value as? Double) ?: error("Node is not a short array! @ $location")).toInt().toShort()
-    }.toShortArray()
+    fun asShortOrNull(): Short? {
+        val value = asValue().value
 
-    fun asIntArray() = asArray().map {
-        ((it.asValue().value as? Double) ?: error("Node is not an int array! @ $location")).toInt()
-    }.toIntArray()
+        if (value === Null) {
+            return null
+        }
 
-    fun asLongArray() = asArray().map {
-        ((it.asValue().value as? Double) ?: error("Node is not a long array! @ $location")).toLong()
-    }.toLongArray()
+        return (value as? Double
+                ?: error("Node is not a short value! @ $location")).toInt().toShort()
+    }
 
-    fun asFloatArray() = asArray().map {
-        ((it.asValue().value as? Double) ?: error("Node is not a float array! @ $location")).toFloat()
-    }.toFloatArray()
+    fun asShort(): Short {
+        val value = asValue().value
 
-    fun asDoubleArray() = asArray().map {
-        (it.asValue().value as? Double) ?: error("Node is not a double array! @ $location")
-    }.toDoubleArray()
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
 
-    fun asCharArray() = asArray().map {
-        (it.asValue().value as? Char) ?: error("Node is not a char array! @ $location")
-    }.toCharArray()
+        return (value as? Double
+                ?: error("Node is not a short value! @ $location")).toInt().toShort()
+    }
 
-    fun asStringArray() = asArray().map {
-        (it.asValue().value as? String) ?: error("Node is not a string array! @ $location")
-    }.toTypedArray()
+    fun asIntOrNull(): Int? {
+        val value = asValue().value
 
-    fun asArrayArray() = asArray().map {
-        it.asArray()
-    }.toTypedArray()
+        if (value === Null) {
+            return null
+        }
 
-    fun asObjectArray() = asArray().map {
-        it.asObject()
-    }.toTypedArray()
+        return (value as? Double
+                ?: error("Node is not an int value! @ $location")).toInt()
+    }
 
-    fun asObject() = this as? Object ?: error("Node is not an object! @ $location")
+    fun asInt(): Int {
+        val value = asValue().value
+
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
+
+        return (value as? Double
+                ?: error("Node is not an int value! @ $location")).toInt()
+    }
+
+    fun asLongOrNull(): Long? {
+        val value = asValue().value
+
+        if (value === Null) {
+            return null
+        }
+
+        return (value as? Double
+                ?: error("Node is not a long value! @ $location")).toLong()
+    }
+
+    fun asLong(): Long {
+        val value = asValue().value
+
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
+
+        return (value as? Double
+                ?: error("Node is not a long value! @ $location")).toLong()
+    }
+
+    fun asFloatOrNull(): Float? {
+        val value = asValue().value
+
+        if (value === Null) {
+            return null
+        }
+
+        return (value as? Double
+                ?: error("Node is not a float value! @ $location")).toFloat()
+    }
+
+    fun asFloat(): Float {
+        val value = asValue().value
+
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
+
+        return (value as? Double
+                ?: error("Node is not a float value! @ $location")).toFloat()
+    }
+
+    fun asDoubleOrNull(): Double? {
+        val value = asValue().value
+
+        if (value === Null) {
+            return null
+        }
+
+        return value as? Double
+                ?: error("Node is not a double value! @ $location")
+    }
+
+    fun asDouble(): Double {
+        val value = asValue().value
+
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
+
+        return value as? Double
+                ?: error("Node is not a double value! @ $location")
+    }
+
+    fun asCharOrNull(): Char? {
+        val value = asValue().value
+
+        if (value === Null) {
+            return null
+        }
+
+        return (value as? String)?.takeIf { it.length == 1 }?.get(0)
+                ?: error("Node is not a char value! @ $location")
+    }
+
+    fun asChar(): Char {
+        val value = asValue().value
+
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
+
+        return (value as? String)?.takeIf { it.length == 1 }?.get(0)
+                ?: error("Node is not a char value! @ $location")
+    }
+
+    fun asStringOrNull(): String? {
+        val value = asValue().value
+
+        if (value === Null) {
+            return null
+        }
+
+        return value as? String
+                ?: error("Node is not a string value! @ $location")
+    }
+
+    fun asString(): String {
+        val value = asValue().value
+
+        if (value === Null) {
+            error("Node cannot be null! @ $location")
+        }
+
+        return value as? String
+                ?: error("Node is not a string value! @ $location")
+    }
+
+    fun asArrayOrNull() = this as? Array
+
+    fun asArray() = this as? Array
+            ?: error("Node is not an array! @ $location")
+
+    fun asBooleanArrayOrNull() = asArray().map(Node::asBoolean)
+
+    fun asByteArrayOrNull() = asArray().map(Node::asByte).toTypedArray()
+
+    fun asShortArrayOrNull() = asArray().map(Node::asShort).toTypedArray()
+
+    fun asIntArrayOrNull() = asArray().map(Node::asInt).toTypedArray()
+
+    fun asLongArrayOrNull() = asArray().map(Node::asLong).toTypedArray()
+
+    fun asFloatArrayOrNull() = asArray().map(Node::asFloat).toTypedArray()
+
+    fun asDoubleArrayOrNull() = asArray().map(Node::asDouble).toTypedArray()
+
+    fun asCharArrayOrNull() = asArray().map(Node::asChar).toTypedArray()
+
+    fun asStringArrayOrNull() = asArray().map(Node::asString).toTypedArray()
+
+    fun asArrayArrayOrNull() = asArray().map(Node::asArray).toTypedArray()
+
+    fun asObjectArrayOrNull() = asArray().map(Node::asObject).toTypedArray()
+
+    fun asObjectOrNull() = this as? Object
+
+    fun asObject() = this as? Object
+            ?: error("Node is not an object! @ $location")
 
     abstract fun format(indent: Int): String
 
@@ -154,28 +319,28 @@ sealed class Node(val location: Location, var value: Any) {
 
                 val realValue: Any? = when (value) {
                     is Value  -> when (type) {
-                        Boolean::class -> value.asBoolean()
-                        Byte::class    -> value.asByte()
-                        Short::class   -> value.asShort()
-                        Int::class     -> value.asInt()
-                        Long::class    -> value.asLong()
-                        Float::class   -> value.asFloat()
-                        Double::class  -> value.asDouble()
-                        Char::class    -> value.asChar()
-                        String::class  -> value.asString()
+                        Boolean::class -> value.asBooleanOrNull()
+                        Byte::class    -> value.asByteOrNull()
+                        Short::class   -> value.asShortOrNull()
+                        Int::class     -> value.asIntOrNull()
+                        Long::class    -> value.asLongOrNull()
+                        Float::class   -> value.asFloatOrNull()
+                        Double::class  -> value.asDoubleOrNull()
+                        Char::class    -> value.asCharOrNull()
+                        String::class  -> value.asStringOrNull()
                         else           -> null
                     }
 
                     is Array  -> when (type) {
-                        BooleanArray::class         -> value.asBooleanArray()
-                        ByteArray::class            -> value.asByteArray()
-                        ShortArray::class           -> value.asShortArray()
-                        IntArray::class             -> value.asIntArray()
-                        LongArray::class            -> value.asLongArray()
-                        FloatArray::class           -> value.asFloatArray()
-                        DoubleArray::class          -> value.asDoubleArray()
-                        CharArray::class            -> value.asCharArray()
-                        kotlin.Array<String>::class -> value.asStringArray()
+                        BooleanArray::class         -> value.asBooleanArrayOrNull()
+                        ByteArray::class            -> value.asByteArrayOrNull()
+                        ShortArray::class           -> value.asShortArrayOrNull()
+                        IntArray::class             -> value.asIntArrayOrNull()
+                        LongArray::class            -> value.asLongArrayOrNull()
+                        FloatArray::class           -> value.asFloatArrayOrNull()
+                        DoubleArray::class          -> value.asDoubleArrayOrNull()
+                        CharArray::class            -> value.asCharArrayOrNull()
+                        kotlin.Array<String>::class -> value.asStringArrayOrNull()
                         else                        -> null
                     }
 
