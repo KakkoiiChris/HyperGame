@@ -12,8 +12,8 @@ package kakkoiichris.hypergame.util.math
 
 import java.awt.Point
 import java.awt.geom.Point2D
-import java.util.*
 import kotlin.math.*
+import kotlin.random.Random
 
 /**
  * ClassDescription
@@ -23,7 +23,7 @@ import kotlin.math.*
  */
 open class Vector(var x: Double = 0.0, var y: Double = 0.0) {
     companion object {
-        fun random(random: Random = Random()) =
+        fun random(random: Random = Random.Default) =
             random.nextDouble(PI * 2).let {
                 Vector(cos(it), sin(it))
             }

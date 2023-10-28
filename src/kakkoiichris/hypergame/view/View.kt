@@ -14,6 +14,7 @@ import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.math.Box
+import kakkoiichris.hypergame.util.math.Vector
 import java.awt.image.BufferedImage
 
 interface View : Runnable {
@@ -35,7 +36,9 @@ interface View : Runnable {
     
     val updateCount: Int
     val frameCount: Int
-    
+
+    val size get() = Vector(width.toDouble(), height.toDouble())
+
     val bounds get() = Box(0.0, 0.0, width.toDouble(), height.toDouble())
     
     fun getScreenshot(): BufferedImage

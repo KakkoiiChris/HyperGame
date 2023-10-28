@@ -9,7 +9,7 @@ import kakkoiichris.hypergame.util.math.QuadTree
 import kakkoiichris.hypergame.util.math.Vector
 import kakkoiichris.hypergame.view.Sketch
 import kakkoiichris.hypergame.view.View
-import java.util.*
+import kotlin.random.Random
 
 fun main() {
     Test4.open()

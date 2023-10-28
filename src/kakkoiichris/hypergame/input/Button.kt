@@ -12,8 +12,8 @@ package kakkoiichris.hypergame.input
 
 import java.awt.event.MouseEvent
 
-enum class Button(val code: Int) {
-    LEFT(MouseEvent.BUTTON1),
-    MIDDLE(MouseEvent.BUTTON2),
-    RIGHT(MouseEvent.BUTTON3)
+enum class Button(override val code: Int) : Toggle.ID {
+    LEFT(MouseEvent.BUTTON1 - 1),
+    MIDDLE(MouseEvent.BUTTON2 - 1),
+    RIGHT(MouseEvent.BUTTON3 - 1)
 }
