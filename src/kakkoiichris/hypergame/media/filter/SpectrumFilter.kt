@@ -22,16 +22,18 @@ import java.awt.Color
  */
 class SpectrumFilter(private val speed: Double) : DynamicFilter {
     private var hue = 0.0
-    
+
     override fun update(time: Time) {
         hue += time.delta * speed
+
+        hue %= 360
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         val (_, r, g, b) = Color.HSBtoRGB(hue.toFloat(), 1F, 1F).argbF
-        
+
         val adjustFilter = AdjustFilter(r, g, b)
-        
+
         adjustFilter.apply(width, height, pixels)
     }
 }

@@ -42,9 +42,7 @@ class StateManager {
                     stack.pop().swapFrom(view)
                 }
 
-                stack.push(swap.state)
-
-                stack.peek().swapTo(view)
+                stack.push(swap.state).swapTo(view)
             }
 
             is Swap.Push -> {
@@ -52,17 +50,13 @@ class StateManager {
                     stack.peek().swapFrom(view)
                 }
 
-                stack.push(swap.state)
-
-                stack.peek().swapTo(view)
+                stack.push(swap.state).swapTo(view)
             }
 
             Swap.Pop     -> {
                 if (stack.isNotEmpty()) {
-                    stack.peek().swapFrom(view)
+                    stack.pop().swapFrom(view)
                 }
-
-                stack.pop()
 
                 if (stack.isNotEmpty()) {
                     stack.peek().swapTo(view)

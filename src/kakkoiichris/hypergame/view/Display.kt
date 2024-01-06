@@ -31,11 +31,9 @@ class Display(
     override val height: Int = View.DEFAULT_HEIGHT,
     override val scale: Int = View.DEFAULT_SCALE,
     override val frameRate: Double = View.DEFAULT_FRAME_RATE,
-    
     val title: String = DEFAULT_TITLE,
     icon: Image = loadDefaultIcon(),
 ) : View {
-    
     companion object {
         const val DEFAULT_TITLE = "HyperGame"
         
@@ -173,7 +171,7 @@ class Display(
     private fun update(time: Time) {
         manager.update(this, time, input)
         
-        input.poll()
+        input.poll(time)
     }
     
     private fun render() {

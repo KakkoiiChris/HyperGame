@@ -222,19 +222,19 @@ sealed class Node(private val location: Location, var value: Any) {
 
     fun asBooleanArrayOrNull() = asArray().map(Node::asBoolean)
 
-    fun asByteArrayOrNull() = asArray().map(Node::asByte).toTypedArray()
+    fun asByteArrayOrNull() = asArray().map(Node::asByte).toByteArray()
 
-    fun asShortArrayOrNull() = asArray().map(Node::asShort).toTypedArray()
+    fun asShortArrayOrNull() = asArray().map(Node::asShort).toShortArray()
 
-    fun asIntArrayOrNull() = asArray().map(Node::asInt).toTypedArray()
+    fun asIntArrayOrNull() = asArray().map(Node::asInt).toIntArray()
 
-    fun asLongArrayOrNull() = asArray().map(Node::asLong).toTypedArray()
+    fun asLongArrayOrNull() = asArray().map(Node::asLong).toLongArray()
 
-    fun asFloatArrayOrNull() = asArray().map(Node::asFloat).toTypedArray()
+    fun asFloatArrayOrNull() = asArray().map(Node::asFloat).toFloatArray()
 
-    fun asDoubleArrayOrNull() = asArray().map(Node::asDouble).toTypedArray()
+    fun asDoubleArrayOrNull() = asArray().map(Node::asDouble).toDoubleArray()
 
-    fun asCharArrayOrNull() = asArray().map(Node::asChar).toTypedArray()
+    fun asCharArrayOrNull() = asArray().map(Node::asChar).toCharArray()
 
     fun asStringArrayOrNull() = asArray().map(Node::asString).toTypedArray()
 

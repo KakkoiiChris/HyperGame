@@ -19,6 +19,9 @@ import java.awt.event.KeyEvent
  * @since 2/7/2018, 00:31
  */
 enum class Key(override val code: Int) : Toggle.ID {
+    /**
+     * @see KeyEvent.VK_CANCEL
+     */
     CANCEL(KeyEvent.VK_CANCEL),
 
     /**

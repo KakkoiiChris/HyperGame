@@ -12,14 +12,14 @@ package kakkoiichris.hypergame.util.math
 
 import kakkoiichris.hypergame.media.Renderer
 
-class QuadTree<X : QuadTree.Element>(val bounds: Box, val capacity: Int = 4) {
-    private val elements = mutableListOf<X>()
+class QuadTree<E : QuadTree.Element>(val bounds: Box, val capacity: Int = 4) {
+    private val elements = mutableListOf<E>()
     
-    private lateinit var quadrants: Array<QuadTree<X>>
+    private lateinit var quadrants: Array<QuadTree<E>>
     
     private var divided = false
     
-    fun insert(element: X): Boolean {
+    fun insert(element: E): Boolean {
         if (element.position !in bounds) {
             return false
         }
@@ -37,8 +37,8 @@ class QuadTree<X : QuadTree.Element>(val bounds: Box, val capacity: Int = 4) {
         return true
     }
     
-    fun queryPosition(box: Box): List<X> {
-        val list = mutableListOf<X>()
+    fun queryPosition(box: Box): List<E> {
+        val list = mutableListOf<E>()
         
         if (bounds.intersects(box)) {
             list.addAll(elements.filter { it.position in box })
@@ -51,8 +51,8 @@ class QuadTree<X : QuadTree.Element>(val bounds: Box, val capacity: Int = 4) {
         return list
     }
     
-    fun queryBounds(box: Box): List<X> {
-        val list = mutableListOf<X>()
+    fun queryBounds(box: Box): List<E> {
+        val list = mutableListOf<E>()
         
         if (bounds.intersects(box)) {
             list.addAll(elements.filter { it.bounds.intersects(box) })

@@ -10,6 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.input
 
+import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Vector
 import kakkoiichris.hypergame.util.math.toVector
 import kakkoiichris.hypergame.view.View
@@ -24,9 +25,9 @@ import java.awt.event.*
  */
 class Input internal constructor(private val view: View) : KeyListener, MouseListener, MouseMotionListener,
     MouseWheelListener {
-    private val keys = Key.entries.map { Toggle(it) }.toTypedArray()
+    private val keys = Key.entries.associate { it.code to Toggle(it) }
 
-    private val buttons = Button.entries.map { Toggle(it) }.toTypedArray()
+    private val buttons = Button.entries.associate { it.code to Toggle(it) }
 
     var mouse = Vector(); private set
 
@@ -40,40 +41,40 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
     var inWindow = false
         private set
 
-    internal fun poll() {
-        for (toggle in keys + buttons) {
-            toggle.poll()
+    internal fun poll(time: Time) {
+        for ((_, toggle) in keys + buttons) {
+            toggle.poll(time)
         }
 
         wheel = 0
     }
 
     fun keyDown(key: Key) =
-        keys[key.code].isDown
+        keys[key.code]!!.isDown
 
     fun keyHeld(key: Key) =
-        keys[key.code].isHeld
+        keys[key.code]!!.isHeld
 
     fun keyUp(key: Key) =
-        keys[key.code].isUp
+        keys[key.code]!!.isUp
 
     fun keyCount(key: Key) =
-        keys[key.code].pressCount
+        keys[key.code]!!.pressCount
 
     fun buttonDown(button: Button) =
-        buttons[button.code].isDown
+        buttons[button.code]!!.isDown
 
     fun buttonHeld(button: Button) =
-        buttons[button.code].isHeld
+        buttons[button.code]!!.isHeld
 
     fun buttonUp(button: Button) =
-        buttons[button.code].isUp
+        buttons[button.code]!!.isUp
 
     fun keyCount(button: Button) =
-        buttons[button.code].pressCount
+        buttons[button.code]!!.pressCount
 
     fun forEach(action: (Toggle) -> Unit) {
-        for (toggle in keys + buttons) {
+        for ((_, toggle) in keys + buttons) {
             action(toggle)
         }
     }
@@ -87,38 +88,38 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
     }
 
     override fun keyPressed(e: KeyEvent) {
-        if (e.keyCode in keys.indices) {
-            val key = keys[e.keyCode]
+        if (!keys.containsKey(e.keyCode)) return
 
-            key.set(true)
-        }
+        val key = keys[e.keyCode]!!
+
+        key.set(true)
     }
 
     override fun keyReleased(e: KeyEvent) {
-        if (e.keyCode in keys.indices) {
-            val key = keys[e.keyCode]
+        if (!keys.containsKey(e.keyCode)) return
 
-            key.set(false)
-        }
+        val key = keys[e.keyCode]!!
+
+        key.set(false)
     }
 
     override fun keyTyped(e: KeyEvent) =
         e.consume()
 
     override fun mousePressed(e: MouseEvent) {
-        if (e.button - 1 in buttons.indices) {
-            val button = buttons[e.button - 1]
+        if (!buttons.containsKey(e.button)) return
 
-            button.set(true)
-        }
+        val button = buttons[e.button]!!
+
+        button.set(true)
     }
 
     override fun mouseReleased(e: MouseEvent) {
-        if (e.button - 1 in buttons.indices) {
-            val button = buttons[e.button - 1]
+        if (!buttons.containsKey(e.button)) return
 
-            button.set(false)
-        }
+        val button = buttons[e.button]!!
+
+        button.set(false)
     }
 
     override fun mouseClicked(e: MouseEvent) =

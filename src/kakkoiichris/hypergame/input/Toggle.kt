@@ -16,7 +16,7 @@ class Toggle(val id: ID) {
     private var now = false
     private var then = false
 
-    private var lastTime = Time.seconds()
+    private var multiPressTimer = 0.0
 
     var pressCount = 0; private set
 
@@ -33,23 +33,21 @@ class Toggle(val id: ID) {
             pressCount++
         }
 
-        lastTime = Time.seconds()
+        multiPressTimer = 0.0
     }
 
-    fun poll() {
+    fun poll(time: Time) {
         then = now
 
-        val elapsed = Time.seconds() - lastTime
+        multiPressTimer += time.seconds
 
-        if (elapsed >= MULTI_PRESS_THRESHOLD) {
+        if (multiPressTimer >= MULTI_PRESS_THRESHOLD_SECONDS) {
             pressCount = 0
-
-            lastTime += elapsed
         }
     }
 
     companion object {
-        private const val MULTI_PRESS_THRESHOLD = 1.0 / 8.0 // Seconds
+        private const val MULTI_PRESS_THRESHOLD_SECONDS = 1.0 / 8.0
     }
 
     interface ID {
