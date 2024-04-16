@@ -508,12 +508,24 @@ class Renderer(private val context: Graphics2D) {
         drawString(string, sx.toInt(), sy.toInt())
     }
 
+    fun drawString(
+        string: String,
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        align: Vector
+    ) = drawString(string, x, y, width, height, align.x, align.y)
+
     fun drawString(string: String, box: Box, xAlign: Double = 0.5, yAlign: Double = 0.5) {
         val sx = box.x + (box.width - fontMetrics.stringWidth(string)) * xAlign
         val sy = box.y + (box.height - fontMetrics.height) * yAlign + fontMetrics.ascent
 
         drawString(string, sx.toInt(), sy.toInt())
     }
+
+    fun drawString(string: String, box: Box, align: Vector) =
+        drawString(string, box, align.x, align.y)
 
     fun addVertex(x: Int, y: Int) {
         vertices.add(Vector(x.toDouble(), y.toDouble()))
