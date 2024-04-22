@@ -162,7 +162,7 @@ object Colors {
         val yellow = Color(255, 255, 0)
         val yellowGreen = Color(154, 205, 50)
     }
-    
+
     val red = Color(255, 0, 0)
     val orange = Color(255, 127, 0)
     val yellow = Color(255, 255, 0)
@@ -180,13 +180,13 @@ object Colors {
     val gray = Color(127, 127, 127)
     val soot = Color(63, 63, 63)
     val black = Color(0, 0, 0)
-    
+
     fun toRGB(hue: Float, saturation: Float, brightness: Float): IntArray {
         val color = Color.HSBtoRGB(hue, saturation, brightness)
-        
+
         return intArrayOf(color.red, color.green, color.blue)
     }
-    
+
     fun toHSB(red: Int, green: Int, blue: Int): FloatArray =
         Color.RGBtoHSB(red, green, blue, null)
 }
@@ -248,3 +248,9 @@ var DoubleArray.blue
 
 fun DoubleArray.toColor() =
     ((alpha * 255).toInt() shl 24) or ((red * 255).toInt() shl 16) or ((green * 255).toInt() shl 8) or (blue * 255).toInt()
+
+fun Color.withAlpha(alpha: Int) =
+    Color(red, green, blue, alpha)
+
+fun Color.withAlpha(alpha: Double) =
+    Color(red, green, blue, (alpha * 255).toInt())

@@ -500,7 +500,7 @@ class Renderer(private val context: Graphics2D) {
         width: Int,
         height: Int,
         xAlign: Double = 0.5,
-        yAlign: Double = 0.5
+        yAlign: Double = 0.5,
     ) {
         val sx = x + (width - fontMetrics.stringWidth(string)) * xAlign
         val sy = y + (height - fontMetrics.height) * yAlign + fontMetrics.ascent
@@ -514,7 +514,7 @@ class Renderer(private val context: Graphics2D) {
         y: Int,
         width: Int,
         height: Int,
-        align: Vector
+        align: Vector,
     ) = drawString(string, x, y, width, height, align.x, align.y)
 
     fun drawString(string: String, box: Box, xAlign: Double = 0.5, yAlign: Double = 0.5) {
@@ -557,6 +557,10 @@ class Renderer(private val context: Graphics2D) {
         val nPoints = vertices.size
 
         fillPolygon(xPoints, yPoints, nPoints)
+    }
+
+    fun clearRect(box: Box) {
+        clearRect(box.x.toInt(), box.y.toInt(), box.width.toInt(), box.height.toInt())
     }
 
     // NATIVE METHODS
