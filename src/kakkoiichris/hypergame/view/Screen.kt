@@ -100,7 +100,7 @@ class Screen(
             var updated = false
 
             while (delta >= 1) {
-                val time = Time(delta, delta / frameRate)
+                val time = Time(delta, delta / frameRate, Time.seconds())
 
                 update(time)
 

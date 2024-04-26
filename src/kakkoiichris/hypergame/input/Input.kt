@@ -23,8 +23,10 @@ import java.awt.event.*
  * @author Christian Bryce Alexander
  * @since 1/31/2018, 18:55
  */
-class Input internal constructor(private val view: View) : KeyListener, MouseListener, MouseMotionListener,
-    MouseWheelListener {
+class Input internal constructor(private val view: View) : KeyListener,
+                                                           MouseListener,
+                                                           MouseMotionListener,
+                                                           MouseWheelListener {
     private val keys = Key.entries.associate { it.code to Toggle(it) }
 
     private val buttons = Button.entries.associate { it.code to Toggle(it) }
@@ -40,6 +42,8 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
 
     var inWindow = false
         private set
+
+    private val typed = mutableListOf<Char>()
 
     internal fun poll(time: Time) {
         for ((_, toggle) in keys + buttons) {
@@ -60,6 +64,15 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
 
     fun keyCount(key: Key) =
         keys[key.code]!!.pressCount
+
+    fun anyKeyHeld() =
+        keys.any { it.value.isHeld }
+
+    fun anyKeyDown() =
+        keys.any { it.value.isDown }
+
+    fun anyKeyUp() =
+        keys.any { it.value.isUp }
 
     fun buttonDown(button: Button) =
         buttons[button.code]!!.isDown
@@ -87,6 +100,9 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
         mouse -= vector
     }
 
+    fun getTypedChar() =
+        typed.removeFirstOrNull()
+
     override fun keyPressed(e: KeyEvent) {
         if (!keys.containsKey(e.keyCode)) return
 
@@ -103,8 +119,9 @@ class Input internal constructor(private val view: View) : KeyListener, MouseLis
         key.set(false)
     }
 
-    override fun keyTyped(e: KeyEvent) =
-        e.consume()
+    override fun keyTyped(e: KeyEvent) {
+        typed += e.keyChar
+    }
 
     override fun mousePressed(e: MouseEvent) {
         if (!buttons.containsKey(e.button)) return

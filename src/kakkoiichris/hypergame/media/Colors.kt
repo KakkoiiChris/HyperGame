@@ -254,3 +254,9 @@ fun Color.withAlpha(alpha: Int) =
 
 fun Color.withAlpha(alpha: Double) =
     Color(red, green, blue, (alpha * 255).toInt())
+
+fun Color.desaturated(): Color {
+    val value = ((red + green + blue) / 3.0).toInt()
+
+    return Color(value, value, value, alpha)
+}

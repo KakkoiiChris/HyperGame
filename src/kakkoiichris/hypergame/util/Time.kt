@@ -10,10 +10,25 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.util
 
-data class Time(val delta: Double, val seconds: Double) {
+data class Time(val delta: Double, val seconds: Double, val instant: Double) {
+    operator fun times(scale: Double) =
+        Time(delta * scale, seconds * scale, instant * scale)
+
+    operator fun times(scale: Int) =
+        Time(delta * scale, seconds * scale, instant * scale)
+
+    operator fun div(scale: Double) =
+        Time(delta / scale, seconds / scale, instant / scale)
+
+    operator fun div(scale: Int) =
+        Time(delta / scale, seconds / scale, instant / scale)
+
     companion object {
         fun seconds() =
-            System.currentTimeMillis() / 1000.0
+            System.currentTimeMillis() / 1E3
+
+        fun microseconds() =
+            System.currentTimeMillis() / 1E1
 
         fun milliseconds() =
             System.currentTimeMillis()
@@ -21,16 +36,4 @@ data class Time(val delta: Double, val seconds: Double) {
         fun nanoseconds() =
             System.nanoTime()
     }
-
-    operator fun times(scale: Double) =
-        Time(delta * scale, seconds * scale)
-
-    operator fun times(scale: Int) =
-        Time(delta * scale, seconds * scale)
-
-    operator fun div(scale: Double) =
-        Time(delta / scale, seconds / scale)
-
-    operator fun div(scale: Int) =
-        Time(delta / scale, seconds / scale)
 }
