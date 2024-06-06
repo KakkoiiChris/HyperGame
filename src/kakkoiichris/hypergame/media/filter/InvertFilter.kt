@@ -10,8 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.argb
-import kakkoiichris.hypergame.media.toColor
+import kakkoiichris.hypergame.media.ColorOp
 
 /**
  * A [Filter] which inverts all three RGB channels in the [Sprite].
@@ -22,13 +21,11 @@ import kakkoiichris.hypergame.media.toColor
 class InvertFilter : Filter {
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argb
-            
-            for (c in argb.indices.drop(1)) {
-                argb[c] = 0xFF - argb[c]
-            }
-            
-            pixels[i] = argb.toColor()
+            val op = ColorOp.of(pixels[i])
+
+            op.map { 1.0 - it }
+
+            pixels[i] = op.value
         }
     }
 }

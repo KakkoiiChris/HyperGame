@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 import kakkoiichris.hypergame.util.math.clamp
 import java.awt.Color.HSBtoRGB
 import java.awt.Color.RGBtoHSB
@@ -26,18 +27,20 @@ class HueFilter(hue: Double) : Filter {
         set(value) {
             field = value.clamp(0.0, 1.0) * 360.0
         }
-    
+
     init {
         this.hue = hue
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argb
-            
-            val values = RGBtoHSB(argb.red, argb.green, argb.blue, null)
-            
-            pixels[i] = (argb.alpha shl 24) or HSBtoRGB((values[0] + hue).toFloat(), values[1], values[2])
+            var op = ColorOp.of(pixels[i])
+
+            val values = RGBtoHSB((op.r * 255).toInt(), (op.g * 255).toInt(), (op.b * 255).toInt(), null)
+
+            op = ColorOp.of(HSBtoRGB((values[0] + hue).toFloat(), values[1], values[2]))
+
+            pixels[i] = op.value
         }
     }
 }

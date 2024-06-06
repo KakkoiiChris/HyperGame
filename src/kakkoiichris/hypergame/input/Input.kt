@@ -62,9 +62,6 @@ class Input internal constructor(private val view: View) : KeyListener,
     fun keyUp(key: Key) =
         keys[key.code]!!.isUp
 
-    fun keyCount(key: Key) =
-        keys[key.code]!!.pressCount
-
     fun anyKeyHeld() =
         keys.any { it.value.isHeld }
 
@@ -73,6 +70,12 @@ class Input internal constructor(private val view: View) : KeyListener,
 
     fun anyKeyUp() =
         keys.any { it.value.isUp }
+
+    fun keyCount(key: Key) =
+        keys[key.code]!!.pressCount
+
+    fun getTypedChar() =
+        typed.removeFirstOrNull()
 
     fun buttonDown(button: Button) =
         buttons[button.code]!!.isDown
@@ -83,14 +86,17 @@ class Input internal constructor(private val view: View) : KeyListener,
     fun buttonUp(button: Button) =
         buttons[button.code]!!.isUp
 
-    fun keyCount(button: Button) =
-        buttons[button.code]!!.pressCount
+    fun anyButtonHeld() =
+        buttons.any { it.value.isHeld }
 
-    fun forEach(action: (Toggle) -> Unit) {
-        for ((_, toggle) in keys + buttons) {
-            action(toggle)
-        }
-    }
+    fun anyButtonDown() =
+        buttons.any { it.value.isDown }
+
+    fun anyButtonUp() =
+        buttons.any { it.value.isUp }
+
+    fun buttonCount(button: Button) =
+        buttons[button.code]!!.pressCount
 
     fun translate(x: Double, y: Double) {
         mouse -= Vector(x, y)
@@ -100,8 +106,11 @@ class Input internal constructor(private val view: View) : KeyListener,
         mouse -= vector
     }
 
-    fun getTypedChar() =
-        typed.removeFirstOrNull()
+    fun forEach(action: (Toggle) -> Unit) {
+        for ((_, toggle) in keys + buttons) {
+            action(toggle)
+        }
+    }
 
     override fun keyPressed(e: KeyEvent) {
         if (!keys.containsKey(e.keyCode)) return

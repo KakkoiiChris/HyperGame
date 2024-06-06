@@ -31,20 +31,20 @@ class BrightnessFilter(brightness: Double) : Filter {
     
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argb
+            val op = ColorOp.of(pixels[i])
             
             if (brightness > 0) {
-                argb.red += ((255 - argb.red) * brightness).toInt()
-                argb.green += ((255 - argb.green) * brightness).toInt()
-                argb.blue += ((255 - argb.blue) * brightness).toInt()
+                op.r += ((255 - op.r) * brightness).toInt()
+                op.g += ((255 - op.g) * brightness).toInt()
+                op.b += ((255 - op.b) * brightness).toInt()
             }
             else {
-                argb.red -= (argb.red * -brightness).toInt()
-                argb.green -= (argb.green * -brightness).toInt()
-                argb.blue -= (argb.blue * -brightness).toInt()
+                op.r -= (op.r * -brightness).toInt()
+                op.g -= (op.g * -brightness).toInt()
+                op.b -= (op.b * -brightness).toInt()
             }
             
-            pixels[i] = argb.toColor()
+            pixels[i] = op.value
         }
     }
 }

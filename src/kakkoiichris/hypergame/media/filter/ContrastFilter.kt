@@ -10,8 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.argbF
-import kakkoiichris.hypergame.media.toColor
+import kakkoiichris.hypergame.media.ColorOp
 import kakkoiichris.hypergame.util.math.clamp
 
 /**
@@ -25,20 +24,18 @@ class ContrastFilter(contrast: Double) : Filter {
         set(value) {
             field = value.clamp(0.0, 1.0)
         }
-    
+
     init {
         this.contrast = contrast
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argbF
-            
-            for (c in argb.indices.drop(1)) {
-                argb[c] = (contrast * (argb[c] - 0.5f) + 0.5f).clamp(0.0, 1.0)
-            }
-            
-            pixels[i] = argb.toColor()
+            val op = ColorOp.of(pixels[i])
+
+            op.map { (contrast * (it - 0.5) + 0.5).clamp(0.0, 1.0) }
+
+            pixels[i] = op.value
         }
     }
 }

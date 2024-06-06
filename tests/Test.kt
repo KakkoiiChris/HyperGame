@@ -121,8 +121,8 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
             val ma = (dna * (a.mass - b.mass) + 2 * b.mass * dnb) / (a.mass + b.mass)
             val mb = (dnb * (b.mass - a.mass) + 2 * a.mass * dna) / (a.mass + b.mass)
 
-            a.velocity = (tangent * dta + normal * ma)*0.9
-            b.velocity = (tangent * dtb + normal * mb)*0.9
+            a.velocity = (tangent * dta + normal * ma) * 0.9
+            b.velocity = (tangent * dtb + normal * mb) * 0.9
         }
     }
 
@@ -185,7 +185,7 @@ class Ball(
 
         if (velocity.magnitude < .01) velocity.zero()
 
-        acceleration = -velocity * .01 + Vector(0.0,0.1)
+        acceleration = -velocity * .01 + Vector(0.0, 0.1)
     }
 
     override fun render(view: View, renderer: Renderer) {

@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 import kotlin.math.min
 
 /**
@@ -22,13 +23,13 @@ import kotlin.math.min
 class SepiaFilter : Filter {
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argbF
-            
-            val or = min(argb.red * 0.393 + argb.green * 0.769 + argb.blue * 0.189, 1.0)
-            val og = min(argb.red * 0.349 + argb.green * 0.686 + argb.blue * 0.168, 1.0)
-            val ob = min(argb.red * 0.272 + argb.green * 0.534 + argb.blue * 0.131, 1.0)
-            
-            pixels[i] = doubleArrayOf(argb.alpha, or, og, ob).toColor()
+            val op = ColorOp.of(pixels[i])
+
+            op.r = min(op.r * 0.393 + op.g * 0.769 + op.b * 0.189, 1.0)
+            op.g = min(op.r * 0.349 + op.g * 0.686 + op.b * 0.168, 1.0)
+            op.b = min(op.r * 0.272 + op.g * 0.534 + op.b * 0.131, 1.0)
+
+            pixels[i] = op.value
         }
     }
 }

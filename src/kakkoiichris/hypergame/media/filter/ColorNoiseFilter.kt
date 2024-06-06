@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 import kakkoiichris.hypergame.util.math.clamp
 import kotlin.random.Random
 
@@ -25,20 +26,18 @@ class ColorNoiseFilter(intensity: Double) : Filter {
         set(value) {
             field = value.clamp(0.0, 1.0)
         }
-    
+
     init {
         this.intensity = intensity
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argbF
-            
-            argb.red *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
-            argb.green *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
-            argb.blue *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
-            
-            pixels[i] = argb.toColor()
+            var op = ColorOp.of(pixels[i])
+
+            op *= Random.nextDouble().clamp(1.0 - intensity, 1.0)
+
+            pixels[i] = op.value
         }
     }
 }

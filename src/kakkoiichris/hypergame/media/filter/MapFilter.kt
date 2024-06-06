@@ -17,7 +17,7 @@ package kakkoiichris.hypergame.media.filter
  * @author Christian Bryce Alexander
  * @since Jan 6, 2016, 6:08:49 PM
  */
-class ReplaceFilter(var map: Map<Int, Int>) : Filter {
+class MapFilter(var map: Map<Int, Int>) : Filter {
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
             pixels[i] = map[pixels[i]] ?: pixels[i]

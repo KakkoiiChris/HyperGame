@@ -19,15 +19,7 @@ import kakkoiichris.hypergame.media.*
  * @author Christian Bryce Alexander
  * @since Dec 14, 2015, 3:59:04 AM
  */
-open class AdjustFilter(var red: Double, var green: Double, var blue: Double) : Filter {
-    /**
-     * Creates a new [AdjustFilter] with its percentages based off of an
-     * integer color value.
-     *
-     * @param color The color to imitate
-     */
-    constructor(color: Int) : this(color.redF, color.greenF, color.blueF)
-    
+open class ColorFilter(var r: Double, var g: Double, var b: Double) : Filter {
     /**
      * Sets the RGB channel percentages based on the specified integer color
      * value.
@@ -35,11 +27,13 @@ open class AdjustFilter(var red: Double, var green: Double, var blue: Double) : 
      * @param color The color to imitate
      */
     fun set(color: Int) {
-        red = color.redF
-        green = color.greenF
-        blue = color.blueF
+        val (_, r, g, b) = ColorOp.of(color)
+
+        this.r = r
+        this.g = g
+        this.b = b
     }
-    
+
     /**
      * Sets the RGB channel percentages with the specified percentages.
      *
@@ -47,21 +41,35 @@ open class AdjustFilter(var red: Double, var green: Double, var blue: Double) : 
      * @param g The percentage of green
      * @param b The percentage of blue
      */
-    fun set(red: Double, green: Double, blue: Double) {
-        this.red = red
-        this.green = green
-        this.blue = blue
+    fun set(r: Double, g: Double, b: Double) {
+        this.r = r
+        this.g = g
+        this.b = b
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argbF
-            
-            argb[1] *= red
-            argb[2] *= green
-            argb[3] *= blue
-            
-            pixels[i] = argb.toColor()
+            val op = ColorOp.of(pixels[i])
+
+            op.r *= r
+            op.g *= g
+            op.b *= b
+
+            pixels[i] = op.value
+        }
+    }
+
+    companion object {
+        /**
+         * Creates a new [ColorFilter] with its percentages based off of an
+         * integer color value.
+         *
+         * @param color The color to imitate
+         */
+        fun of(color: Int): ColorFilter {
+            val (_, r, g, b) = ColorOp.of(color)
+
+            return ColorFilter(r, g, b)
         }
     }
 }

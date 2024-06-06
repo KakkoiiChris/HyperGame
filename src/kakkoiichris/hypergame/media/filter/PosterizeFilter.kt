@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 import kakkoiichris.hypergame.util.math.clamp
 
 /**
@@ -24,25 +25,33 @@ class PosterizeFilter(levels: Int) : Filter {
         set(value) {
             field = (value - 1).clamp(1, 0xFF)
         }
-    
+
     init {
         this.levels = levels
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
+        val div = 0xFF / levels
+
         for (i in pixels.indices) {
-            val argb = pixels[i].argb
-            
-            argb.red /= 0xFF / levels
-            argb.red *= 0xFF / levels
-            
-            argb.green /= 0xFF / levels
-            argb.green *= 0xFF / levels
-            
-            argb.blue /= 0xFF / levels
-            argb.blue *= 0xFF / levels
-            
-            pixels[i] = argb.toColor()
+            val (a, r, g, b) = ColorOp.of(pixels[i])
+
+            var ir = (r * 255).toInt()
+            var ig = (g * 255).toInt()
+            var ib = (b * 255).toInt()
+
+            ir /= div
+            ir *= div
+
+            ig /= div
+            ig *= div
+
+            ib /= div
+            ib *= div
+
+            val resOp = ColorOp(a, ir / 255.0, ig / 255.0, ib / 255.0)
+
+            pixels[i] = resOp.value
         }
     }
 }

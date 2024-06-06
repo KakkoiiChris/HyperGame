@@ -527,6 +527,20 @@ class Renderer(private val context: Graphics2D) {
     fun drawString(string: String, box: Box, align: Vector) =
         drawString(string, box, align.x, align.y)
 
+    fun getCharSize(char: Char): Vector {
+        val width = fontMetrics.stringWidth(char.toString()).toDouble()
+        val height = fontMetrics.height.toDouble()
+
+        return Vector(width, height)
+    }
+
+    fun getStringSize(string: String): Vector {
+        val width = fontMetrics.stringWidth(string).toDouble()
+        val height = fontMetrics.height.toDouble()
+
+        return Vector(width, height)
+    }
+
     fun addVertex(x: Int, y: Int) {
         vertices.add(Vector(x.toDouble(), y.toDouble()))
     }

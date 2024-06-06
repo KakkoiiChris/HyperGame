@@ -10,9 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
+import kakkoiichris.hypergame.media.ColorOp
 import kakkoiichris.hypergame.media.Sprite
-import kakkoiichris.hypergame.media.argbF
-import kakkoiichris.hypergame.media.toColor
 import kakkoiichris.hypergame.util.math.clamp
 
 /**
@@ -27,18 +26,18 @@ class AlphaFilter(alpha: Double) : Filter {
         set(value) {
             field = value.clamp(0.0, 1.0)
         }
-    
+
     init {
         this.alpha = alpha
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argbF
-            
-            argb[0] *= alpha
-            
-            pixels[i] = argb.toColor()
+            val op = ColorOp.of(pixels[i])
+
+            op.a *= alpha
+
+            pixels[i] = op.value
         }
     }
 }

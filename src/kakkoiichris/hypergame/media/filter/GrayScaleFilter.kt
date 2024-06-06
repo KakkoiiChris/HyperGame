@@ -21,11 +21,13 @@ import kakkoiichris.hypergame.media.*
 open class GrayScaleFilter(var mode: GrayscaleMode) : Filter {
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
-            val argb = pixels[i].argb
+            val op = ColorOp.of(pixels[i])
             
-            val value = mode(argb.red, argb.green, argb.blue)
+            val v = mode(op.r, op.g, op.b)
+
+            op.map { v }
             
-            pixels[i] = intArrayOf(argb.alpha, value, value, value).toColor()
+            pixels[i] = op.value
         }
     }
 }

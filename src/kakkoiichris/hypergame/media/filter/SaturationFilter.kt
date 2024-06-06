@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 import kakkoiichris.hypergame.util.math.avg
 import kakkoiichris.hypergame.util.math.clamp
 
@@ -26,43 +27,43 @@ class SaturationFilter(saturation: Double) : Filter {
         set(value) {
             field = value.clamp(-1.0, 1.0)
         }
-    
+
     init {
         this.saturation = saturation
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         if (saturation == 0.0) return
-        
+
         for (i in pixels.indices) {
-            val argb = pixels[i].argbF
-            
+            val op = ColorOp.of(pixels[i])
+
             if (saturation > 0) {
-                val rLim = if (argb.red >= 0.5) 1.0 else 0.0
-                val gLim = if (argb.green >= 0.5) 1.0 else 0.0
-                val bLim = if (argb.blue >= 0.5) 1.0 else 0.0
-                
-                val rDiff = rLim - argb.red
-                val gDiff = gLim - argb.green
-                val bDiff = bLim - argb.blue
-                
-                argb.red += rDiff * saturation
-                argb.green += gDiff * saturation
-                argb.blue += bDiff * saturation
+                val rLim = if (op.r >= 0.5) 1.0 else 0.0
+                val gLim = if (op.g >= 0.5) 1.0 else 0.0
+                val bLim = if (op.b >= 0.5) 1.0 else 0.0
+
+                val rDiff = rLim - op.r
+                val gDiff = gLim - op.g
+                val bDiff = bLim - op.b
+
+                op.r += rDiff * saturation
+                op.g += gDiff * saturation
+                op.b += bDiff * saturation
             }
             else {
-                val avg = avg(argb.red, argb.green, argb.blue)
-                
-                val rDiff = avg - argb.red
-                val gDiff = avg - argb.green
-                val bDiff = avg - argb.blue
-                
-                argb.red += rDiff * -saturation
-                argb.green += gDiff * -saturation
-                argb.blue += bDiff * -saturation
+                val avg = avg(op.r, op.g, op.b)
+
+                val rDiff = avg - op.r
+                val gDiff = avg - op.g
+                val bDiff = avg - op.b
+
+                op.r += rDiff * -saturation
+                op.g += gDiff * -saturation
+                op.b += bDiff * -saturation
             }
-            
-            pixels[i] = argb.toColor()
+
+            pixels[i] = op.value
         }
     }
 }

@@ -13,6 +13,24 @@ package kakkoiichris.hypergame.media
 import java.awt.Color
 
 object Colors {
+    val red = Color(255, 0, 0)
+    val orange = Color(255, 127, 0)
+    val yellow = Color(255, 255, 0)
+    val lime = Color(127, 255, 0)
+    val green = Color(0, 255, 0)
+    val aqua = Color(0, 255, 127)
+    val cyan = Color(0, 255, 255)
+    val sky = Color(0, 127, 255)
+    val blue = Color(0, 0, 255)
+    val purple = Color(127, 0, 255)
+    val magenta = Color(255, 0, 255)
+    val rose = Color(255, 0, 127)
+    val white = Color(255, 255, 255)
+    val silver = Color(191, 191, 191)
+    val gray = Color(127, 127, 127)
+    val soot = Color(63, 63, 63)
+    val black = Color(0, 0, 0)
+
     object CSS {
         val aliceBlue = Color(240, 248, 255)
         val antiqueWhite = Color(250, 235, 215)
@@ -162,92 +180,7 @@ object Colors {
         val yellow = Color(255, 255, 0)
         val yellowGreen = Color(154, 205, 50)
     }
-
-    val red = Color(255, 0, 0)
-    val orange = Color(255, 127, 0)
-    val yellow = Color(255, 255, 0)
-    val lime = Color(127, 255, 0)
-    val green = Color(0, 255, 0)
-    val aqua = Color(0, 255, 127)
-    val cyan = Color(0, 255, 255)
-    val sky = Color(0, 127, 255)
-    val blue = Color(0, 0, 255)
-    val purple = Color(127, 0, 255)
-    val magenta = Color(255, 0, 255)
-    val rose = Color(255, 0, 127)
-    val white = Color(255, 255, 255)
-    val silver = Color(191, 191, 191)
-    val gray = Color(127, 127, 127)
-    val soot = Color(63, 63, 63)
-    val black = Color(0, 0, 0)
-
-    fun toRGB(hue: Float, saturation: Float, brightness: Float): IntArray {
-        val color = Color.HSBtoRGB(hue, saturation, brightness)
-
-        return intArrayOf(color.red, color.green, color.blue)
-    }
-
-    fun toHSB(red: Int, green: Int, blue: Int): FloatArray =
-        Color.RGBtoHSB(red, green, blue, null)
 }
-
-val Int.alpha get() = (this shr 24) and 0xFF
-
-val Int.red get() = (this shr 16) and 0xFF
-
-val Int.green get() = (this shr 8) and 0xFF
-
-val Int.blue get() = this and 0xFF
-
-val Int.argb get() = intArrayOf(alpha, red, green, blue)
-
-val Int.alphaF get() = alpha / 255.0
-
-val Int.redF get() = red / 255.0
-
-val Int.greenF get() = green / 255.0
-
-val Int.blueF get() = blue / 255.0
-
-val Int.argbF get() = doubleArrayOf(alphaF, redF, greenF, blueF)
-
-var IntArray.alpha
-    get() = get(0)
-    set(v) = set(0, v)
-
-var IntArray.red
-    get() = get(1)
-    set(v) = set(1, v)
-
-var IntArray.green
-    get() = get(2)
-    set(v) = set(2, v)
-
-var IntArray.blue
-    get() = get(3)
-    set(v) = set(3, v)
-
-fun IntArray.toColor() =
-    (alpha shl 24) or (red shl 16) or (green shl 8) or blue
-
-var DoubleArray.alpha
-    get() = get(0)
-    set(v) = set(0, v)
-
-var DoubleArray.red
-    get() = get(1)
-    set(v) = set(1, v)
-
-var DoubleArray.green
-    get() = get(2)
-    set(v) = set(2, v)
-
-var DoubleArray.blue
-    get() = get(3)
-    set(v) = set(3, v)
-
-fun DoubleArray.toColor() =
-    ((alpha * 255).toInt() shl 24) or ((red * 255).toInt() shl 16) or ((green * 255).toInt() shl 8) or (blue * 255).toInt()
 
 fun Color.withAlpha(alpha: Int) =
     Color(red, green, blue, alpha)
