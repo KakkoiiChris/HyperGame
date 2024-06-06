@@ -69,7 +69,7 @@ class Entity : QuadTree.Element, Renderable {
     }
 
     override val position = Vector.random(Random(32))
-    override val bounds = Box(position.x, 1.0, 1.0)
+    override val bounds = Box(position.x, position.y, 1.0)
 
     var highlight = false
 
