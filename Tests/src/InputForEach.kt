@@ -7,10 +7,10 @@ import kakkoiichris.hypergame.view.Sketch
 import kakkoiichris.hypergame.view.View
 
 fun main() {
-    Test5.open()
+    InputForEach.open()
 }
 
-object Test5 : Sketch(500, 500, "Input Test") {
+object InputForEach : Sketch(500, 500, "Input Test") {
     private var down = false
 
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {

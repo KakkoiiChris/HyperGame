@@ -12,10 +12,10 @@ import kakkoiichris.hypergame.view.View
 import kotlin.random.Random
 
 fun main() {
-    Test4.open()
+    QuadTrees.open()
 }
 
-object Test4 : Sketch(640, 480, "QuadTree Test") {
+object QuadTrees : Sketch(640, 480, "QuadTree Test") {
     private val entities = mutableListOf<Entity>()
 
     private lateinit var tree: QuadTree<Entity>

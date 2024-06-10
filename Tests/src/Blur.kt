@@ -12,13 +12,13 @@ import java.awt.Color
 fun main() {
     val display = Display(300, 300, 3)
 
-    display.manager.push(Test6)
+    display.manager.push(Blur)
 
     display.open()
 }
 
-object Test6 : State {
-    val icon = Sprite.load("/kakkoiichris/hypergame/img/font16.png")
+object Blur : State {
+    private val icon = Sprite.load("/kakkoiichris/hypergame/img/font16.png")
 
     override fun swapTo(view: View) {
     }

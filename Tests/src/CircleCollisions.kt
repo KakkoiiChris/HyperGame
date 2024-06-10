@@ -146,8 +146,6 @@ class Ball(
 
     private var acceleration = Vector()
 
-    var collided = false
-
     fun distanceTo(other: Ball) =
         position.distanceTo(other.position)
 

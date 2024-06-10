@@ -12,7 +12,7 @@ import kakkoiichris.hypergame.view.View
 import java.awt.Color
 
 fun main() {
-    Test3.open()
+    ZRES.open()
 }
 
 class Sphere(private var velocity: Vector, private var hue: Float) : Box(width = 100.0, height = 100.0), Renderable {
@@ -37,7 +37,7 @@ class Sphere(private var velocity: Vector, private var hue: Float) : Box(width =
     }
 }
 
-object Test3 : Sketch(800, 800, "Zen Rainbow Energy Spheres") {
+object ZRES : Sketch(800, 800, "Zen Rainbow Energy Spheres") {
     private const val COUNT = 6
 
     private val spheres = Array(COUNT) { i ->

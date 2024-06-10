@@ -229,12 +229,12 @@ enum class Collider {
             var value =
                 Area.map[(row * Area.columns + column).toInt()]// We get the tile value under the top left corner of the Player:
 
-            if (value != 0) values()[value](column, row)// If it's not a walkable tile, we do narrow phase collision.
+            if (value != 0) entries[value](column, row)// If it's not a walkable tile, we do narrow phase collision.
 
             column = floor((Player.x + Player.width) / TILE_SIZE)// The column under the right side of the Player:
             value = Area.map[(row * Area.columns + column).toInt()]// Value under the top right corner of the Player.
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
 
             /* TEST BOTTOM */
 
@@ -242,12 +242,12 @@ enum class Collider {
             row = floor((Player.y + Player.height) / TILE_SIZE)// The row under the bottom side of the Player:
             value = Area.map[(row * Area.columns + column).toInt()]
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
 
             column = floor((Player.x + Player.width) / TILE_SIZE)// The column under the right side of the Player:
             value = Area.map[(row * Area.columns + column).toInt()]
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
 
             /* TEST LEFT */
 
@@ -255,12 +255,12 @@ enum class Collider {
             row = floor(Player.y / TILE_SIZE)// Top side row:
             value = Area.map[(row * Area.columns + column).toInt()]
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
 
             row = floor((Player.y + Player.height) / TILE_SIZE)// Bottom side row:
             value = Area.map[(row * Area.columns + column).toInt()]
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
 
             /* TEST RIGHT */
 
@@ -268,12 +268,12 @@ enum class Collider {
             row = floor(Player.y / TILE_SIZE)// Top side row:
             value = Area.map[(row * Area.columns + column).toInt()]
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
 
             row = floor((Player.y + Player.height) / TILE_SIZE)// Bottom side row:
             value = Area.map[(row * Area.columns + column).toInt()]
 
-            if (value != 0) values()[value](column, row)
+            if (value != 0) entries[value](column, row)
         }
     }
 }
