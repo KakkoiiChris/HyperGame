@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 import kakkoiichris.hypergame.util.math.clamp
 
 /**
@@ -24,26 +25,26 @@ class BrightnessFilter(brightness: Double) : Filter {
         set(value) {
             field = value.clamp(-1.0, 1.0)
         }
-    
+
     init {
         this.brightness = brightness
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
             val op = ColorOp.of(pixels[i])
-            
+
             if (brightness > 0) {
-                op.r += ((255 - op.r) * brightness).toInt()
-                op.g += ((255 - op.g) * brightness).toInt()
-                op.b += ((255 - op.b) * brightness).toInt()
+                op.red += ((255 - op.red) * brightness).toInt()
+                op.green += ((255 - op.green) * brightness).toInt()
+                op.blue += ((255 - op.blue) * brightness).toInt()
             }
             else {
-                op.r -= (op.r * -brightness).toInt()
-                op.g -= (op.g * -brightness).toInt()
-                op.b -= (op.b * -brightness).toInt()
+                op.red -= (op.red * -brightness).toInt()
+                op.green -= (op.green * -brightness).toInt()
+                op.blue -= (op.blue * -brightness).toInt()
             }
-            
+
             pixels[i] = op.value
         }
     }

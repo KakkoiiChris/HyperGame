@@ -163,7 +163,7 @@ class Renderer(private val context: Graphics2D) {
         context.shear(vector.x, vector.y)
 
     fun translate(vector: Vector) =
-        translate(vector.x, vector.y)
+        context.translate(vector.x, vector.y)
 
     fun drawAnimation(animation: Animation, x: Int, y: Int, observer: ImageObserver? = null) =
         context.drawImage(animation.frame, x, y, observer)
@@ -407,59 +407,59 @@ class Renderer(private val context: Graphics2D) {
             observer
         )
 
-    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, x: Int, y: Int) =
+    fun drawSheet(sheet: SpriteSheet, sx: Int, sy: Int, x: Int, y: Int) =
         context.drawImage(
             sheet.sprite,
             x,
             y,
             x + sheet.spriteWidth,
             y + sheet.spriteHeight,
-            column * sheet.spriteWidth,
-            row * sheet.spriteHeight,
-            (column * sheet.spriteWidth) + sheet.spriteWidth,
-            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            sx * sheet.spriteWidth,
+            sy * sheet.spriteHeight,
+            (sx * sheet.spriteWidth) + sheet.spriteWidth,
+            (sy * sheet.spriteHeight) + sheet.spriteHeight,
             null
         )
 
-    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, vector: Vector) =
+    fun drawSheet(sheet: SpriteSheet, sx: Int, sy: Int, vector: Vector) =
         context.drawImage(
             sheet.sprite,
             vector.x.toInt(),
             vector.y.toInt(),
             (vector.x + sheet.spriteWidth).toInt(),
             (vector.y + sheet.spriteHeight).toInt(),
-            column * sheet.spriteWidth,
-            row * sheet.spriteHeight,
-            (column * sheet.spriteWidth) + sheet.spriteWidth,
-            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            sx * sheet.spriteWidth,
+            sy * sheet.spriteHeight,
+            (sx * sheet.spriteWidth) + sheet.spriteWidth,
+            (sy * sheet.spriteHeight) + sheet.spriteHeight,
             null
         )
 
-    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, x: Int, y: Int, width: Int, height: Int) =
+    fun drawSheet(sheet: SpriteSheet, sx: Int, sy: Int, x: Int, y: Int, width: Int, height: Int) =
         context.drawImage(
             sheet.sprite,
             x,
             y,
             x + width,
             y + height,
-            column * sheet.spriteWidth,
-            row * sheet.spriteHeight,
-            (column * sheet.spriteWidth) + sheet.spriteWidth,
-            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            sx * sheet.spriteWidth,
+            sy * sheet.spriteHeight,
+            (sx * sheet.spriteWidth) + sheet.spriteWidth,
+            (sy * sheet.spriteHeight) + sheet.spriteHeight,
             null
         )
 
-    fun drawSheet(sheet: SpriteSheet, row: Int, column: Int, box: Box) =
+    fun drawSheet(sheet: SpriteSheet, sx: Int, sy: Int, box: Box) =
         context.drawImage(
             sheet.sprite,
             box.left.toInt(),
             box.top.toInt(),
             box.right.toInt(),
             box.bottom.toInt(),
-            column * sheet.spriteWidth,
-            row * sheet.spriteHeight,
-            (column * sheet.spriteWidth) + sheet.spriteWidth,
-            (row * sheet.spriteHeight) + sheet.spriteHeight,
+            sx * sheet.spriteWidth,
+            sy * sheet.spriteHeight,
+            (sx * sheet.spriteWidth) + sheet.spriteWidth,
+            (sy * sheet.spriteHeight) + sheet.spriteHeight,
             null
         )
 
@@ -505,7 +505,7 @@ class Renderer(private val context: Graphics2D) {
         val sx = x + (width - fontMetrics.stringWidth(string)) * xAlign
         val sy = y + (height - fontMetrics.height) * yAlign + fontMetrics.ascent
 
-        drawString(string, sx.toInt(), sy.toInt())
+        context.drawString(string, sx.toInt(), sy.toInt())
     }
 
     fun drawString(
@@ -521,7 +521,7 @@ class Renderer(private val context: Graphics2D) {
         val sx = box.x + (box.width - fontMetrics.stringWidth(string)) * xAlign
         val sy = box.y + (box.height - fontMetrics.height) * yAlign + fontMetrics.ascent
 
-        drawString(string, sx.toInt(), sy.toInt())
+        context.drawString(string, sx.toInt(), sy.toInt())
     }
 
     fun drawString(string: String, box: Box, align: Vector) =
@@ -553,9 +553,8 @@ class Renderer(private val context: Graphics2D) {
         vertices += vectors
     }
 
-    fun clearVertices() {
+    fun clearVertices() =
         vertices.clear()
-    }
 
     fun drawVertices() {
         val xPoints = vertices.map { it.x.toInt() }.toIntArray()
@@ -573,9 +572,8 @@ class Renderer(private val context: Graphics2D) {
         fillPolygon(xPoints, yPoints, nPoints)
     }
 
-    fun clearRect(box: Box) {
-        clearRect(box.x.toInt(), box.y.toInt(), box.width.toInt(), box.height.toInt())
-    }
+    fun clearRect(box: Box) =
+        context.clearRect(box.x.toInt(), box.y.toInt(), box.width.toInt(), box.height.toInt())
 
     // NATIVE METHODS
 

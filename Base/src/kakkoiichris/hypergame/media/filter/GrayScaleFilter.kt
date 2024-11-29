@@ -10,7 +10,9 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.GrayscaleMode
+import kakkoiichris.hypergame.media.Sprite
 
 /**
  * A [Filter] which applies a gray-scale effect to the [Sprite].
@@ -22,11 +24,11 @@ open class GrayScaleFilter(var mode: GrayscaleMode) : Filter {
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
             val op = ColorOp.of(pixels[i])
-            
-            val v = mode(op.r, op.g, op.b)
+
+            val v = mode(op.red, op.green, op.blue)
 
             op.map { v }
-            
+
             pixels[i] = op.value
         }
     }

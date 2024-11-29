@@ -10,7 +10,8 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media.filter
 
-import kakkoiichris.hypergame.media.*
+import kakkoiichris.hypergame.media.ColorOp
+import kakkoiichris.hypergame.media.Sprite
 
 /**
  * A [Filter] which adjusts the percentage of all three RGB channels in
@@ -51,9 +52,9 @@ open class ColorFilter(var r: Double, var g: Double, var b: Double) : Filter {
         for (i in pixels.indices) {
             val op = ColorOp.of(pixels[i])
 
-            op.r *= r
-            op.g *= g
-            op.b *= b
+            op.red *= r
+            op.green *= g
+            op.blue *= b
 
             pixels[i] = op.value
         }

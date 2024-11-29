@@ -23,6 +23,6 @@ import kakkoiichris.hypergame.view.View
  */
 interface Renderable {
     fun update(view: View, manager: StateManager, time: Time, input: Input)
-    
+
     fun render(view: View, renderer: Renderer)
 }

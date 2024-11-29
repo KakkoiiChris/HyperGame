@@ -25,9 +25,9 @@ class SepiaFilter : Filter {
         for (i in pixels.indices) {
             val op = ColorOp.of(pixels[i])
 
-            op.r = min(op.r * 0.393 + op.g * 0.769 + op.b * 0.189, 1.0)
-            op.g = min(op.r * 0.349 + op.g * 0.686 + op.b * 0.168, 1.0)
-            op.b = min(op.r * 0.272 + op.g * 0.534 + op.b * 0.131, 1.0)
+            op.red = min(op.red * 0.393 + op.green * 0.769 + op.blue * 0.189, 1.0)
+            op.green = min(op.red * 0.349 + op.green * 0.686 + op.blue * 0.168, 1.0)
+            op.blue = min(op.red * 0.272 + op.green * 0.534 + op.blue * 0.131, 1.0)
 
             pixels[i] = op.value
         }

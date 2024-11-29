@@ -36,7 +36,7 @@ class HueFilter(hue: Double) : Filter {
         for (i in pixels.indices) {
             var op = ColorOp.of(pixels[i])
 
-            val values = RGBtoHSB((op.r * 255).toInt(), (op.g * 255).toInt(), (op.b * 255).toInt(), null)
+            val values = RGBtoHSB((op.red * 255).toInt(), (op.green * 255).toInt(), (op.blue * 255).toInt(), null)
 
             op = ColorOp.of(HSBtoRGB((values[0] + hue).toFloat(), values[1], values[2]))
 

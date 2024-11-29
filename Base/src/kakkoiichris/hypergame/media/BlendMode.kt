@@ -76,12 +76,12 @@ enum class BlendMode(private val operation: (src: Double, dst: Double) -> Double
      * The Photoshop Linear Light algorithm.
      */
     LINEAR_LIGHT({ src, dst ->
-                    clamp(
-                        round(src) * (dst + 2.0 * (src - 0.5)) + round(src) * (dst + 2.0 * src - 1.0),
-                        0.0,
-                        1.0
-                    )
-                }),
+                     clamp(
+                         round(src) * (dst + 2.0 * (src - 0.5)) + round(src) * (dst + 2.0 * src - 1.0),
+                         0.0,
+                         1.0
+                     )
+                 }),
 
     /**
      * The Photoshop Pin Light algorithm.

@@ -39,28 +39,28 @@ class SaturationFilter(saturation: Double) : Filter {
             val op = ColorOp.of(pixels[i])
 
             if (saturation > 0) {
-                val rLim = if (op.r >= 0.5) 1.0 else 0.0
-                val gLim = if (op.g >= 0.5) 1.0 else 0.0
-                val bLim = if (op.b >= 0.5) 1.0 else 0.0
+                val rLim = if (op.red >= 0.5) 1.0 else 0.0
+                val gLim = if (op.green >= 0.5) 1.0 else 0.0
+                val bLim = if (op.blue >= 0.5) 1.0 else 0.0
 
-                val rDiff = rLim - op.r
-                val gDiff = gLim - op.g
-                val bDiff = bLim - op.b
+                val rDiff = rLim - op.red
+                val gDiff = gLim - op.green
+                val bDiff = bLim - op.blue
 
-                op.r += rDiff * saturation
-                op.g += gDiff * saturation
-                op.b += bDiff * saturation
+                op.red += rDiff * saturation
+                op.green += gDiff * saturation
+                op.blue += bDiff * saturation
             }
             else {
-                val avg = avg(op.r, op.g, op.b)
+                val avg = avg(op.red, op.green, op.blue)
 
-                val rDiff = avg - op.r
-                val gDiff = avg - op.g
-                val bDiff = avg - op.b
+                val rDiff = avg - op.red
+                val gDiff = avg - op.green
+                val bDiff = avg - op.blue
 
-                op.r += rDiff * -saturation
-                op.g += gDiff * -saturation
-                op.b += bDiff * -saturation
+                op.red += rDiff * -saturation
+                op.green += gDiff * -saturation
+                op.blue += bDiff * -saturation
             }
 
             pixels[i] = op.value

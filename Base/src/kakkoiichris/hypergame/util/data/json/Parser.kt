@@ -47,30 +47,30 @@ internal class Parser(private val lexer: Lexer) {
     private fun parseObject(): Node.Object {
         val location = currentToken.location
 
-        mustSkip(LeftBrace)
+        mustSkip(LEFT_BRACE)
 
         val members = mutableMapOf<String, Node>()
 
-        if (!skip(RightBrace)) {
+        if (!skip(RIGHT_BRACE)) {
             do {
                 val name = currentToken.value as? String
-                        ?: error("JSON member name '${currentToken.value}' must be a string! @ ${currentToken.location}")
+                    ?: error("JSON member name '${currentToken.value}' must be a string! @ ${currentToken.location}")
 
-                mustSkip(Value, Colon)
+                mustSkip(VALUE, COLON)
 
                 val node = when {
-                    match(LeftBrace)  -> parseObject()
+                    match(LEFT_BRACE) -> parseObject()
 
-                    match(LeftSquare) -> parseArray()
+                    match(LEFT_SQUARE) -> parseArray()
 
                     else              -> parseValue()
                 }
 
                 members[name] = node
             }
-            while (skip(Comma))
+            while (skip(COMMA))
 
-            mustSkip(RightBrace)
+            mustSkip(RIGHT_BRACE)
         }
 
         return Node.Object(location, members)
@@ -79,25 +79,25 @@ internal class Parser(private val lexer: Lexer) {
     private fun parseArray(): Node.Array {
         val location = currentToken.location
 
-        mustSkip(LeftSquare)
+        mustSkip(LEFT_SQUARE)
 
         val elements = mutableListOf<Node>()
 
-        if (!skip(RightSquare)) {
+        if (!skip(RIGHT_SQUARE)) {
             do {
                 val node = when {
-                    match(LeftBrace)  -> parseObject()
+                    match(LEFT_BRACE) -> parseObject()
 
-                    match(LeftSquare) -> parseArray()
+                    match(LEFT_SQUARE) -> parseArray()
 
                     else              -> parseValue()
                 }
 
                 elements.add(node)
             }
-            while (skip(Comma))
+            while (skip(COMMA))
 
-            mustSkip(RightSquare)
+            mustSkip(RIGHT_SQUARE)
         }
 
         return Node.Array(location, elements)
@@ -107,7 +107,7 @@ internal class Parser(private val lexer: Lexer) {
         val location = currentToken.location
         val value = currentToken.value
 
-        mustSkip(Value)
+        mustSkip(VALUE)
 
         return Node.Value(location, value)
     }

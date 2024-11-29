@@ -35,7 +35,7 @@ class AlphaFilter(alpha: Double) : Filter {
         for (i in pixels.indices) {
             val op = ColorOp.of(pixels[i])
 
-            op.a *= alpha
+            op.alpha *= alpha
 
             pixels[i] = op.value
         }

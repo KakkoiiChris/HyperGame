@@ -24,12 +24,12 @@ import kakkoiichris.hypergame.view.View
  */
 interface State : Renderable {
     fun swapTo(view: View)
-    
+
     fun swapFrom(view: View)
-    
+
     fun halt(view: View)
-    
+
     override fun update(view: View, manager: StateManager, time: Time, input: Input)
-    
+
     override fun render(view: View, renderer: Renderer)
 }

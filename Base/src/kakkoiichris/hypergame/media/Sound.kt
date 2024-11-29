@@ -23,14 +23,15 @@ import kotlin.concurrent.thread
  */
 class Sound internal constructor(private val clip: Clip) {
     companion object {
-        val extensions = arrayOf("wav", "mp3")
-        
+        fun isExtension(ext: String) =
+            ext.matches("wav|mp3".toRegex())
+
         fun load(path: String): Sound {
             val ais = AudioSystem.getAudioInputStream(Sound::class.java.getResourceAsStream(path))
             val baseFormat = ais.format
             val sampleRate = baseFormat.sampleRate
             val channels = baseFormat.channels
-            
+
             val decoded = AudioFormat(
                 AudioFormat.Encoding.PCM_SIGNED,
                 sampleRate,
@@ -40,66 +41,66 @@ class Sound internal constructor(private val clip: Clip) {
                 sampleRate,
                 false
             )
-            
+
             val dais = AudioSystem.getAudioInputStream(decoded, ais)
-            
+
             val clip = AudioSystem.getClip()
-            
+
             clip.open(dais)
-            
+
             return Sound(clip)
         }
     }
-    
+
     private var listenerThread: Thread = Thread()
-    
+
     private var listening = false
-    
+
     val isPlaying get() = clip.isRunning
-    
+
     fun play(listener: ((Double) -> Unit)? = null) {
         clip.stop()
-        
+
         clip.framePosition = 0
-        
+
         clip.start()
-        
+
         listen(listener)
     }
-    
+
     fun loop(count: Int = Clip.LOOP_CONTINUOUSLY, listener: ((Double) -> Unit)? = null) {
         clip.stop()
-        
+
         clip.framePosition = 0
-        
+
         clip.loop(count)
-        
+
         listen(listener)
     }
-    
+
     private fun listen(listener: ((Double) -> Unit)?) {
         if (listener == null) return
-        
+
         listening = true
-        
+
         listenerThread = thread {
             while (listening) {
                 listener(clip.microsecondPosition / clip.microsecondLength.toDouble())
             }
         }
     }
-    
+
     fun pause() = clip.stop()
-    
+
     fun stop() {
         listening = false
-        
+
         clip.stop()
     }
-    
+
     fun close() {
         listening = false
-        
+
         clip.stop()
         clip.flush()
         clip.close()

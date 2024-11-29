@@ -12,13 +12,13 @@ package kakkoiichris.hypergame.util.data.json
 
 internal data class Token(val location: Location, val type: Type, val value: Any = Unit) {
     enum class Type {
-        Value,
-        LeftBrace,
-        RightBrace,
-        LeftSquare,
-        RightSquare,
-        Colon,
-        Comma,
-        EndOfFile
+        VALUE,
+        LEFT_BRACE,
+        RIGHT_BRACE,
+        LEFT_SQUARE,
+        RIGHT_SQUARE,
+        COLON,
+        COMMA,
+        END_OF_FILE
     }
 }

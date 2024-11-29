@@ -14,8 +14,10 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
 sealed class Node(private val location: Location, var value: Any) {
+    fun asValueOrNull() = this as? Value
+
     fun asValue() = (this as? Value)
-            ?: error("Node is not a value! @ $location")
+        ?: error("Node is not a value! @ $location")
 
     fun asBooleanOrNull(): Boolean? {
         val value = asValue().value
@@ -25,7 +27,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return value as? Boolean
-                ?: error("Node is not a boolean value! @ $location")
+            ?: error("Node is not a boolean value! @ $location")
     }
 
     fun asBoolean(): Boolean {
@@ -36,7 +38,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return value as? Boolean
-                ?: error("Node is not a boolean value! @ $location")
+            ?: error("Node is not a boolean value! @ $location")
     }
 
     fun asByteOrNull(): Byte? {
@@ -47,7 +49,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a byte value! @ $location")).toInt().toByte()
+            ?: error("Node is not a byte value! @ $location")).toInt().toByte()
     }
 
     fun asByte(): Byte {
@@ -58,7 +60,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a byte value! @ $location")).toInt().toByte()
+            ?: error("Node is not a byte value! @ $location")).toInt().toByte()
     }
 
     fun asShortOrNull(): Short? {
@@ -69,7 +71,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a short value! @ $location")).toInt().toShort()
+            ?: error("Node is not a short value! @ $location")).toInt().toShort()
     }
 
     fun asShort(): Short {
@@ -80,7 +82,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a short value! @ $location")).toInt().toShort()
+            ?: error("Node is not a short value! @ $location")).toInt().toShort()
     }
 
     fun asIntOrNull(): Int? {
@@ -91,7 +93,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not an int value! @ $location")).toInt()
+            ?: error("Node is not an int value! @ $location")).toInt()
     }
 
     fun asInt(): Int {
@@ -102,7 +104,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not an int value! @ $location")).toInt()
+            ?: error("Node is not an int value! @ $location")).toInt()
     }
 
     fun asLongOrNull(): Long? {
@@ -113,7 +115,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a long value! @ $location")).toLong()
+            ?: error("Node is not a long value! @ $location")).toLong()
     }
 
     fun asLong(): Long {
@@ -124,7 +126,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a long value! @ $location")).toLong()
+            ?: error("Node is not a long value! @ $location")).toLong()
     }
 
     fun asFloatOrNull(): Float? {
@@ -135,7 +137,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a float value! @ $location")).toFloat()
+            ?: error("Node is not a float value! @ $location")).toFloat()
     }
 
     fun asFloat(): Float {
@@ -146,7 +148,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? Double
-                ?: error("Node is not a float value! @ $location")).toFloat()
+            ?: error("Node is not a float value! @ $location")).toFloat()
     }
 
     fun asDoubleOrNull(): Double? {
@@ -157,7 +159,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return value as? Double
-                ?: error("Node is not a double value! @ $location")
+            ?: error("Node is not a double value! @ $location")
     }
 
     fun asDouble(): Double {
@@ -168,7 +170,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return value as? Double
-                ?: error("Node is not a double value! @ $location")
+            ?: error("Node is not a double value! @ $location")
     }
 
     fun asCharOrNull(): Char? {
@@ -179,7 +181,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? String)?.takeIf { it.length == 1 }?.get(0)
-                ?: error("Node is not a char value! @ $location")
+            ?: error("Node is not a char value! @ $location")
     }
 
     fun asChar(): Char {
@@ -190,7 +192,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return (value as? String)?.takeIf { it.length == 1 }?.get(0)
-                ?: error("Node is not a char value! @ $location")
+            ?: error("Node is not a char value! @ $location")
     }
 
     fun asStringOrNull(): String? {
@@ -201,7 +203,7 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return value as? String
-                ?: error("Node is not a string value! @ $location")
+            ?: error("Node is not a string value! @ $location")
     }
 
     fun asString(): String {
@@ -212,40 +214,62 @@ sealed class Node(private val location: Location, var value: Any) {
         }
 
         return value as? String
-                ?: error("Node is not a string value! @ $location")
+            ?: error("Node is not a string value! @ $location")
     }
 
     fun asArrayOrNull() = this as? Array
 
     fun asArray() = this as? Array
-            ?: error("Node is not an array! @ $location")
+        ?: error("Node is not an array! @ $location")
 
-    fun asBooleanArrayOrNull() = asArray().map(Node::asBoolean)
+    fun asBooleanArrayOrNull() = asArrayOrNull()?.map(Node::asBoolean)
 
-    fun asByteArrayOrNull() = asArray().map(Node::asByte).toByteArray()
+    fun asBooleanArray() = asArray().map(Node::asBoolean)
 
-    fun asShortArrayOrNull() = asArray().map(Node::asShort).toShortArray()
+    fun asByteArrayOrNull() = asArrayOrNull()?.map(Node::asByte)?.toByteArray()
 
-    fun asIntArrayOrNull() = asArray().map(Node::asInt).toIntArray()
+    fun asByteArray() = asArray().map(Node::asByte).toByteArray()
 
-    fun asLongArrayOrNull() = asArray().map(Node::asLong).toLongArray()
+    fun asShortArrayOrNull() = asArrayOrNull()?.map(Node::asShort)?.toShortArray()
 
-    fun asFloatArrayOrNull() = asArray().map(Node::asFloat).toFloatArray()
+    fun asShortArray() = asArray().map(Node::asShort).toShortArray()
 
-    fun asDoubleArrayOrNull() = asArray().map(Node::asDouble).toDoubleArray()
+    fun asIntArrayOrNull() = asArrayOrNull()?.map(Node::asInt)?.toIntArray()
 
-    fun asCharArrayOrNull() = asArray().map(Node::asChar).toCharArray()
+    fun asIntArray() = asArray().map(Node::asInt).toIntArray()
 
-    fun asStringArrayOrNull() = asArray().map(Node::asString).toTypedArray()
+    fun asLongArrayOrNull() = asArrayOrNull()?.map(Node::asLong)?.toLongArray()
 
-    fun asArrayArrayOrNull() = asArray().map(Node::asArray).toTypedArray()
+    fun asLongArray() = asArray().map(Node::asLong).toLongArray()
 
-    fun asObjectArrayOrNull() = asArray().map(Node::asObject).toTypedArray()
+    fun asFloatArrayOrNull() = asArrayOrNull()?.map(Node::asFloat)?.toFloatArray()
+
+    fun asFloatArray() = asArray().map(Node::asFloat).toFloatArray()
+
+    fun asDoubleArrayOrNull() = asArrayOrNull()?.map(Node::asDouble)?.toDoubleArray()
+
+    fun asDoubleArray() = asArray().map(Node::asDouble).toDoubleArray()
+
+    fun asCharArrayOrNull() = asArrayOrNull()?.map(Node::asChar)?.toCharArray()
+
+    fun asCharArray() = asArray().map(Node::asChar).toCharArray()
+
+    fun asStringArrayOrNull() = asArrayOrNull()?.map(Node::asString)?.toTypedArray()
+
+    fun asStringArray() = asArray().map(Node::asString).toTypedArray()
+
+    fun asArrayArrayOrNull() = asArrayOrNull()?.map(Node::asArray)?.toTypedArray()
+
+    fun asArrayArray() = asArray().map(Node::asArray).toTypedArray()
+
+    fun asObjectArrayOrNull() = asArrayOrNull()?.map(Node::asObject)?.toTypedArray()
+
+    fun asObjectArray() = asArray().map(Node::asObject).toTypedArray()
 
     fun asObjectOrNull() = this as? Object
 
     fun asObject() = this as? Object
-            ?: error("Node is not an object! @ $location")
+        ?: error("Node is not an object! @ $location")
 
     abstract fun format(indent: Int): String
 
@@ -261,7 +285,7 @@ sealed class Node(private val location: Location, var value: Any) {
     }
 
     class Array(location: Location, list: MutableList<Node> = mutableListOf()) : Node(location, list),
-        MutableList<Node> by list {
+                                                                                 MutableList<Node> by list {
         fun addValue(value: Any) = add(Value(Location.none, value))
 
         fun addValue(index: Int, value: Any) = add(index, Value(Location.none, value))
@@ -296,7 +320,7 @@ sealed class Node(private val location: Location, var value: Any) {
     }
 
     class Object(location: Location, map: MutableMap<String, Node> = mutableMapOf()) : Node(location, map),
-        MutableMap<String, Node> by map {
+                                                                                       MutableMap<String, Node> by map {
         fun addValue(name: String, value: Any) = put(name, Value(Location.none, value))
 
         fun addArray(name: String) = put(name, Array(Location.none))

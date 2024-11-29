@@ -22,11 +22,11 @@ import kakkoiichris.hypergame.util.Time
  */
 class AcidFilter : DynamicFilter {
     private var offset = 0.0
-    
+
     override fun update(time: Time) {
         offset += time.delta
     }
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         for (i in pixels.indices) {
             pixels[i] += pixels[((i + offset) % pixels.size).toInt()] + i

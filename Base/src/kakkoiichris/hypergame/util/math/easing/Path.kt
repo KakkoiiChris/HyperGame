@@ -46,65 +46,65 @@ import kotlin.math.min
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 class Path(val ex: Equation, val ey: Equation, var start: Vector, var end: Vector, val duration: Double) {
-    enum class Equation(private val calc: (t: Double, b: Double, c: Double, d: Double) -> Double) {
-        BACK_IN(kakkoiichris.hypergame.util.math.easing.Back::easeIn),
-        BACK_OUT(kakkoiichris.hypergame.util.math.easing.Back::easeOut),
-        BACK_BOTH(kakkoiichris.hypergame.util.math.easing.Back::easeInOut),
-        BOUNCE_IN(kakkoiichris.hypergame.util.math.easing.Bounce::easeIn),
-        BOUNCE_OUT(kakkoiichris.hypergame.util.math.easing.Bounce::easeOut),
-        BOUNCE_BOTH(kakkoiichris.hypergame.util.math.easing.Bounce::easeInOut),
-        CIRCLE_IN(kakkoiichris.hypergame.util.math.easing.Circle::easeIn),
-        CIRCLE_OUT(kakkoiichris.hypergame.util.math.easing.Circle::easeOut),
-        CIRCLE_BOTH(kakkoiichris.hypergame.util.math.easing.Circle::easeInOut),
-        CUBIC_IN(kakkoiichris.hypergame.util.math.easing.Cubic::easeIn),
-        CUBIC_OUT(kakkoiichris.hypergame.util.math.easing.Cubic::easeOut),
-        CUBIC_BOTH(kakkoiichris.hypergame.util.math.easing.Cubic::easeInOut),
-        ELASTIC_IN(kakkoiichris.hypergame.util.math.easing.Elastic::easeIn),
-        ELASTIC_OUT(kakkoiichris.hypergame.util.math.easing.Elastic::easeOut),
-        ELASTIC_BOTH(kakkoiichris.hypergame.util.math.easing.Elastic::easeInOut),
-        EXPONENTIAL_IN(kakkoiichris.hypergame.util.math.easing.Expo::easeIn),
-        EXPONENTIAL_OUT(kakkoiichris.hypergame.util.math.easing.Expo::easeOut),
-        EXPONENTIAL_BOTH(kakkoiichris.hypergame.util.math.easing.Expo::easeInOut),
-        LINEAR_IN(kakkoiichris.hypergame.util.math.easing.Linear::easeIn),
-        LINEAR_OUT(kakkoiichris.hypergame.util.math.easing.Linear::easeOut),
-        LINEAR_BOTH(kakkoiichris.hypergame.util.math.easing.Linear::easeInOut),
-        QUADRATIC_IN(kakkoiichris.hypergame.util.math.easing.Quad::easeIn),
-        QUADRATIC_OUT(kakkoiichris.hypergame.util.math.easing.Quad::easeOut),
-        QUADRATIC_BOTH(kakkoiichris.hypergame.util.math.easing.Quad::easeInOut),
-        QUARTIC_IN(kakkoiichris.hypergame.util.math.easing.Quart::easeIn),
-        QUARTIC_OUT(kakkoiichris.hypergame.util.math.easing.Quart::easeOut),
-        QUARTIC_BOTH(kakkoiichris.hypergame.util.math.easing.Quart::easeInOut),
-        QUINTIC_IN(kakkoiichris.hypergame.util.math.easing.Quint::easeIn),
-        QUINTIC_OUT(kakkoiichris.hypergame.util.math.easing.Quint::easeOut),
-        QUINTIC_BOTH(kakkoiichris.hypergame.util.math.easing.Quint::easeInOut),
-        SINE_IN(kakkoiichris.hypergame.util.math.easing.Sine::easeIn),
-        SINE_OUT(kakkoiichris.hypergame.util.math.easing.Sine::easeOut),
-        SINE_BOTH(kakkoiichris.hypergame.util.math.easing.Sine::easeInOut);
-        
-        operator fun invoke(t: Double, b: Double, c: Double, d: Double) = calc(t, b, c, d)
-    }
-    
     private var elapsed = 0.0
         get() = min(field, duration)
-    
+
     val hasElapsed get() = elapsed >= duration
-    
+
     fun swapEnds() {
         val temp = start
         start = end
         end = temp
     }
-    
+
     fun reset() {
         elapsed = 0.0
     }
-    
+
     fun update(delta: Double) {
         elapsed += delta
     }
-    
+
     fun getPoint() = Vector(
         ex(elapsed, start.x, end.x - start.x, duration),
         ey(elapsed, start.y, end.y - start.y, duration)
     )
+
+    enum class Equation(private val calc: (t: Double, b: Double, c: Double, d: Double) -> Double) {
+        BACK_IN(Back::easeIn),
+        BACK_OUT(Back::easeOut),
+        BACK_BOTH(Back::easeInOut),
+        BOUNCE_IN(Bounce::easeIn),
+        BOUNCE_OUT(Bounce::easeOut),
+        BOUNCE_BOTH(Bounce::easeInOut),
+        CIRCLE_IN(Circle::easeIn),
+        CIRCLE_OUT(Circle::easeOut),
+        CIRCLE_BOTH(Circle::easeInOut),
+        CUBIC_IN(Cubic::easeIn),
+        CUBIC_OUT(Cubic::easeOut),
+        CUBIC_BOTH(Cubic::easeInOut),
+        ELASTIC_IN(Elastic::easeIn),
+        ELASTIC_OUT(Elastic::easeOut),
+        ELASTIC_BOTH(Elastic::easeInOut),
+        EXPONENTIAL_IN(Expo::easeIn),
+        EXPONENTIAL_OUT(Expo::easeOut),
+        EXPONENTIAL_BOTH(Expo::easeInOut),
+        LINEAR_IN(Linear::easeIn),
+        LINEAR_OUT(Linear::easeOut),
+        LINEAR_BOTH(Linear::easeInOut),
+        QUADRATIC_IN(Quad::easeIn),
+        QUADRATIC_OUT(Quad::easeOut),
+        QUADRATIC_BOTH(Quad::easeInOut),
+        QUARTIC_IN(Quart::easeIn),
+        QUARTIC_OUT(Quart::easeOut),
+        QUARTIC_BOTH(Quart::easeInOut),
+        QUINTIC_IN(Quint::easeIn),
+        QUINTIC_OUT(Quint::easeOut),
+        QUINTIC_BOTH(Quint::easeInOut),
+        SINE_IN(Sine::easeIn),
+        SINE_OUT(Sine::easeOut),
+        SINE_BOTH(Sine::easeInOut);
+
+        operator fun invoke(t: Double, b: Double, c: Double, d: Double) = calc(t, b, c, d)
+    }
 }

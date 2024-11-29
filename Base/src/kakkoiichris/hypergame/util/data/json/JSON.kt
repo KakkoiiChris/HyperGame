@@ -14,7 +14,8 @@ import java.io.*
 
 class JSON(private val filePath: String) {
     companion object {
-        val extensions = arrayOf("json")
+        fun isExtension(ext: String) =
+            ext.matches("json".toRegex())
     }
 
     lateinit var root: Node.Object; private set

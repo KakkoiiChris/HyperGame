@@ -22,7 +22,7 @@ import kakkoiichris.hypergame.view.View
 class Level(private val viewport: Box, val cols: Int, val rows: Int) : Renderable {
     private val blockSize = 16
 
-    private val blocks: Array<Block> = Array(cols * rows) { MyBlocks.random() }
+    private val blocks = Array<Block>(cols * rows) { Block.Empty }
 
     val width = cols * blockSize
     val height = rows * blockSize
@@ -45,6 +45,10 @@ class Level(private val viewport: Box, val cols: Int, val rows: Int) : Renderabl
         entities += e
 
         camera.target = e
+    }
+
+    fun addEntity(entity: Entity) {
+        entities += entity
     }
 
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {

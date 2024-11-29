@@ -30,83 +30,83 @@ fun avg(vararg values: Int) =
 fun Double.clamp(min: Double, max: Double) =
     when {
         this < min -> min
-        
+
         this > max -> max
-        
+
         else       -> this
     }
 
 fun Float.clamp(min: Float, max: Float) =
     when {
         this < min -> min
-        
+
         this > max -> max
-        
+
         else       -> this
     }
 
 fun Int.clamp(min: Int, max: Int) =
     when {
         this < min -> min
-        
+
         this > max -> max
-        
+
         else       -> this
     }
 
 fun max(vararg values: Double) =
     when (values.size) {
         1    -> values[0]
-        
+
         2    -> kotlin.math.max(values[0], values[1])
-        
+
         else -> values.drop(1).maxOrNull() ?: values[0]
     }
 
 fun max(vararg values: Int) =
     when (values.size) {
         1    -> values[0]
-        
+
         2    -> kotlin.math.max(values[0], values[1])
-        
+
         else -> values.drop(1).maxOrNull() ?: values[0]
     }
 
 fun med(vararg values: Double): Double {
     values.sort()
-    
+
     if (values.size % 2 == 0) {
         return (values[values.size / 2 - 1] + values[values.size / 2]) / 2.0
     }
-    
+
     return values[values.size / 2]
 }
 
 fun med(vararg values: Int): Double {
     values.sort()
-    
+
     if (values.size % 2 == 0) {
         return (values[values.size / 2 - 1] + values[values.size / 2]) / 2.0
     }
-    
+
     return values[values.size / 2].toDouble()
 }
 
 fun min(vararg values: Double) =
     when (values.size) {
         1    -> values[0]
-        
+
         2    -> kotlin.math.min(values[0], values[1])
-        
+
         else -> values.drop(1).minOrNull() ?: values[0]
     }
 
 fun min(vararg values: Int) =
     when (values.size) {
         1    -> values[0]
-        
+
         2    -> kotlin.math.min(values[0], values[1])
-        
+
         else -> values.drop(1).minOrNull() ?: values[0]
     }
 

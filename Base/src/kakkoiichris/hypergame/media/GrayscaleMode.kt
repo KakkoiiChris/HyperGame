@@ -25,6 +25,6 @@ enum class GrayscaleMode(private val calc: (r: Double, g: Double, b: Double) -> 
     MIN({ r, g, b -> min(r, g, b) }),
     MED({ r, g, b -> med(r, g, b) }),
     MAX({ r, g, b -> max(r, g, b) });
-    
+
     operator fun invoke(r: Double, g: Double, b: Double) = calc(r, g, b)
 }

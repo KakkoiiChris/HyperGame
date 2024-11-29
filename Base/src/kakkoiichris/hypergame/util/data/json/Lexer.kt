@@ -38,7 +38,7 @@ internal class Lexer(private val source: String) {
             }
         }
 
-        return Token(here(), EndOfFile)
+        return Token(here(), END_OF_FILE)
     }
 
     private fun peek() =
@@ -126,7 +126,7 @@ internal class Lexer(private val source: String) {
             }
         }
 
-        return Token(location, Value, result.toDouble())
+        return Token(location, VALUE, result.toDouble())
     }
 
     private fun string(): Token {
@@ -167,7 +167,7 @@ internal class Lexer(private val source: String) {
             }
         }
 
-        return Token(location, Value, result)
+        return Token(location, VALUE, result)
     }
 
     private fun unicode() =
@@ -186,7 +186,7 @@ internal class Lexer(private val source: String) {
         }
 
         return Token(
-            location, Value, when (result) {
+            location, VALUE, when (result) {
                 "true"  -> true
 
                 "false" -> false
@@ -204,17 +204,17 @@ internal class Lexer(private val source: String) {
         return Token(
             location,
             when {
-                skip('{') -> LeftBrace
+                skip('{') -> LEFT_BRACE
 
-                skip('}') -> RightBrace
+                skip('}') -> RIGHT_BRACE
 
-                skip('[') -> LeftSquare
+                skip('[') -> LEFT_SQUARE
 
-                skip(']') -> RightSquare
+                skip(']') -> RIGHT_SQUARE
 
-                skip(':') -> Colon
+                skip(':') -> COLON
 
-                skip(',') -> Comma
+                skip(',') -> COMMA
 
                 else      -> error("Invalid character '${peek()}'! @ $location")
             }

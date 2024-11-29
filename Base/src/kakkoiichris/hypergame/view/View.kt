@@ -24,26 +24,26 @@ interface View : Runnable {
         const val DEFAULT_SCALE = 1
         const val DEFAULT_FRAME_RATE = 60.0
     }
-    
+
     val width: Int
     val height: Int
     val scale: Int
     val frameRate: Double
-    
+
     val manager: StateManager
     val input: Input
     val renderer: Renderer
-    
+
     val updateCount: Int
     val frameCount: Int
 
     val size get() = Vector(width.toDouble(), height.toDouble())
 
     val bounds get() = Box(0.0, 0.0, width.toDouble(), height.toDouble())
-    
+
     fun getScreenshot(): BufferedImage
-    
+
     fun open()
-    
+
     fun close()
 }

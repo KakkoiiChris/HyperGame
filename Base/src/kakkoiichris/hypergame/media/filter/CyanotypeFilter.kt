@@ -21,7 +21,7 @@ import kakkoiichris.hypergame.media.GrayscaleMode
 class CyanotypeFilter(mode: GrayscaleMode) : GrayScaleFilter(mode) {
     private val cyanotype = ColorFilter.of(-0xB17511)
     private val bright = BrightnessFilter(0.1)
-    
+
     override fun apply(width: Int, height: Int, pixels: IntArray) {
         super.apply(width, height, pixels)
         cyanotype.apply(width, height, pixels)

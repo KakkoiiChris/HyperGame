@@ -108,7 +108,7 @@ abstract class Module : Box(), Renderable {
         marginLeft = left
     }
 
-    fun add(module: Module, option: UInt = 0U) {
+    open fun add(module: Module, option: UInt = 0U) {
         module.parent = this
 
         if (option == 0U) {
