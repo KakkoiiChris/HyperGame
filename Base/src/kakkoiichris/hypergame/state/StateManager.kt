@@ -25,7 +25,7 @@ import java.util.*
 class StateManager {
     private val stack = Stack<State>()
 
-    private var nextSwap: Swap? = null
+    private var swaps = mutableListOf<Swap>()
 
     internal fun init(view: View) {
         if (stack.isNotEmpty()) {
@@ -34,49 +34,51 @@ class StateManager {
     }
 
     internal fun swap(view: View) {
-        val swap = nextSwap ?: return
+        if (swaps.isEmpty()) return
 
-        when (swap) {
-            is Swap.Goto -> {
-                if (stack.isNotEmpty()) {
-                    stack.pop().swapFrom(view)
+        for (swap in swaps) {
+            when (swap) {
+                is Swap.Goto -> {
+                    if (stack.isNotEmpty()) {
+                        stack.pop().swapFrom(view)
+                    }
+
+                    stack.push(swap.state).swapTo(view)
                 }
 
-                stack.push(swap.state).swapTo(view)
-            }
+                is Swap.Push -> {
+                    if (stack.isNotEmpty()) {
+                        stack.peek().swapFrom(view)
+                    }
 
-            is Swap.Push -> {
-                if (stack.isNotEmpty()) {
-                    stack.peek().swapFrom(view)
+                    stack.push(swap.state).swapTo(view)
                 }
 
-                stack.push(swap.state).swapTo(view)
-            }
+                Swap.Pop     -> {
+                    if (stack.isNotEmpty()) {
+                        stack.pop().swapFrom(view)
+                    }
 
-            Swap.Pop     -> {
-                if (stack.isNotEmpty()) {
-                    stack.pop().swapFrom(view)
-                }
-
-                if (stack.isNotEmpty()) {
-                    stack.peek().swapTo(view)
+                    if (stack.isNotEmpty()) {
+                        stack.peek().swapTo(view)
+                    }
                 }
             }
         }
 
-        nextSwap = null
+        swaps.clear()
     }
 
     fun goto(state: State) {
-        nextSwap = Swap.Goto(state)
+        swaps += Swap.Goto(state)
     }
 
     fun push(state: State) {
-        nextSwap = Swap.Push(state)
+        swaps += Swap.Push(state)
     }
 
     fun pop() {
-        nextSwap = Swap.Pop
+        swaps += Swap.Pop
     }
 
     internal fun update(view: View, time: Time, input: Input) {

@@ -11,10 +11,13 @@
 package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.input.Input
+import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.util.math.Vector
+import java.awt.Canvas
 import java.awt.image.BufferedImage
 
 interface View : Runnable {
@@ -30,6 +33,8 @@ interface View : Runnable {
     val scale: Int
     val frameRate: Double
 
+    val image: BufferedImage
+
     val manager: StateManager
     val input: Input
     val renderer: Renderer
@@ -41,9 +46,40 @@ interface View : Runnable {
 
     val bounds get() = Box(0.0, 0.0, width.toDouble(), height.toDouble())
 
+    val canvas: Canvas
+
+    var preRenderable: Renderable?
+    var postRenderable: Renderable?
+
     fun getScreenshot(): BufferedImage
 
     fun open()
 
     fun close()
+
+    fun update(time: Time) {
+        preRenderable?.update(this, manager, time, input)
+
+        manager.update(this, time, input)
+
+        postRenderable?.update(this, manager, time, input)
+
+        input.poll(time)
+    }
+
+    fun render() {
+        preRenderable?.render(this, renderer)
+
+        manager.render(this, renderer)
+
+        postRenderable?.render(this, renderer)
+
+        val buffer = canvas.bufferStrategy
+
+        val graphics = buffer.drawGraphics
+        graphics.drawImage(image, 0, 0, canvas.width, canvas.height, null)
+        graphics.dispose()
+
+        buffer.show()
+    }
 }

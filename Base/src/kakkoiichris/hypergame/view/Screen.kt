@@ -11,6 +11,7 @@
 package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.input.Input
+import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
@@ -29,16 +30,19 @@ class Screen(
 
     override val input = Input(this)
 
-    private val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+    override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
     override val renderer = Renderer(image.graphics as Graphics2D)
 
     override var updateCount = 0; private set
     override var frameCount = 0; private set
 
-    val canvas = Canvas()
+    override val canvas = Canvas()
 
     private val thread = Thread(this::run)
     private var running = false
+
+    override var preRenderable: Renderable? = null
+    override var postRenderable: Renderable? = null
 
     init {
         val size = Dimension(width * scale, height * scale)
@@ -67,6 +71,7 @@ class Screen(
     }
 
     override fun open() {
+        manager.swap(this)
         manager.init(this)
 
         canvas.requestFocus()
@@ -132,24 +137,6 @@ class Screen(
         }
 
         manager.halt(this)
-    }
-
-    private fun update(time: Time) {
-        manager.update(this, time, input)
-
-        input.poll(time)
-    }
-
-    private fun render() {
-        manager.render(this, renderer)
-
-        val buffer = canvas.bufferStrategy
-
-        val graphics = buffer.drawGraphics
-        graphics.drawImage(image, 0, 0, canvas.width, canvas.height, null)
-        graphics.dispose()
-
-        buffer.show()
     }
 
     override fun toString() = """"${javaClass.simpleName}" : {
