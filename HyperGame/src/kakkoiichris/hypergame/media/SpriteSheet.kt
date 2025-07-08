@@ -35,6 +35,9 @@ class SpriteSheet(val sprite: Sprite, val spriteWidth: Int, val spriteHeight: In
             return spriteList.toTypedArray()
         }
 
+    fun getXY(i: Int) =
+        i % columns to i / columns
+
     operator fun get(x: Int, y: Int) =
         sprite.crop(x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight)
 

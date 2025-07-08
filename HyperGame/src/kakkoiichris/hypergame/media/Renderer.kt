@@ -463,6 +463,30 @@ class Renderer(private val context: Graphics2D) {
             null
         )
 
+    fun drawSheet(sheet: SpriteSheet, si: Int, x: Int, y: Int) {
+        val (sx, sy) = sheet.getXY(si)
+
+        drawSheet(sheet, sx, sy, x, y)
+    }
+
+    fun drawSheet(sheet: SpriteSheet, si: Int, vector: Vector) {
+        val (sx, sy) = sheet.getXY(si)
+
+        drawSheet(sheet, sx, sy, vector)
+    }
+
+    fun drawSheet(sheet: SpriteSheet, si: Int, x: Int, y: Int, width: Int, height: Int) {
+        val (sx, sy) = sheet.getXY(si)
+
+        drawSheet(sheet, sx, sy, x, y, width, height)
+    }
+
+    fun drawSheet(sheet: SpriteSheet, si: Int, box: Box) {
+        val (sx, sy) = sheet.getXY(si)
+
+        drawSheet(sheet, sx, sy, box)
+    }
+
     fun drawLine(va: Vector, vb: Vector) =
         context.drawLine(va.x.toInt(), va.y.toInt(), vb.x.toInt(), vb.y.toInt())
 
