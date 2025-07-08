@@ -13,10 +13,6 @@ import kotlin.math.min
 class BlurComposite(val size: Int = 1) : Composite, CompositeContext {
     private val square = ((size * 2) + 1) * ((size * 2) + 1)
 
-    private fun checkRaster(r: Raster) {
-        check(r.sampleModel.dataType == DataBuffer.TYPE_INT) { "Expected integer sample type" }
-    }
-
     override fun compose(src: Raster, dstIn: Raster, dstOut: WritableRaster) {
         checkRaster(src)
         checkRaster(dstIn)

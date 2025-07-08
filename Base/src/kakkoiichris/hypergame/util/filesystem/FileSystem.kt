@@ -1,6 +1,7 @@
 package kakkoiichris.hypergame.util.filesystem
 
 import kakkoiichris.hypergame.media.Fonts
+import kakkoiichris.hypergame.media.PolySound
 import kakkoiichris.hypergame.media.Sound
 import kakkoiichris.hypergame.media.Sprite
 import kakkoiichris.hypergame.util.data.CSV
@@ -31,6 +32,12 @@ class FileSystem(rootPath: String) {
 
     fun getSoundOrNull(name: String) =
         cd.getSoundOrNull(name)
+
+    fun getPolySound(name: String) =
+        cd.getPolySound(name)
+
+    fun getPolySoundOrNull(name: String) =
+        cd.getPolySoundOrNull(name)
 
     fun getSprite(name: String) =
         cd.getSprite(name)
@@ -90,6 +97,7 @@ class FileSystem(rootPath: String) {
         private val root = Paths.get(path)
 
         private val sounds = mutableMapOf<String, Sound>()
+        private val polySounds = mutableMapOf<String, PolySound>()
         private val sprites = mutableMapOf<String, Sprite>()
         private val fonts = mutableMapOf<String, String>()
         private val csvFiles = mutableMapOf<String, CSV>()
@@ -112,19 +120,21 @@ class FileSystem(rootPath: String) {
                 val ext = it.extension.lowercase()
 
                 when {
-                    Sound.isExtension(ext)  -> sounds[resourceName] = Sound.load(resourcePath)
+                    Sound.isExtension(ext)     -> sounds[resourceName] = Sound.load(resourcePath)
 
-                    Sprite.isExtension(ext) -> sprites[resourceName] = Sprite.load(resourcePath)
+                    PolySound.isExtension(ext) -> polySounds[resourceName] = PolySound.load(resourcePath)
 
-                    Fonts.isExtension(ext)  -> fonts[resourceName] = Fonts.register(resourcePath)
+                    Sprite.isExtension(ext)    -> sprites[resourceName] = Sprite.load(resourcePath)
 
-                    CSV.isExtension(ext)    -> csvFiles[resourceName] = CSV(resourcePath).apply { readResource() }
+                    Fonts.isExtension(ext)     -> fonts[resourceName] = Fonts.register(resourcePath)
 
-                    JSON.isExtension(ext)   -> jsonFiles[resourceName] = JSON(resourcePath).apply { readResource() }
+                    CSV.isExtension(ext)       -> csvFiles[resourceName] = CSV(resourcePath).apply { readResource() }
 
-                    TXT.isExtension(ext)    -> txtFiles[resourceName] = TXT(resourcePath).apply { readResource() }
+                    JSON.isExtension(ext)      -> jsonFiles[resourceName] = JSON(resourcePath).apply { readResource() }
 
-                    XML.isExtension(ext)    -> xmlFiles[resourceName] = XML(resourcePath).apply { readResource() }
+                    TXT.isExtension(ext)       -> txtFiles[resourceName] = TXT(resourcePath).apply { readResource() }
+
+                    XML.isExtension(ext)       -> xmlFiles[resourceName] = XML(resourcePath).apply { readResource() }
                 }
             }
 
@@ -138,6 +148,12 @@ class FileSystem(rootPath: String) {
 
         fun getSoundOrNull(name: String) =
             sounds[name]
+
+        fun getPolySound(name: String) =
+            polySounds[name] ?: error("Poly sound '$root/$name' does not exist!")
+
+        fun getPolySoundOrNull(name: String) =
+            polySounds[name]
 
         fun getSprite(name: String) =
             sprites[name] ?: error("Sprite '$root/$name' does not exist!")
