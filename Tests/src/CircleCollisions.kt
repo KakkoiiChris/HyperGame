@@ -1,9 +1,9 @@
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Button.LEFT
 import kakkoiichris.hypergame.input.Button.RIGHT
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.util.math.QuadTree
@@ -44,7 +44,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         view.renderer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         if (input.buttonDown(LEFT) || input.buttonDown(RIGHT)) {
             held = null
 
@@ -79,7 +79,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         val tree = QuadTree<Ball>(view.bounds)
 
         balls.forEach {
-            it.update(view, manager, time, input)
+            it.update(view, game, time, input)
 
             tree.insert(it)
         }
@@ -126,10 +126,10 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.clearRect(0, 0, view.width, view.height)
 
-        balls.forEach { it.render(view, renderer) }
+        balls.forEach { it.render(view, game, renderer) }
     }
 }
 
@@ -157,7 +157,7 @@ class Ball(
     operator fun contains(vector: Vector) =
         position.distanceTo(vector) <= radius
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         velocity += acceleration * time.delta
         position += velocity
 
@@ -186,7 +186,7 @@ class Ball(
         acceleration = -velocity * .01 + Vector(0.0, 0.1)
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.push()
 
         renderer.color = color

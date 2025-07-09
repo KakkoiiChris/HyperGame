@@ -1,5 +1,6 @@
 package kakkoiichris.hypergame.physics
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
@@ -18,10 +19,10 @@ class World : Renderable {
         bodies += body
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         bodies.forEach { it.render(renderer) }
     }
 

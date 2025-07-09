@@ -1,3 +1,4 @@
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
@@ -21,11 +22,11 @@ object MenuTest: Sketch(500, 500, "Menu") {
         menu.add(Button("Quit"))
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        menu.update(view, manager, time, input)
+    override fun update(view: View, game: Game, time: Time, input: Input) {
+        menu.update(view, game, time, input)
     }
 
-    override fun render(view: View, renderer: Renderer) {
-        menu.render(view, renderer)
+    override fun render(view: View, game: Game, renderer: Renderer) {
+        menu.render(view, game, renderer)
     }
 }

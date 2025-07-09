@@ -1,5 +1,6 @@
 package kakkoiichris.hypergame.play
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
@@ -51,7 +52,7 @@ open class Camera(private val level: Level, bounds: Box) : Box(bounds), Renderab
             lockVertical = value
         }
     
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         val original = center
         
         if (target != null) {
@@ -76,6 +77,6 @@ open class Camera(private val level: Level, bounds: Box) : Box(bounds), Renderab
         }
     }
     
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
     }
 }

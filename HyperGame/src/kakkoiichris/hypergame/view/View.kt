@@ -10,17 +10,17 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.view
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.util.math.Vector
 import java.awt.Canvas
 import java.awt.image.BufferedImage
 
-interface View : Runnable {
+interface View {
     companion object {
         const val DEFAULT_WIDTH = 640
         const val DEFAULT_HEIGHT = 480
@@ -35,7 +35,6 @@ interface View : Runnable {
 
     val image: BufferedImage
 
-    val manager: StateManager
     val input: Input
     val renderer: Renderer
 
@@ -53,26 +52,26 @@ interface View : Runnable {
 
     fun getScreenshot(): BufferedImage
 
-    fun open()
+    fun open(game: Game)
 
     fun close()
 
-    fun update(time: Time) {
-        preRenderable?.update(this, manager, time, input)
+    fun update(game: Game, time: Time) {
+        preRenderable?.update(this, game, time, input)
 
-        manager.update(this, time, input)
+        game.update(this, time, input)
 
-        postRenderable?.update(this, manager, time, input)
+        postRenderable?.update(this, game, time, input)
 
         input.poll(time)
     }
 
-    fun render() {
-        preRenderable?.render(this, renderer)
+    fun render(game: Game) {
+        preRenderable?.render(this, game, renderer)
 
-        manager.render(this, renderer)
+        game.render(this, renderer)
 
-        postRenderable?.render(this, renderer)
+        postRenderable?.render(this, game, renderer)
 
         val buffer = canvas.bufferStrategy
 

@@ -10,18 +10,25 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.view
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.state.State
 
 abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : State {
     private val display = Display(width, height, frameRate = frameRate, title = title)
 
-    fun open() {
-        display.manager.push(this)
-
-        display.open()
+    private val game = object : Game() {
+        override fun init(view: View) {
+            stateManager.push(this@Sketch)
+        }
     }
 
-    fun close() = display.close()
+    fun open() {
+        display.open(game)
+    }
+
+    fun close() {
+        display.close()
+    }
 
     override fun swapTo(view: View) = Unit
 

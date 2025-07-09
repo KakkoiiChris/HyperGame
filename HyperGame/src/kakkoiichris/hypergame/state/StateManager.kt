@@ -10,6 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.state
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.util.Time
@@ -54,7 +55,7 @@ class StateManager {
                     stack.push(swap.state).swapTo(view)
                 }
 
-                Swap.Pop     -> {
+                Swap.Pop -> {
                     if (stack.isNotEmpty()) {
                         stack.pop().swapFrom(view)
                     }
@@ -81,15 +82,15 @@ class StateManager {
         swaps += Swap.Pop
     }
 
-    internal fun update(view: View, time: Time, input: Input) {
+    internal fun update(view: View, game: Game, time: Time, input: Input) {
         if (stack.isNotEmpty()) {
-            stack.peek().update(view, this, time, input)
+            stack.peek().update(view, game, time, input)
         }
     }
 
-    internal fun render(view: View, renderer: Renderer) {
+    internal fun render(view: View, game: Game, renderer: Renderer) {
         if (stack.isNotEmpty()) {
-            stack.peek().render(view, renderer)
+            stack.peek().render(view, game, renderer)
         }
     }
 

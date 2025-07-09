@@ -1,7 +1,7 @@
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Colors
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.Sketch
 import kakkoiichris.hypergame.view.View
@@ -13,7 +13,7 @@ fun main() {
 object InputForEach : Sketch(500, 500, "Input Test") {
     private var down = false
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         down = false
 
         input.forEach {
@@ -25,7 +25,7 @@ object InputForEach : Sketch(500, 500, "Input Test") {
         }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.clearRect(view.bounds)
 
         if (!down) return

@@ -1,8 +1,8 @@
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.play.Level
 import kakkoiichris.hypergame.state.State
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.Display
 import kakkoiichris.hypergame.view.View
@@ -20,30 +20,34 @@ import kakkoiichris.hypergame.view.View
  */
 fun main() {
     val display = Display(320, 240, 4, title = "Level Test")
-    
-    display.manager.push(LevelState)
-    
-    display.open()
+
+    display.open(MyGame)
+}
+
+object MyGame : Game() {
+    override fun init(view: View) {
+        stateManager.push(LevelState)
+    }
 }
 
 object LevelState : State {
     private lateinit var level: Level
-    
+
     override fun swapTo(view: View) {
         level = Level(view.bounds.resized(-10.0), 30, 30)
     }
-    
+
     override fun swapFrom(view: View) {
     }
-    
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        level.update(view, manager, time, input)
+
+    override fun update(view: View, game: Game, time: Time, input: Input) {
+        level.update(view, game, time, input)
     }
-    
-    override fun render(view: View, renderer: Renderer) {
-        level.render(view, renderer)
+
+    override fun render(view: View, game: Game, renderer: Renderer) {
+        level.render(view, game, renderer)
     }
-    
+
     override fun halt(view: View) {
     }
 }

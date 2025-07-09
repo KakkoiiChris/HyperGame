@@ -1,9 +1,9 @@
 package kakkoiichris.hypergame.ui.form
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.ui.Module
 import kakkoiichris.hypergame.ui.UIEvent
 import kakkoiichris.hypergame.util.Time
@@ -26,8 +26,8 @@ open class RadioButton private constructor(var text: String, private val group: 
         onChange(Event(this, time.copy()))
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        super.update(view, manager, time, input)
+    override fun update(view: View, game: Game, time: Time, input: Input) {
+        super.update(view, game, time, input)
 
         if (!enabled) {
             hover = false
@@ -55,11 +55,11 @@ open class RadioButton private constructor(var text: String, private val group: 
         }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = when {
-            hover   -> background.brighter()
+            hover -> background.brighter()
 
-            else    -> background
+            else -> background
         }
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)

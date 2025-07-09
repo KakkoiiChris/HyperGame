@@ -1,9 +1,9 @@
 package kakkoiichris.hypergame.ui.form
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.ui.Module
 import kakkoiichris.hypergame.ui.UIEvent
 import kakkoiichris.hypergame.util.Time
@@ -18,8 +18,8 @@ open class Button(var text: String = "") : Module() {
     private var hover = false
     private var pressed = false
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        super.update(view, manager, time, input)
+    override fun update(view: View, game: Game, time: Time, input: Input) {
+        super.update(view, game, time, input)
 
         if (!enabled) {
             hover = false
@@ -45,13 +45,13 @@ open class Button(var text: String = "") : Module() {
         }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = when {
             pressed -> background.darker()
 
-            hover   -> background.brighter()
+            hover -> background.brighter()
 
-            else    -> background
+            else -> background
         }
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)

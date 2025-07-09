@@ -1,7 +1,7 @@
 package kakkoiichris.hypergame.ui.layout
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.ui.Module
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
@@ -9,9 +9,9 @@ import kakkoiichris.hypergame.view.View
 open class Panel : Module() {
     var layout: Layout = Layout.None
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         layout(this, children)
 
-        super.update(view, manager, time, input)
+        super.update(view, game, time, input)
     }
 }

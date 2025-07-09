@@ -1,8 +1,8 @@
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Colors
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.util.math.QuadTree
@@ -28,7 +28,7 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
         tree = QuadTree(view.bounds)
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         box.center = input.mouse
 
         timer += time.seconds
@@ -46,7 +46,7 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
         highlighted.forEach { it.highlight = true }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = Colors.black
 
         renderer.fillRect(view.bounds)
@@ -59,7 +59,7 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
 
         renderer.drawRect(box)
 
-        entities.forEach { it.render(view, renderer) }
+        entities.forEach { it.render(view, game, renderer) }
     }
 }
 
@@ -73,9 +73,9 @@ class Entity : QuadTree.Element, Renderable {
 
     var highlight = false
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) = Unit
+    override fun update(view: View, game: Game, time: Time, input: Input) = Unit
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = if (highlight) Colors.aqua else Colors.white
 
         renderer.fillOval(position.x.toInt() - RADIUS, position.y.toInt() - RADIUS, RADIUS * 2, RADIUS * 2)

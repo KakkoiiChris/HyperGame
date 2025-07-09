@@ -10,10 +10,10 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.view
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import java.awt.*
 import java.awt.event.WindowAdapter
@@ -42,8 +42,6 @@ class Display(
             ImageIO.read(Display::class.java.getResourceAsStream("/kakkoiichris/hypergame/img/icon.png"))
     }
 
-    override val manager = StateManager()
-
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -55,7 +53,6 @@ class Display(
     val frame = Frame(title)
     override val canvas = Canvas()
 
-    private val thread = Thread(this::run)
     private var running = false
 
     override var preRenderable: Renderable? = null
@@ -99,23 +96,23 @@ class Display(
         return screenshot
     }
 
-    override fun open() {
+    override fun open(game: Game) {
         frame.isVisible = true
 
-        manager.swap(this)
-        manager.init(this)
+        game.init(this)
 
         canvas.requestFocus()
 
         running = true
-        thread.start()
+
+        run(game)
     }
 
     override fun close() {
         running = false
     }
 
-    override fun run() {
+    private fun run(game: Game) {
         val npu = 1E9 / frameRate
 
         var then = Time.nanoseconds()
@@ -138,7 +135,7 @@ class Display(
             while (delta >= 1) {
                 val time = Time(delta, delta / frameRate, Time.seconds())
 
-                update(time)
+                update(game, time)
 
                 delta--
                 updates++
@@ -147,7 +144,7 @@ class Display(
             }
 
             if (updated) {
-                render()
+                render(game)
 
                 frames++
             }
@@ -165,11 +162,11 @@ class Display(
             }
 
             if (updated) {
-                manager.swap(this)
+                game.swap(this)
             }
         }
 
-        manager.halt(this)
+        game.halt(this)
 
         frame.dispose()
     }

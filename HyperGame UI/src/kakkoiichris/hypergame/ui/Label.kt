@@ -1,5 +1,6 @@
 package kakkoiichris.hypergame.ui
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.view.View
 import java.awt.Font
@@ -7,7 +8,7 @@ import java.awt.Font
 class Label(var text: String) : Module() {
     var font = Font("Monospaced", Font.PLAIN, 15)
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = background
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)

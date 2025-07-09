@@ -1,9 +1,9 @@
 package kakkoiichris.hypergame.ui
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.input.Key
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.ui.form.TextBox
 import kakkoiichris.hypergame.ui.layout.Layout
 import kakkoiichris.hypergame.util.Time
@@ -29,7 +29,7 @@ class Test(view: View) : UIState(view) {
     private var n = 0
 
     private fun createModule(text: String) =
-        TextBox().apply {
+        TextBox(text).apply {
             margin = 10u
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)
@@ -41,8 +41,8 @@ class Test(view: View) : UIState(view) {
     override fun swapFrom(view: View) {
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        super.update(view, manager, time, input)
+    override fun update(view: View, game: Game, time: Time, input: Input) {
+        super.update(view, game, time, input)
 
         if (input.inWindow && input.buttonHeld(Button.RIGHT)) {
             dimensions = input.mouse
@@ -61,10 +61,14 @@ class Test(view: View) : UIState(view) {
     }
 }
 
+object MyGame : Game() {
+    override fun init(view: View) {
+        stateManager.push(Test(view))
+    }
+}
+
 fun main() {
     val display = Display(800, 800, title = "HYPERGAME UI TEST")
 
-    display.manager.push(Test(display))
-
-    display.open()
+    display.open(MyGame)
 }

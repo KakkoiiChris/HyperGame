@@ -1,5 +1,6 @@
 package kakkoiichris.hypergame.ui
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
@@ -150,13 +151,13 @@ abstract class Module : Box(), Renderable {
         children.forEach { it.defocusTree() }
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         for (child in children) {
-            child.update(view, manager, time, input)
+            child.update(view, game,  time, input)
         }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = background
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)
@@ -176,7 +177,7 @@ abstract class Module : Box(), Renderable {
         )
 
         for (child in children) {
-            child.render(view, renderer)
+            child.render(view, game, renderer)
         }
     }
 }

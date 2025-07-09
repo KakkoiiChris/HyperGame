@@ -10,6 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.view
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
@@ -26,8 +27,6 @@ class Screen(
     override val scale: Int = View.DEFAULT_SCALE,
     override val frameRate: Double = View.DEFAULT_FRAME_RATE,
 ) : View {
-    override val manager = StateManager()
-
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -38,7 +37,6 @@ class Screen(
 
     override val canvas = Canvas()
 
-    private val thread = Thread(this::run)
     private var running = false
 
     override var preRenderable: Renderable? = null
@@ -70,21 +68,22 @@ class Screen(
         return copy
     }
 
-    override fun open() {
-        manager.swap(this)
-        manager.init(this)
+    override fun open(game: Game) {
+        game.swap(this)
+        game.init(this)
 
         canvas.requestFocus()
 
         running = true
-        thread.start()
+
+        run(game)
     }
 
     override fun close() {
         running = false
     }
 
-    override fun run() {
+    private fun run(game: Game) {
         val npu = 1E9 / frameRate
 
         var then = Time.nanoseconds()
@@ -107,7 +106,7 @@ class Screen(
             while (delta >= 1) {
                 val time = Time(delta, delta / frameRate, Time.seconds())
 
-                update(time)
+                update(game, time)
 
                 delta--
                 updates++
@@ -116,7 +115,7 @@ class Screen(
             }
 
             if (updated) {
-                render()
+                render(game)
 
                 frames++
             }
@@ -132,11 +131,11 @@ class Screen(
             }
 
             if (updated) {
-                manager.swap(this)
+                game.swap(this)
             }
         }
 
-        manager.halt(this)
+        game.halt(this)
     }
 
     override fun toString() = """"${javaClass.simpleName}" : {

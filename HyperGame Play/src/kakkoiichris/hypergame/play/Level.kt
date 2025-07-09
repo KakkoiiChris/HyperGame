@@ -1,9 +1,9 @@
 package kakkoiichris.hypergame.play
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.input.Key
 import kakkoiichris.hypergame.media.*
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.view.View
@@ -51,13 +51,13 @@ class Level(private val viewport: Box, val cols: Int, val rows: Int) : Renderabl
         entities += entity
     }
 
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
-        entities.forEach { it.update(view, manager, time, input) }
+    override fun update(view: View, game: Game, time: Time, input: Input) {
+        entities.forEach { it.update(view, game, time, input) }
 
-        camera.update(view, manager, time, input)
+        camera.update(view, game, time, input)
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.push()
 
         renderer.clip = viewport.rectangle
@@ -89,11 +89,11 @@ class Level(private val viewport: Box, val cols: Int, val rows: Int) : Renderabl
             }
         }
 
-        entities.forEach { it.render(view, renderer) }
+        entities.forEach { it.render(view, game, renderer) }
 
         renderer.pop()
 
-        camera.render(view, renderer)
+        camera.render(view, game, renderer)
 
         renderer.pop()
     }
@@ -114,7 +114,7 @@ enum class MyBlocks : Block {
 }
 
 class TestEntity : Entity(0.0, 0.0, 16.0, 16.0) {
-    override fun update(view: View, manager: StateManager, time: Time, input: Input) {
+    override fun update(view: View, game: Game, time: Time, input: Input) {
         if (input.keyHeld(Key.W)) {
             y -= time.delta
         }
@@ -132,7 +132,7 @@ class TestEntity : Entity(0.0, 0.0, 16.0, 16.0) {
         }
     }
 
-    override fun render(view: View, renderer: Renderer) {
+    override fun render(view: View, game: Game, renderer: Renderer) {
         renderer.color = Colors.CSS.mediumPurple
 
         renderer.fillOval(this)
