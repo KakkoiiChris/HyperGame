@@ -175,60 +175,6 @@ class JSONObject(val map: MutableMap<String, JSONNode> = mutableMapOf()) : JSONN
         return constructor.callBy(params)
     }
 
-    /*@Suppress("UNCHECKED_CAST")
-    fun <T : Any> create(clazz: KClass<T>): T? {
-        val parameters = clazz.primaryConstructor?.parameters ?: error("No Constructor Parameters!")
-
-        val arguments = parameters.associateWith { kParameter ->
-            val annotation =
-                kParameter.annotations.firstOrNull { it is JSONMember } as? JSONMember
-
-            val name = annotation?.name?.takeIf { it.isNotEmpty() } ?: kParameter.name
-
-            val value = this[name] ?: error("Cannot find value at '${name}'!")
-
-            val type = kParameter.type.classifier as? KClass<T> ?: error("")
-
-            val realValue: Any? = when (value) {
-                is Value  -> when (type) {
-                    Boolean::class -> value.asBooleanOrNull()
-                    Byte::class    -> value.asByteOrNull()
-                    Short::class   -> value.asShortOrNull()
-                    Int::class     -> value.asIntOrNull()
-                    Long::class    -> value.asLongOrNull()
-                    Float::class   -> value.asFloatOrNull()
-                    Double::class  -> value.asDoubleOrNull()
-                    Char::class    -> value.asCharOrNull()
-                    String::class  -> value.asStringOrNull()
-                    else           -> null
-                }
-
-                is Array  -> when (type) {
-                    BooleanArray::class         -> value.asBooleanArrayOrNull()
-                    ByteArray::class            -> value.asByteArrayOrNull()
-                    ShortArray::class           -> value.asShortArrayOrNull()
-                    IntArray::class             -> value.asIntArrayOrNull()
-                    LongArray::class            -> value.asLongArrayOrNull()
-                    FloatArray::class           -> value.asFloatArrayOrNull()
-                    DoubleArray::class          -> value.asDoubleArrayOrNull()
-                    CharArray::class            -> value.asCharArrayOrNull()
-                    kotlin.Array<String>::class -> value.asStringArrayOrNull()
-                    else                        -> null
-                }
-
-                is Object -> {
-                    val subClazz = Class.forName(annotation?.classType ?: "")
-
-                    value.create(subClazz.kotlin)
-                }
-            }
-
-            realValue
-        }
-
-        return clazz.primaryConstructor?.callBy(arguments)
-    }*/
-
     override fun printNode(indent: Int, name: String) = buildString {
         append(super.printNode(indent, name))
 
