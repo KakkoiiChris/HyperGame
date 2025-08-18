@@ -10,7 +10,6 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.state
 
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
@@ -24,13 +23,13 @@ import kakkoiichris.hypergame.view.View
  * @since 2/22/2018, 19:17
  */
 interface State : Renderable {
-    fun swapTo(view: View)
+    fun swapTo(view: View<*>)
 
-    fun swapFrom(view: View)
+    fun swapFrom(view: View<*>)
 
-    fun halt(view: View)
+    fun halt(view: View<*>)
 
-    override fun update(view: View, game: Game, time: Time, input: Input)
+    override fun update(view: View<*>, time: Time, input: Input)
 
-    override fun render(view: View, game: Game, renderer: Renderer)
+    override fun render(view: View<*>, renderer: Renderer)
 }

@@ -8,74 +8,51 @@
  *                    Kotlin 2D Game Development Library                   *
  *                     Copyright (C) 2021, KakkoiiChris                    *
  ***************************************************************************/
-package kakkoiichris.hypergame.util.data
+package kakkoiichris.hypergame.data.xml
 
+import kakkoiichris.hypergame.data.DataFile
+import kakkoiichris.hypergame.data.Source
 import org.w3c.dom.Document
-import java.io.File
-import java.io.FileInputStream
+import org.xml.sax.InputSource
+import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
-class XML(private val filePath: String) {
-    companion object {
-        fun isExtension(ext: String) =
-            ext.matches("xml".toRegex())
-    }
-
+class XML(override val source: Source) : DataFile {
     lateinit var doc: Document; private set
 
-    fun readResource(): Boolean {
+    override fun read() {
         try {
             val builder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 
-            doc = builder.parse(javaClass.getResourceAsStream(filePath))
+            doc = builder.parse(InputSource(StringReader(source.read())))
 
             doc.normalize()
         }
         catch (e: Exception) {
             e.printStackTrace()
-
-            return false
         }
-
-        return true
     }
 
-    fun read(): Boolean {
-        try {
-            val builder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-
-            doc = builder.parse(FileInputStream(File(filePath)))
-
-            doc.normalize()
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-
-            return false
-        }
-
-        return true
-    }
-
-    fun write(): Boolean {
+    override fun write() {
         try {
             val transformer = TransformerFactory.newInstance().newTransformer()
 
             val source = DOMSource(doc)
 
-            val result = StreamResult(File(filePath))
+            val result = StreamResult()
 
             transformer.transform(source, result)
         }
         catch (e: Exception) {
             e.printStackTrace()
-
-            return false
         }
+    }
 
-        return true
+    companion object : DataFile.Extension {
+        override fun isExtension(extension: String) =
+            extension.matches("xml".toRegex())
     }
 }

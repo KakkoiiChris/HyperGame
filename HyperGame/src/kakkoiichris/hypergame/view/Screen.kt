@@ -12,21 +12,19 @@ package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
-import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import java.awt.Canvas
 import java.awt.Dimension
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
-class Screen(
+class Screen<G : Game>(
     override val width: Int = View.DEFAULT_WIDTH,
     override val height: Int = View.DEFAULT_HEIGHT,
     override val scale: Int = View.DEFAULT_SCALE,
     override val frameRate: Double = View.DEFAULT_FRAME_RATE,
-) : View {
+) : View<G> {
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -38,9 +36,6 @@ class Screen(
     override val canvas = Canvas()
 
     private var running = false
-
-    override var preRenderable: Renderable? = null
-    override var postRenderable: Renderable? = null
 
     init {
         val size = Dimension(width * scale, height * scale)
@@ -68,8 +63,7 @@ class Screen(
         return copy
     }
 
-    override fun open(game: Game) {
-        game.swap(this)
+    override fun open(game: G) {
         game.init(this)
 
         canvas.requestFocus()
@@ -83,7 +77,7 @@ class Screen(
         running = false
     }
 
-    private fun run(game: Game) {
+    private fun run(game: G) {
         val npu = 1E9 / frameRate
 
         var then = Time.nanoseconds()
@@ -128,10 +122,6 @@ class Screen(
                 frames = 0
 
                 timer -= frameRate
-            }
-
-            if (updated) {
-                game.swap(this)
             }
         }
 

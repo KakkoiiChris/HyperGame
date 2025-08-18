@@ -21,7 +21,7 @@ object PhysicsTest : Sketch(800, 600, "Physics") {
 
     private var zoom = 20.0
 
-    override fun swapTo(view: View) {
+    override fun swapTo(view: View, game: Game) {
         world.clear()
 
         val padding = 20.0

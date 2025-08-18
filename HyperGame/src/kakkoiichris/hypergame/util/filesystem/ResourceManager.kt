@@ -10,14 +10,15 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.util.filesystem
 
+import kakkoiichris.hypergame.data.Source
+import kakkoiichris.hypergame.data.csv.CSV
+import kakkoiichris.hypergame.data.json.JSON
+import kakkoiichris.hypergame.data.txt.TXT
+import kakkoiichris.hypergame.data.xml.XML
 import kakkoiichris.hypergame.media.Fonts
 import kakkoiichris.hypergame.media.PolySound
 import kakkoiichris.hypergame.media.Sound
 import kakkoiichris.hypergame.media.Sprite
-import kakkoiichris.hypergame.util.data.CSV
-import kakkoiichris.hypergame.util.data.TXT
-import kakkoiichris.hypergame.util.data.XML
-import kakkoiichris.hypergame.util.data.json.JSON
 import java.io.File
 
 class ResourceManager(rootPath: String = "/resources") {
@@ -92,21 +93,21 @@ class ResourceManager(rootPath: String = "/resources") {
                 val ext = it.extension.lowercase()
 
                 when {
-                    Sound.isExtension(ext)      -> sounds[resourceName] = Sound.load(resourcePath)
+                    Sound.isExtension(ext)     -> sounds[resourceName] = Sound.load(resourcePath)
 
                     PolySound.isExtension(ext) -> polySounds[resourceName] = PolySound.load(resourcePath)
 
-                    Sprite.isExtension(ext)     -> sprites[resourceName] = Sprite.load(resourcePath)
+                    Sprite.isExtension(ext)    -> sprites[resourceName] = Sprite.load(resourcePath)
 
-                    Fonts.isExtension(ext)      -> fonts[resourceName] = Fonts.register(resourcePath)
+                    Fonts.isExtension(ext)     -> fonts[resourceName] = Fonts.register(resourcePath)
 
-                    CSV.isExtension(ext)        -> csvFiles[resourceName] = CSV(resourcePath).apply { readResource() }
+                    CSV.isExtension(ext)       -> csvFiles[resourceName] = CSV(Source.ofResource(resourcePath))
 
-                    JSON.isExtension(ext)       -> jsonFiles[resourceName] = JSON(resourcePath).apply { readResource() }
+                    JSON.isExtension(ext)      -> jsonFiles[resourceName] = JSON(Source.ofResource(resourcePath))
 
-                    TXT.isExtension(ext)        -> txtFiles[resourceName] = TXT(resourcePath).apply { readResource() }
+                    TXT.isExtension(ext)       -> txtFiles[resourceName] = TXT(Source.ofResource(resourcePath))
 
-                    XML.isExtension(ext)        -> xmlFiles[resourceName] = XML(resourcePath).apply { readResource() }
+                    XML.isExtension(ext)       -> xmlFiles[resourceName] = XML(Source.ofResource(resourcePath))
                 }
             }
 

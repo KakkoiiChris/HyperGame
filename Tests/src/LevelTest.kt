@@ -33,11 +33,11 @@ object MyGame : Game() {
 object LevelState : State {
     private lateinit var level: Level
 
-    override fun swapTo(view: View) {
+    override fun swapTo(view: View, game: Game) {
         level = Level(view.bounds.resized(-10.0), 30, 30)
     }
 
-    override fun swapFrom(view: View) {
+    override fun swapFrom(view: View, game: Game) {
     }
 
     override fun update(view: View, game: Game, time: Time, input: Input) {
@@ -48,6 +48,6 @@ object LevelState : State {
         level.render(view, game, renderer)
     }
 
-    override fun halt(view: View) {
+    override fun halt(view: View, game: Game) {
     }
 }

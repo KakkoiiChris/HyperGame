@@ -23,7 +23,7 @@ import java.awt.event.*
  * @author Christian Bryce Alexander
  * @since 1/31/2018, 18:55
  */
-class Input internal constructor(private val view: View) : KeyListener,
+class Input internal constructor(private val view: View<*>) : KeyListener,
                                                            MouseListener,
                                                            MouseMotionListener,
                                                            MouseWheelListener {

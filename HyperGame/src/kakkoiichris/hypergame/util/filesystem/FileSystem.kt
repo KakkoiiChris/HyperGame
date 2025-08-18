@@ -1,13 +1,14 @@
 package kakkoiichris.hypergame.util.filesystem
 
+import kakkoiichris.hypergame.data.Source
 import kakkoiichris.hypergame.media.Fonts
 import kakkoiichris.hypergame.media.PolySound
 import kakkoiichris.hypergame.media.Sound
 import kakkoiichris.hypergame.media.Sprite
-import kakkoiichris.hypergame.util.data.CSV
-import kakkoiichris.hypergame.util.data.TXT
-import kakkoiichris.hypergame.util.data.XML
-import kakkoiichris.hypergame.util.data.json.JSON
+import kakkoiichris.hypergame.data.csv.CSV
+import kakkoiichris.hypergame.data.json.JSON
+import kakkoiichris.hypergame.data.txt.TXT
+import kakkoiichris.hypergame.data.xml.XML
 import java.io.File
 import java.nio.file.Paths
 
@@ -128,13 +129,13 @@ class FileSystem(rootPath: String) {
 
                     Fonts.isExtension(ext)     -> fonts[resourceName] = Fonts.register(resourcePath)
 
-                    CSV.isExtension(ext)       -> csvFiles[resourceName] = CSV(resourcePath).apply { readResource() }
+                    CSV.isExtension(ext)       -> csvFiles[resourceName] = CSV(Source.of(resourcePath))
 
-                    JSON.isExtension(ext)      -> jsonFiles[resourceName] = JSON(resourcePath).apply { readResource() }
+                    JSON.isExtension(ext)      -> jsonFiles[resourceName] = JSON(Source.of(resourcePath))
 
-                    TXT.isExtension(ext)       -> txtFiles[resourceName] = TXT(resourcePath).apply { readResource() }
+                    TXT.isExtension(ext)       -> txtFiles[resourceName] = TXT(Source.of(resourcePath))
 
-                    XML.isExtension(ext)       -> xmlFiles[resourceName] = XML(resourcePath).apply { readResource() }
+                    XML.isExtension(ext)       -> xmlFiles[resourceName] = XML(Source.of(resourcePath))
                 }
             }
 
