@@ -10,7 +10,6 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.state
 
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.util.Time
@@ -28,13 +27,13 @@ class StateManager {
 
     private var swaps = mutableListOf<Swap>()
 
-    internal fun init(view: View) {
+    internal fun init(view: View<*>) {
         if (stack.isNotEmpty()) {
             stack.peek().swapTo(view)
         }
     }
 
-    internal fun swap(view: View) {
+    internal fun swap(view: View<*>) {
         if (swaps.isEmpty()) return
 
         for (swap in swaps) {
@@ -55,7 +54,7 @@ class StateManager {
                     stack.push(swap.state).swapTo(view)
                 }
 
-                Swap.Pop -> {
+                Swap.Pop     -> {
                     if (stack.isNotEmpty()) {
                         stack.pop().swapFrom(view)
                     }
@@ -82,19 +81,19 @@ class StateManager {
         swaps += Swap.Pop
     }
 
-    internal fun update(view: View, game: Game, time: Time, input: Input) {
+    internal fun update(view: View<*>, time: Time, input: Input) {
         if (stack.isNotEmpty()) {
-            stack.peek().update(view, game, time, input)
+            stack.peek().update(view, time, input)
         }
     }
 
-    internal fun render(view: View, game: Game, renderer: Renderer) {
+    internal fun render(view: View<*>, renderer: Renderer) {
         if (stack.isNotEmpty()) {
-            stack.peek().render(view, game, renderer)
+            stack.peek().render(view, renderer)
         }
     }
 
-    internal fun halt(view: View) {
+    internal fun halt(view: View<*>) {
         while (stack.isNotEmpty()) {
             stack.pop().halt(view)
         }

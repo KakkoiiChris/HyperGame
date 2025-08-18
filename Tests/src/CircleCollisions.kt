@@ -29,7 +29,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
 
     private var mouse = Vector()
 
-    override fun swapTo(view: View) {
+    override fun swapTo(view: View, game: Game) {
         val random = Random(0xCBA)
 
         balls = List(600) {

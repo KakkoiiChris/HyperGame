@@ -12,7 +12,6 @@ package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
-import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.util.Time
 import java.awt.*
@@ -27,21 +26,14 @@ import javax.imageio.ImageIO
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:12
  */
-class Display(
+class Window<G: Game>(
     override val width: Int = View.DEFAULT_WIDTH,
     override val height: Int = View.DEFAULT_HEIGHT,
     override val scale: Int = View.DEFAULT_SCALE,
     override val frameRate: Double = View.DEFAULT_FRAME_RATE,
     val title: String = DEFAULT_TITLE,
     icon: Image = loadDefaultIcon(),
-) : View {
-    companion object {
-        const val DEFAULT_TITLE = "HyperGame"
-
-        private fun loadDefaultIcon() =
-            ImageIO.read(Display::class.java.getResourceAsStream("/kakkoiichris/hypergame/img/icon.png"))
-    }
-
+) : View<G> {
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -54,9 +46,6 @@ class Display(
     override val canvas = Canvas()
 
     private var running = false
-
-    override var preRenderable: Renderable? = null
-    override var postRenderable: Renderable? = null
 
     init {
         frame.iconImage = icon
@@ -96,10 +85,8 @@ class Display(
         return screenshot
     }
 
-    override fun open(game: Game) {
+    override fun open(game:G) {
         frame.isVisible = true
-
-        game.init(this)
 
         canvas.requestFocus()
 
@@ -112,7 +99,7 @@ class Display(
         running = false
     }
 
-    private fun run(game: Game) {
+    private fun run(game:G) {
         val npu = 1E9 / frameRate
 
         var then = Time.nanoseconds()
@@ -160,10 +147,6 @@ class Display(
 
                 frame.title = "$title ($updateCount U, $frameCount F)"
             }
-
-            if (updated) {
-                game.swap(this)
-            }
         }
 
         game.halt(this)
@@ -178,4 +161,11 @@ class Display(
             |  "frameRate": $frameRate,
             |  "title":     $title
             |}""".trimMargin()
+
+    companion object {
+        const val DEFAULT_TITLE = "HyperGame"
+
+        private fun loadDefaultIcon() =
+            ImageIO.read(Window::class.java.getResourceAsStream("/kakkoiichris/hypergame/img/icon.png"))
+    }
 }

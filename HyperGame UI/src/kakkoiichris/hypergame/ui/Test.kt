@@ -35,10 +35,10 @@ class Test(view: View) : UIState(view) {
             font = Font("Times New Roman", Font.PLAIN, 20)
         }
 
-    override fun swapTo(view: View) {
+    override fun swapTo(view: View, game: Game) {
     }
 
-    override fun swapFrom(view: View) {
+    override fun swapFrom(view: View, game: Game) {
     }
 
     override fun update(view: View, game: Game, time: Time, input: Input) {
@@ -57,7 +57,7 @@ class Test(view: View) : UIState(view) {
         }
     }
 
-    override fun halt(view: View) {
+    override fun halt(view: View, game: Game) {
     }
 }
 

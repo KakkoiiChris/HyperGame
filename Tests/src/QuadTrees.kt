@@ -24,7 +24,7 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
 
     private var timer = 0.0
 
-    override fun swapTo(view: View) {
+    override fun swapTo(view: View, game: Game) {
         tree = QuadTree(view.bounds)
     }
 

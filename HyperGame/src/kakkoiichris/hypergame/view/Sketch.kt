@@ -11,28 +11,52 @@
 package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.Game
+import kakkoiichris.hypergame.input.Input
+import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.State
+import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.util.Time
 
 abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : State {
-    private val display = Display(width, height, frameRate = frameRate, title = title)
-
-    private val game = object : Game() {
-        override fun init(view: View) {
-            stateManager.push(this@Sketch)
-        }
-    }
+    private val display = Window<Companion>(width, height, frameRate = frameRate, title = title)
 
     fun open() {
-        display.open(game)
+        manager.push(this)
+        display.open(Companion)
     }
 
     fun close() {
         display.close()
     }
 
-    override fun swapTo(view: View) = Unit
+    override fun swapTo(view: View<*>) = Unit
+    override fun swapFrom(view: View<*>) = Unit
+    override fun halt(view: View<*>) = Unit
 
-    override fun swapFrom(view: View) = Unit
+    companion object : Game {
+        private val manager = StateManager()
 
-    override fun halt(view: View) = Unit
+        override fun init(view: View<*>) {
+            manager.init(view)
+        }
+
+        override fun update(
+            view: View<*>,
+            time: Time,
+            input: Input
+        ) {
+            manager.update(view, time, input)
+        }
+
+        override fun render(
+            view: View<*>,
+            renderer: Renderer
+        ) {
+            manager.render(view, renderer)
+        }
+
+        override fun halt(view: View<*>) {
+            manager.halt(view)
+        }
+    }
 }
