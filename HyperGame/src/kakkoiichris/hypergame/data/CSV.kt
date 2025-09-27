@@ -1,3 +1,7 @@
+package kakkoiichris.hypergame.data
+
+import kotlin.text.iterator
+
 /***************************************************************************
  *   ___ ___                                ________                       *
  *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
@@ -8,11 +12,6 @@
  *                    Kotlin 2D Game Development Library                   *
  *                     Copyright (C) 2021, KakkoiiChris                    *
  ***************************************************************************/
-package kakkoiichris.hypergame.data.csv
-
-import kakkoiichris.hypergame.data.DataFile
-import kakkoiichris.hypergame.data.Source
-
 class CSV(override val source: Source, val separator: Char = ',') : DataFile, Iterable<CSV.Row> {
     private val rows = mutableListOf<Row>()
 

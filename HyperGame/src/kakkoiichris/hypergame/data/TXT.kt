@@ -1,3 +1,5 @@
+package kakkoiichris.hypergame.data
+
 /***************************************************************************
  *   ___ ___                                ________                       *
  *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
@@ -8,13 +10,10 @@
  *                    Kotlin 2D Game Development Library                   *
  *                     Copyright (C) 2021, KakkoiiChris                    *
  ***************************************************************************/
-package kakkoiichris.hypergame.data.txt
-
-import kakkoiichris.hypergame.data.DataFile
-import kakkoiichris.hypergame.data.Source
-
 class TXT(override val source: Source) : DataFile {
     var text = ""
+
+    val lines get() = text.lines()
 
     override fun read() {
         text = source.read()

@@ -1,3 +1,13 @@
+package kakkoiichris.hypergame.data
+
+import org.w3c.dom.Document
+import org.xml.sax.InputSource
+import java.io.StringReader
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
+
 /***************************************************************************
  *   ___ ___                                ________                       *
  *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
@@ -8,18 +18,6 @@
  *                    Kotlin 2D Game Development Library                   *
  *                     Copyright (C) 2021, KakkoiiChris                    *
  ***************************************************************************/
-package kakkoiichris.hypergame.data.xml
-
-import kakkoiichris.hypergame.data.DataFile
-import kakkoiichris.hypergame.data.Source
-import org.w3c.dom.Document
-import org.xml.sax.InputSource
-import java.io.StringReader
-import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.transform.TransformerFactory
-import javax.xml.transform.dom.DOMSource
-import javax.xml.transform.stream.StreamResult
-
 class XML(override val source: Source) : DataFile {
     lateinit var doc: Document; private set
 
