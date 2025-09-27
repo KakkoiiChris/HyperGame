@@ -25,15 +25,23 @@ data class Time(val delta: Double, val seconds: Double, val instant: Double) {
 
     companion object {
         fun seconds() =
-            System.currentTimeMillis() / 1E3
+            System.nanoTime() / 1E9
 
         fun microseconds() =
-            System.currentTimeMillis() / 1E1
+            System.nanoTime() / 1E7
 
         fun milliseconds() =
             System.currentTimeMillis()
 
         fun nanoseconds() =
             System.nanoTime()
+
+        fun count(action: () -> Unit): Double {
+            val start = seconds()
+
+            action()
+
+            return seconds() - start
+        }
     }
 }

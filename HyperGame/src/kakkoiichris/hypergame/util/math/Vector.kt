@@ -22,13 +22,6 @@ import kotlin.random.Random
  * @since 1/31/2018, 20:10
  */
 open class Vector(var x: Double = 0.0, var y: Double = 0.0) {
-    companion object {
-        fun random(random: Random = Random.Default) =
-            random.nextDouble(PI * 2).let {
-                Vector(cos(it), sin(it))
-            }
-    }
-
     var magnitude
         get() = sqrt(x.pow(2.0) + y.pow(2.0))
         set(value) {
@@ -53,6 +46,8 @@ open class Vector(var x: Double = 0.0, var y: Double = 0.0) {
 
     val point2D
         get() = Point2D.Double(x, y)
+
+    constructor(x: Int, y: Int) : this(x.toDouble(), y.toDouble())
 
     constructor(other: Vector) : this(other.x, other.y)
 
@@ -160,6 +155,13 @@ open class Vector(var x: Double = 0.0, var y: Double = 0.0) {
             |  "x" : $x,
             |  "y" : $y
             |}""".trimMargin()
+
+    companion object {
+        fun random(random: Random = Random.Default) =
+            random.nextDouble(PI * 2).let {
+                Vector(cos(it), sin(it))
+            }
+    }
 }
 
 fun Point.toVector() =
