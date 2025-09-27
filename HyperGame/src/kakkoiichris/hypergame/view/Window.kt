@@ -92,6 +92,8 @@ class Window<G: Game>(
 
         running = true
 
+        game.init(this)
+
         run(game)
     }
 

@@ -21,13 +21,6 @@ import kotlin.random.Random
  * @since 1/31/2018, 19:13
  */
 class Animation(private val frames: Array<Sprite>, var speed: Double, var style: Style) {
-    enum class Style {
-        BOUNCE,
-        LOOP,
-        ONCE,
-        RANDOM
-    }
-
     var timer = 0.0
     var index = 0
     var forward = true
@@ -114,5 +107,12 @@ class Animation(private val frames: Array<Sprite>, var speed: Double, var style:
 
     fun filter(vararg filters: Filter) {
         frames.forEach { it.filter(*filters) }
+    }
+
+    enum class Style {
+        BOUNCE,
+        LOOP,
+        ONCE,
+        RANDOM
     }
 }

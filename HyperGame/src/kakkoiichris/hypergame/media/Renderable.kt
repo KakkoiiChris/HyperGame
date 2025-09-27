@@ -10,6 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.media
 
+import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
@@ -20,8 +21,8 @@ import kakkoiichris.hypergame.view.View
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:16
  */
-interface Renderable {
-    fun update(view: View<*>, time: Time, input: Input)
+interface Renderable<G : Game> {
+    fun update(view: View<*>, game: G, time: Time, input: Input)
 
-    fun render(view: View<*>, renderer: Renderer)
+    fun render(view: View<*>, game: G, renderer: Renderer)
 }

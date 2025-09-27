@@ -10,14 +10,7 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.view
 
-import kakkoiichris.hypergame.Game
-import kakkoiichris.hypergame.input.Input
-import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.State
-import kakkoiichris.hypergame.state.StateManager
-import kakkoiichris.hypergame.util.Time
-
-abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : State {
+/*abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : State {
     private val display = Window<Companion>(width, height, frameRate = frameRate, title = title)
 
     fun open() {
@@ -59,4 +52,4 @@ abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double 
             manager.halt(view)
         }
     }
-}
+}*/
