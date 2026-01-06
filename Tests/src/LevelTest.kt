@@ -2,10 +2,9 @@ import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.play.Level
-import kakkoiichris.hypergame.state.State
 import kakkoiichris.hypergame.util.Time
-import kakkoiichris.hypergame.view.Display
 import kakkoiichris.hypergame.view.View
+import kakkoiichris.hypergame.view.Window
 
 /**
  * HyperGame Play
@@ -19,35 +18,26 @@ import kakkoiichris.hypergame.view.View
  * @author Christian Bryce Alexander
  */
 fun main() {
-    val display = Display(320, 240, 4, title = "Level Test")
+    val window = Window(320, 240, 4, title = "Level Test")
 
-    display.open(MyGame)
+    window.open(Level)
 }
 
-object MyGame : Game() {
-    override fun init(view: View) {
-        stateManager.push(LevelState)
-    }
-}
-
-object LevelState : State {
+object Level : Game {
     private lateinit var level: Level
 
-    override fun swapTo(view: View, game: Game) {
+    override fun init(view: View) {
         level = Level(view.bounds.resized(-10.0), 30, 30)
     }
 
-    override fun swapFrom(view: View, game: Game) {
+    override fun update(view: View, time: Time, input: Input) {
+        level.update(view, this, time, input)
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
-        level.update(view, game, time, input)
+    override fun render(view: View, renderer: Renderer) {
+        level.render(view, this, renderer)
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
-        level.render(view, game, renderer)
-    }
-
-    override fun halt(view: View, game: Game) {
+    override fun halt(view: View) {
     }
 }

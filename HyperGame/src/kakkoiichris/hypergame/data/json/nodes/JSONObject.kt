@@ -1,10 +1,12 @@
-package kakkoiigames.playkid.data.json.nodes
+package kakkoiichris.hypergame.data.json.nodes
 
-import kotlin.reflect.KClass
+import kakkoiichris.hypergame.data.json.JSONMember
 import kotlin.reflect.KParameter
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
 
-class JSONObject(val map: MutableMap<String, JSONNode> = mutableMapOf()) : JSONNode, MutableMap<String, JSONNode> by map {
+class JSONObject(val map: MutableMap<String, JSONNode> = mutableMapOf()) : JSONNode,
+    MutableMap<String, JSONNode> by map {
     fun getBoolean(key: String) =
         (map[key] as JSONBoolean).value
 
@@ -150,31 +152,31 @@ class JSONObject(val map: MutableMap<String, JSONNode> = mutableMapOf()) : JSONN
     fun getObject(key: String) =
         map[key] as JSONObject
 
-    /*inline fun <reified T : Any> create(): T {
+    inline fun <reified T : Any> create(): T {
         val constructor = T::class.primaryConstructor!!
 
         val params = mutableMapOf<KParameter, Any>()
 
         for (param in constructor.parameters) {
-            val name = param.name!!
+            val member = param.findAnnotation<JSONMember>()!!.name
 
             val value = when (param.type) {
-                Boolean -> getBoolean(name)
-                Byte -> getByte(name)
-                Short -> getShort(name)
-                Int -> getInt(name)
-                Long -> getLong(name)
-                Float -> getFloat(name)
-                Double -> getDouble(name)
-                String -> getString(name)
-                else -> TODO()
+                Boolean -> getBoolean(member)
+                Byte    -> getByte(member)
+                Short   -> getShort(member)
+                Int     -> getInt(member)
+                Long    -> getLong(member)
+                Float   -> getFloat(member)
+                Double  -> getDouble(member)
+                String  -> getString(member)
+                else    -> TODO()
             }
 
             params[param] = value
         }
 
         return constructor.callBy(params)
-    }*/
+    }
 
     /*@Suppress("UNCHECKED_CAST")
     inline fun <reified T : Any> create(clazz: KClass<T>): T? {

@@ -41,16 +41,16 @@ object ZRES : Sketch(800, 800, "Zen Rainbow Energy Spheres", frameRate = 144.0) 
     private const val COUNT = 6
 
     private val spheres = Array(COUNT) { i ->
-        Sphere(Vector(i + 1.0, COUNT.toDouble() - i)/144.0*60.0, i * (1F / COUNT))
+        Sphere(Vector(i + 1.0, COUNT.toDouble() - i) / 144.0 * 60.0, i * (1F / COUNT))
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
         spheres.forEach {
-            it.update(view, game, time, input)
+            it.update(view, this, time, input)
         }
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
         renderer.color = Color(0, 0, 0, 16)
 
         renderer.fillRect(view.bounds)
@@ -60,7 +60,7 @@ object ZRES : Sketch(800, 800, "Zen Rainbow Energy Spheres", frameRate = 144.0) 
         renderer.composite = BlendComposite(BlendMode.SCREEN)
 
         spheres.forEach {
-            it.render(view, game, renderer)
+            it.render(view, this, renderer)
         }
 
         renderer.composite = last

@@ -10,46 +10,20 @@
  ***************************************************************************/
 package kakkoiichris.hypergame.view
 
-/*abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : State {
-    private val display = Window<Companion>(width, height, frameRate = frameRate, title = title)
+import kakkoiichris.hypergame.Game
+
+abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : Game {
+    private val display = Window(width, height, frameRate = frameRate, title = title)
 
     fun open() {
-        manager.push(this)
-        display.open(Companion)
+        display.open(this)
     }
 
     fun close() {
         display.close()
     }
 
-    override fun swapTo(view: View<*>) = Unit
-    override fun swapFrom(view: View<*>) = Unit
-    override fun halt(view: View<*>) = Unit
+    override fun init(view: View) = Unit
 
-    companion object : Game {
-        private val manager = StateManager()
-
-        override fun init(view: View<*>) {
-            manager.init(view)
-        }
-
-        override fun update(
-            view: View<*>,
-            time: Time,
-            input: Input
-        ) {
-            manager.update(view, time, input)
-        }
-
-        override fun render(
-            view: View<*>,
-            renderer: Renderer
-        ) {
-            manager.render(view, renderer)
-        }
-
-        override fun halt(view: View<*>) {
-            manager.halt(view)
-        }
-    }
-}*/
+    override fun halt(view: View) = Unit
+}

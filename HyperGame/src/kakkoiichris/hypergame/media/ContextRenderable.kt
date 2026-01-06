@@ -5,8 +5,8 @@ import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 
-interface ContextRenderable<G : Game, Context> {
-    fun update(view: View<*>, game: G, context: Context, time: Time, input: Input)
+interface ContextRenderable<Context> {
+    fun update(view: View, game: Game, context: Context, time: Time, input: Input)
 
-    fun render(view: View<*>, game: G, context: Context, renderer: Renderer)
+    fun render(view: View, game: Game, context: Context, renderer: Renderer)
 }

@@ -19,7 +19,7 @@ import kakkoiichris.hypergame.util.math.Vector
 import java.awt.Canvas
 import java.awt.image.BufferedImage
 
-interface View<G : Game> {
+interface View {
     companion object {
         const val DEFAULT_WIDTH = 640
         const val DEFAULT_HEIGHT = 480
@@ -48,17 +48,17 @@ interface View<G : Game> {
 
     fun getScreenshot(): BufferedImage
 
-    fun open(game: G)
+    fun open(game: Game)
 
     fun close()
 
-    fun update(game: G, time: Time) {
+    fun update(game: Game, time: Time) {
         game.update(this, time, input)
 
         input.poll(time)
     }
 
-    fun render(game: G) {
+    fun render(game: Game) {
         game.render(this, renderer)
 
         val buffer = canvas.bufferStrategy

@@ -29,7 +29,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
 
     private var mouse = Vector()
 
-    override fun swapTo(view: View, game: Game) {
+    override fun init(view: View) {
         val random = Random(0xCBA)
 
         balls = List(600) {
@@ -44,7 +44,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         view.renderer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
         if (input.buttonDown(LEFT) || input.buttonDown(RIGHT)) {
             held = null
 
@@ -79,7 +79,7 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         val tree = QuadTree<Ball>(view.bounds)
 
         balls.forEach {
-            it.update(view, game, time, input)
+            it.update(view, this, time, input)
 
             tree.insert(it)
         }
@@ -126,10 +126,10 @@ object CircleCollisions : Sketch(900, 900, "Circle Collisions", 144.0) {
         }
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
         renderer.clearRect(0, 0, view.width, view.height)
 
-        balls.forEach { it.render(view, game, renderer) }
+        balls.forEach { it.render(view, this, renderer) }
     }
 }
 

@@ -4,7 +4,6 @@ import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 

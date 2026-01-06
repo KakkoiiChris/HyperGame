@@ -1,4 +1,3 @@
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.BlurComposite
 import kakkoiichris.hypergame.media.Renderer
@@ -15,10 +14,10 @@ fun main() {
 object Blur : Sketch(300, 300, "Blur") {
     private val icon = Sprite.load("/kakkoiichris/hypergame/img/font16.png")
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
         renderer.clearRect(view.bounds)
 
         renderer.drawImage(icon, 0, 0)

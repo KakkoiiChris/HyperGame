@@ -24,11 +24,11 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
 
     private var timer = 0.0
 
-    override fun swapTo(view: View, game: Game) {
+    override fun init(view: View) {
         tree = QuadTree(view.bounds)
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
         box.center = input.mouse
 
         timer += time.seconds
@@ -46,7 +46,7 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
         highlighted.forEach { it.highlight = true }
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
         renderer.color = Colors.black
 
         renderer.fillRect(view.bounds)
@@ -59,7 +59,7 @@ object QuadTrees : Sketch(640, 480, "QuadTree Test") {
 
         renderer.drawRect(box)
 
-        entities.forEach { it.render(view, game, renderer) }
+        entities.forEach { it.render(view, this, renderer) }
     }
 }
 

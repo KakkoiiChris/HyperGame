@@ -2,7 +2,7 @@ package kakkoiichris.hypergame.data.json
 
 import kakkoiichris.hypergame.data.DataFile
 import kakkoiichris.hypergame.data.Source
-import kakkoiigames.playkid.data.json.nodes.JSONObject
+import kakkoiichris.hypergame.data.json.nodes.JSONObject
 
 class JSON(override val source: Source) : DataFile {
     var root = JSONObject(); private set

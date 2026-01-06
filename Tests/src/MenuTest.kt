@@ -1,7 +1,5 @@
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.ui.SuperMenu
 import kakkoiichris.hypergame.ui.form.Button
 import kakkoiichris.hypergame.util.Time
@@ -12,7 +10,7 @@ fun main() {
     MenuTest.open()
 }
 
-object MenuTest: Sketch(500, 500, "Menu") {
+object MenuTest : Sketch(500, 500, "Menu") {
     private val menu = SuperMenu()
 
     init {
@@ -22,11 +20,11 @@ object MenuTest: Sketch(500, 500, "Menu") {
         menu.add(Button("Quit"))
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
-        menu.update(view, game, time, input)
+    override fun update(view: View, time: Time, input: Input) {
+        menu.update(view, this, time, input)
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
-        menu.render(view, game, renderer)
+    override fun render(view: View, renderer: Renderer) {
+        menu.render(view, this, renderer)
     }
 }

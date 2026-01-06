@@ -1,11 +1,12 @@
 package kakkoiichris.hypergame.data.json
 
-import kakkoiigames.playkid.data.json.nodes.JSONArray
-import kakkoiigames.playkid.data.json.nodes.JSONBoolean
-import kakkoiigames.playkid.data.json.nodes.JSONNode
-import kakkoiigames.playkid.data.json.nodes.JSONNumber
-import kakkoiigames.playkid.data.json.nodes.JSONObject
-import kakkoiigames.playkid.data.json.nodes.JSONString
+import kakkoiichris.hypergame.data.json.nodes.JSONArray
+import kakkoiichris.hypergame.data.json.nodes.JSONBoolean
+import kakkoiichris.hypergame.data.json.nodes.JSONNode
+import kakkoiichris.hypergame.data.json.nodes.JSONNull
+import kakkoiichris.hypergame.data.json.nodes.JSONNumber
+import kakkoiichris.hypergame.data.json.nodes.JSONObject
+import kakkoiichris.hypergame.data.json.nodes.JSONString
 
 internal class Parser(private val lexer: Lexer) {
     private var token = lexer.next()
@@ -108,12 +109,14 @@ internal class Parser(private val lexer: Lexer) {
     }
 
     private fun value() = when {
+        match<Token.Type.Null>()    -> JSONNull
+
         match<Token.Type.Boolean>() -> JSONBoolean(get<Token.Type.Boolean>().type.value)
 
         match<Token.Type.Number>()  -> JSONNumber(get<Token.Type.Number>().type.value)
 
         match<Token.Type.String>()  -> JSONString(get<Token.Type.String>().type.value)
 
-        else                        -> TODO()
+        else                        -> error("Token type ${token.type} is not a value! (${token.location})")
     }
 }

@@ -5,7 +5,6 @@ import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.media.desaturated
-import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.view.View
@@ -153,7 +152,7 @@ abstract class Module : Box(), Renderable {
 
     override fun update(view: View, game: Game, time: Time, input: Input) {
         for (child in children) {
-            child.update(view, game,  time, input)
+            child.update(view, game, time, input)
         }
     }
 

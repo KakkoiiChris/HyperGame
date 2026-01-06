@@ -6,11 +6,11 @@ import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 
 interface Game {
-    fun init(view: View<*>)
+    fun init(view: View)
 
-    fun update(view: View<*>, time: Time, input: Input)
+    fun update(view: View, time: Time, input: Input)
 
-    fun render(view: View<*>, renderer: Renderer)
+    fun render(view: View, renderer: Renderer)
 
-    fun halt(view: View<*>)
+    fun halt(view: View)
 }

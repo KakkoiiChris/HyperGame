@@ -1,5 +1,6 @@
 package kakkoiichris.hypergame.data.json
 
+
 internal class Lexer(private val src: String) : Iterator<Token<*>> {
     private companion object {
         private const val NUL = '\u0000'
@@ -175,7 +176,7 @@ internal class Lexer(private val src: String) : Iterator<Token<*>> {
             .toInt(16)
             .toChar()
 
-    private fun literal(): Token<Token.Type.Boolean> {
+    private fun literal(): Token<*> {
         val loc = here()
 
         val result = buildString {
@@ -185,14 +186,16 @@ internal class Lexer(private val src: String) : Iterator<Token<*>> {
         }
 
         val value = when (result) {
-            "true"  -> true
+            "true"  -> Token.Type.Boolean(true)
 
-            "false" -> false
+            "false" -> Token.Type.Boolean(false)
+
+            "null"  -> Token.Type.Null
 
             else    -> error("Invalid literal '$result'! $loc")
         }
 
-        return Token(loc, Token.Type.Boolean(value))
+        return Token(loc, value)
     }
 
     private fun delimiter(): Token<Token.Type.Delimiter> {

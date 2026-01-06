@@ -21,8 +21,8 @@ import kakkoiichris.hypergame.view.View
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:16
  */
-interface Renderable<G : Game> {
-    fun update(view: View<*>, game: G, time: Time, input: Input)
+interface Renderable {
+    fun update(view: View, game: Game, time: Time, input: Input)
 
-    fun render(view: View<*>, game: G, renderer: Renderer)
+    fun render(view: View, game: Game, renderer: Renderer)
 }

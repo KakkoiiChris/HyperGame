@@ -1,4 +1,3 @@
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.util.Time
@@ -14,10 +13,10 @@ fun main() {
 }
 
 object TileCollisions : Sketch(128, 128, "Tile Collisions") {
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
     }
 }
 
@@ -115,7 +114,8 @@ enum class Collider {
                 Player.jumping = false
                 Player.yVelocity = 0.0
                 Player.y = row * TILE_SIZE - Player.height - OFFSET
-            } else if (Player.y + Player.height > top) {
+            }
+            else if (Player.y + Player.height > top) {
                 Player.jumping = false
                 Player.yVelocity = 0.0
                 Player.y = top - Player.height - OFFSET
@@ -209,7 +209,8 @@ enum class Collider {
                 Player.yVelocity = 0.0
                 Player.y = top - Player.height - OFFSET
                 return true
-            } else if (currentCrossProduct < 1 && oldCrossProduct > -1) {
+            }
+            else if (currentCrossProduct < 1 && oldCrossProduct > -1) {
                 Player.jumping = false
                 Player.yVelocity = 0.0
                 Player.y = row * TILE_SIZE + slope * currentX + yOffset - Player.height - OFFSET

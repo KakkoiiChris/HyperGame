@@ -26,14 +26,14 @@ import javax.imageio.ImageIO
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:12
  */
-class Window<G: Game>(
+class Window(
     override val width: Int = View.DEFAULT_WIDTH,
     override val height: Int = View.DEFAULT_HEIGHT,
     override val scale: Int = View.DEFAULT_SCALE,
     override val frameRate: Double = View.DEFAULT_FRAME_RATE,
     val title: String = DEFAULT_TITLE,
     icon: Image = loadDefaultIcon(),
-) : View<G> {
+) : View {
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -85,7 +85,7 @@ class Window<G: Game>(
         return screenshot
     }
 
-    override fun open(game:G) {
+    override fun open(game: Game) {
         frame.isVisible = true
 
         canvas.requestFocus()
@@ -101,7 +101,7 @@ class Window<G: Game>(
         running = false
     }
 
-    private fun run(game:G) {
+    private fun run(game: Game) {
         val npu = 1E9 / frameRate
 
         var then = Time.nanoseconds()

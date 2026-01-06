@@ -8,7 +8,7 @@
  *                    Kotlin 2D Game Development Library                   *
  *                     Copyright (C) 2021, KakkoiiChris                    *
  ***************************************************************************/
-package kakkoiichris.hypergame.state
+package kakkoiichris.hypergame.scene
 
 import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
@@ -24,16 +24,16 @@ import kakkoiichris.hypergame.view.View
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:17
  */
-class SceneManager<G : Game> {
-    private val stack = Stack<Scene<G>>()
+class SceneManager {
+    private val stack = Stack<Scene>()
 
-    private var swaps = Queue<Swap<G>>()
+    private var swaps = Queue<Swap>()
 
-    fun goto(scene: Scene<G>) {
+    fun goto(scene: Scene) {
         swaps += Swap.Goto(scene)
     }
 
-    fun push(scene: Scene<G>) {
+    fun push(scene: Scene) {
         swaps += Swap.Push(scene)
     }
 
@@ -41,17 +41,17 @@ class SceneManager<G : Game> {
         swaps += Swap.Pop()
     }
 
-    fun init(view: View<*>, game: G) {
+    fun init(view: View, game: Game) {
         stack.peek()?.swapTo(view, game)
     }
 
-    fun update(view: View<*>, game: G, time: Time, input: Input) {
+    fun update(view: View, game: Game, time: Time, input: Input) {
         swap(view, game)
 
         stack.peek()?.update(view, game, time, input)
     }
 
-    private fun swap(view: View<*>, game: G) {
+    private fun swap(view: View, game: Game) {
         while (!swaps.isEmpty()) {
             when (val swap = swaps.remove()) {
                 is Swap.Goto -> {
@@ -77,19 +77,19 @@ class SceneManager<G : Game> {
         }
     }
 
-    fun render(view: View<*>, game: G, renderer: Renderer) {
+    fun render(view: View, game: Game, renderer: Renderer) {
         stack.peek()?.render(view, game, renderer)
     }
 
-    fun halt(view: View<*>, game: G) {
+    fun halt(view: View, game: Game) {
         stack.pop()?.halt(view, game)
     }
 
-    private interface Swap<G : Game> {
-        class Goto<G : Game>(val scene: Scene<G>) : Swap<G>
+    private interface Swap {
+        class Goto(val scene: Scene) : Swap
 
-        class Push<G : Game>(val scene: Scene<G>) : Swap<G>
+        class Push(val scene: Scene) : Swap
 
-        class Pop<G : Game> : Swap<G>
+        class Pop : Swap
     }
 }

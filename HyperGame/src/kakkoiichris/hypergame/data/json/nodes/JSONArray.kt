@@ -1,8 +1,6 @@
-package kakkoiigames.playkid.data.json.nodes
+package kakkoiichris.hypergame.data.json.nodes
 
-class JSONArray(
-    val list: MutableList<JSONNode> = mutableListOf()
-) : JSONNode, MutableList<JSONNode> by list {
+class JSONArray(val list: MutableList<JSONNode> = mutableListOf()) : JSONNode, MutableList<JSONNode> by list {
     fun getBoolean(index: Int) =
         (list[index] as JSONBoolean).value
 

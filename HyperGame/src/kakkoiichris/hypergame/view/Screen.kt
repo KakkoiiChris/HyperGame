@@ -19,12 +19,12 @@ import java.awt.Dimension
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
-class Screen<G : Game>(
+class Screen(
     override val width: Int = View.DEFAULT_WIDTH,
     override val height: Int = View.DEFAULT_HEIGHT,
     override val scale: Int = View.DEFAULT_SCALE,
     override val frameRate: Double = View.DEFAULT_FRAME_RATE,
-) : View<G> {
+) : View {
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -63,7 +63,7 @@ class Screen<G : Game>(
         return copy
     }
 
-    override fun open(game: G) {
+    override fun open(game: Game) {
         game.init(this)
 
         canvas.requestFocus()
@@ -77,7 +77,7 @@ class Screen<G : Game>(
         running = false
     }
 
-    private fun run(game: G) {
+    private fun run(game: Game) {
         val npu = 1E9 / frameRate
 
         var then = Time.nanoseconds()

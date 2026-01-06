@@ -1,4 +1,3 @@
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.input.Key
 import kakkoiichris.hypergame.media.Renderer
@@ -21,7 +20,7 @@ object PhysicsTest : Sketch(800, 600, "Physics") {
 
     private var zoom = 20.0
 
-    override fun swapTo(view: View, game: Game) {
+    override fun init(view: View) {
         world.clear()
 
         val padding = 20.0
@@ -33,7 +32,8 @@ object PhysicsTest : Sketch(800, 600, "Physics") {
 
             val body = if (isCircle) {
                 createCircleBody(3.0, position, 2.0, 0.5, false) ?: error("BAD CIRCLE")
-            } else {
+            }
+            else {
                 createBoxBody(3.0, 3.0, position, 2.0, 0.5, false) ?: error("BAD BOX")
             }
 
@@ -41,7 +41,7 @@ object PhysicsTest : Sketch(800, 600, "Physics") {
         }
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
         if (input.keyDown(Key.UP)) {
             zoom *= 2.0
         }
@@ -51,7 +51,7 @@ object PhysicsTest : Sketch(800, 600, "Physics") {
         }
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
         renderer.withState {
             color = Color.BLACK
             renderer.fillRect(view.bounds)
@@ -60,7 +60,7 @@ object PhysicsTest : Sketch(800, 600, "Physics") {
             scale(1.0, -1.0)
             scale(zoom)
 
-            world.render(view, game, renderer)
+            world.render(view, this@PhysicsTest, renderer)
         }
     }
 }

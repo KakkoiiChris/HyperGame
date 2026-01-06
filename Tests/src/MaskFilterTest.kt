@@ -1,4 +1,3 @@
-import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.BlendMode
 import kakkoiichris.hypergame.media.Renderer
@@ -33,7 +32,7 @@ object MaskFilterTest : Sketch(512, 512, "Cloud Mask") {
         back.filter(blend)
     }
 
-    override fun update(view: View, game: Game, time: Time, input: Input) {
+    override fun update(view: View, time: Time, input: Input) {
         draw = sprite.copy()
         draw.filter(mask)
 
@@ -42,7 +41,7 @@ object MaskFilterTest : Sketch(512, 512, "Cloud Mask") {
         theta += 0.005 * time.delta
     }
 
-    override fun render(view: View, game: Game, renderer: Renderer) {
+    override fun render(view: View, renderer: Renderer) {
         renderer.color = Color(0, 0, 255, 20)
         renderer.fillRect(view.bounds)
         renderer.drawImage(back, view.bounds)

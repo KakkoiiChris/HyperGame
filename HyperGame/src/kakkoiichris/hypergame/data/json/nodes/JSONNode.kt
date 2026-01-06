@@ -1,4 +1,4 @@
-package kakkoiigames.playkid.data.json.nodes
+package kakkoiichris.hypergame.data.json.nodes
 
 import kotlin.math.floor
 
@@ -10,6 +10,16 @@ sealed interface JSONNode {
             append("\"$name\" : ")
         }
     }
+}
+
+object JSONNull : JSONNode {
+    override fun printNode(indent: Int, name: String)  = buildString {
+        append(super.printNode(indent, name))
+
+        append("null")
+    }
+
+    override fun toString() = "null"
 }
 
 class JSONBoolean(var value: Boolean) : JSONNode {
