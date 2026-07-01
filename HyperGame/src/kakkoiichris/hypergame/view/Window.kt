@@ -18,7 +18,6 @@ import java.awt.*
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 
 /**
  * ClassDescription
@@ -26,14 +25,9 @@ import javax.imageio.ImageIO
  * @author Christian Bryce Alexander
  * @since 2/22/2018, 19:12
  */
-class Window(
-    override val width: Int = View.DEFAULT_WIDTH,
-    override val height: Int = View.DEFAULT_HEIGHT,
-    override val scale: Int = View.DEFAULT_SCALE,
-    override val frameRate: Double = View.DEFAULT_FRAME_RATE,
-    val title: String = DEFAULT_TITLE,
-    icon: Image = loadDefaultIcon(),
-) : View {
+class Window(override val config: Config = Config()) : View {
+    val title get() = config.title
+
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -48,7 +42,7 @@ class Window(
     private var running = false
 
     init {
-        frame.iconImage = icon
+        frame.iconImage = config.icon
         frame.layout = BorderLayout()
         frame.addWindowListener(object : WindowAdapter() {
             override fun windowClosing(e: WindowEvent) {
@@ -68,7 +62,7 @@ class Window(
 
         frame.add(canvas, BorderLayout.CENTER)
         frame.pack()
-        frame.isResizable = false
+        frame.isResizable = config.isResizable
         frame.setLocationRelativeTo(null)
         frame.isFocusable = false
 
@@ -163,11 +157,4 @@ class Window(
             |  "frameRate": $frameRate,
             |  "title":     $title
             |}""".trimMargin()
-
-    companion object {
-        const val DEFAULT_TITLE = "HyperGame"
-
-        private fun loadDefaultIcon() =
-            ImageIO.read(Window::class.java.getResourceAsStream("/kakkoiichris/hypergame/img/icon.png"))
-    }
 }

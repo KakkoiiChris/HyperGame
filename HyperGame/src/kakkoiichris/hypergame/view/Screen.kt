@@ -19,12 +19,7 @@ import java.awt.Dimension
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
-class Screen(
-    override val width: Int = View.DEFAULT_WIDTH,
-    override val height: Int = View.DEFAULT_HEIGHT,
-    override val scale: Int = View.DEFAULT_SCALE,
-    override val frameRate: Double = View.DEFAULT_FRAME_RATE,
-) : View {
+class Screen(override val config: Config = Config()) : View {
     override val input = Input(this)
 
     override val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)

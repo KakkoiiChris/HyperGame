@@ -20,17 +20,13 @@ import java.awt.Canvas
 import java.awt.image.BufferedImage
 
 interface View {
-    companion object {
-        const val DEFAULT_WIDTH = 640
-        const val DEFAULT_HEIGHT = 480
-        const val DEFAULT_SCALE = 1
-        const val DEFAULT_FRAME_RATE = 60.0
-    }
+    val config: Config
 
-    val width: Int
-    val height: Int
-    val scale: Int
-    val frameRate: Double
+    val width get()= config.width
+    val height get()= config.height
+    val scale get() = config.scale
+    val isResizable get() = config.isResizable
+    val frameRate get() = config.frameRate
 
     val image: BufferedImage
 

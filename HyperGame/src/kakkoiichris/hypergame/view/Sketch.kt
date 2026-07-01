@@ -13,14 +13,25 @@ package kakkoiichris.hypergame.view
 import kakkoiichris.hypergame.Game
 
 abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double = 60.0) : Game {
-    private val display = Window(width, height, frameRate = frameRate, title = title)
+    private val window: Window
+
+    init {
+        val config = Config(
+            width = width,
+            height = height,
+            title = title,
+            frameRate = frameRate
+        )
+
+        window = Window(config)
+    }
 
     fun open() {
-        display.open(this)
+        window.open(this)
     }
 
     fun close() {
-        display.close()
+        window.close()
     }
 
     override fun init(view: View) = Unit
