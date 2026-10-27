@@ -40,6 +40,12 @@ data class ColorOp(
         blue = transform(blue, other.blue)
     }
 
+    operator fun plus(that: ColorOp) =
+        ColorOp(alpha + that.alpha, red + that.red, green + that.green, blue + that.blue)
+
+    operator fun minus(that: ColorOp) =
+        ColorOp(alpha - that.alpha, red - that.red, green - that.green, blue - that.blue)
+
     operator fun times(that: Double) =
         ColorOp(alpha * that, red * that, green * that, blue * that)
 
