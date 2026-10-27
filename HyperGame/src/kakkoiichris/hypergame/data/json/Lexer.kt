@@ -171,10 +171,17 @@ internal class Lexer(private val src: String) : Iterator<Token<*>> {
         else            -> error("Invalid character escape '\\${peek()}'! ${here()}")
     }
 
-    private fun unicode() =
-        buildString(4) { repeat(4, ::take) }
-            .toInt(16)
-            .toChar()
+    private fun unicode(): Char {
+        val start = here()
+
+        val code = buildString(4) { repeat(4) { take() } }
+
+        val value = code.toIntOrNull(16)
+            ?.toChar()
+            ?: error("Invalid unicode '\\u$code'! $start'")
+
+        return value
+    }
 
     private fun literal(): Token<*> {
         val loc = here()

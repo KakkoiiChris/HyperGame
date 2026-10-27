@@ -109,7 +109,11 @@ internal class Parser(private val lexer: Lexer) {
     }
 
     private fun value() = when {
-        match<Token.Type.Null>()    -> JSONNull
+        match<Token.Type.Null>()    -> {
+            skip(Token.Type.Null)
+
+            JSONNull
+        }
 
         match<Token.Type.Boolean>() -> JSONBoolean(get<Token.Type.Boolean>().type.value)
 
