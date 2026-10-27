@@ -87,9 +87,9 @@ abstract class Module : Box(), Renderable {
     var backgroundOn = Color(222, 232, 242)
     var accentOn = Color(28, 152, 186)
 
-    var foregroundOff = foregroundOn.desaturated().darker()
-    var backgroundOff = backgroundOn.desaturated().darker()
-    var accentOff = accentOn.desaturated().darker()
+    var foregroundOff = foregroundOn.desaturated().darker()!!
+    var backgroundOff = backgroundOn.desaturated().darker()!!
+    var accentOff = accentOn.desaturated().darker()!!
 
     var stroke = BasicStroke(4F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
     var cornerRadius = 16

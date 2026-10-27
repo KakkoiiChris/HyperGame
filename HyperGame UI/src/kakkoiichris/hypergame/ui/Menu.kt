@@ -31,7 +31,8 @@ class SuperMenu : Module() {
 
         targetHeight = if (open) {
             selectedMenu.height + selectedMenu.children.sumOf { it.height }
-        } else {
+        }
+        else {
             children.sumOf { it.height }
         }
 

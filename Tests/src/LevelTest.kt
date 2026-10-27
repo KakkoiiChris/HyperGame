@@ -3,6 +3,7 @@ import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.play.Level
 import kakkoiichris.hypergame.util.Time
+import kakkoiichris.hypergame.view.Config
 import kakkoiichris.hypergame.view.View
 import kakkoiichris.hypergame.view.Window
 
@@ -18,7 +19,7 @@ import kakkoiichris.hypergame.view.Window
  * @author Christian Bryce Alexander
  */
 fun main() {
-    val window = Window(320, 240, 4, title = "Level Test")
+    val window = Window(Config(320, 240, 4, title = "Level Test"))
 
     window.open(Level)
 }

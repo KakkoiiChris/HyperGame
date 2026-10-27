@@ -9,6 +9,7 @@ import kakkoiichris.hypergame.scene.SceneManager
 import kakkoiichris.hypergame.ui.form.TextBox
 import kakkoiichris.hypergame.ui.layout.Layout
 import kakkoiichris.hypergame.util.Time
+import kakkoiichris.hypergame.view.Config
 import kakkoiichris.hypergame.view.View
 import kakkoiichris.hypergame.view.Window
 import java.awt.Font
@@ -88,7 +89,7 @@ object MyGame : Game {
 }
 
 fun main() {
-    val display = Window(800, 800, title = "HYPERGAME UI TEST")
+    val display = Window(Config(800, 800, title = "HYPERGAME UI TEST"))
 
     display.open(MyGame)
 }
