@@ -56,15 +56,18 @@ open class Button(var text: String = "") : Module() {
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
+        renderer.color = foreground
+        renderer.font = font
+
+        renderer.clip(rectangle)
+        renderer.drawString(text, this)
+
+        renderer.clip = null
+
         renderer.color = accent
         renderer.stroke = stroke
 
         renderer.drawRoundRect(this, cornerRadius, cornerRadius)
-
-        renderer.color = foreground
-        renderer.font = font
-
-        renderer.drawString(text, this)
     }
 
     data class Event(

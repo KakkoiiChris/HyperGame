@@ -6,7 +6,6 @@ import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.input.Key
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.scene.SceneManager
-import kakkoiichris.hypergame.ui.form.TextBox
 import kakkoiichris.hypergame.ui.layout.Layout
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.Config
@@ -20,22 +19,23 @@ class Test(view: View) : UIScene(view) {
 
         add(createModule("Dokibird"))
         add(createModule("Mint Fantôme"))
-        add(createModule("Quinn Benet"))
-        add(createModule("K9 Kuro"))
+        add(createModule("Nimi Nightmare"))
+        add(createModule("Sameko Saba"))
         add(createModule("Matara Kan"))
-        add(createModule("Michi Mochievee"))
+        add(createModule("Amalee"))
         add(createModule("Sayu Sincronisity"))
-        add(createModule("Unnämed"))
-        add(createModule("Ksononair"))
+        add(createModule("Dooby 3D"))
+        add(createModule("Shachimu"))
     }
 
     private var n = 0
 
     private fun createModule(text: String) =
-        TextBox(text).apply {
+        kakkoiichris.hypergame.ui.form.CheckBox(text).apply {
             margin = 10u
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)
+            //onClick = { println(text) }
         }
 
     override fun swapTo(view: View, game: Game) {
