@@ -1,3 +1,10 @@
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
 package kakkoiichris.hypergame.data.json
 
 data class Token<T : Token.Type>(val location: Location, val type: T) {

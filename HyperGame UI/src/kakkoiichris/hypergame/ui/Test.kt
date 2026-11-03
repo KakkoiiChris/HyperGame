@@ -1,3 +1,10 @@
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
 package kakkoiichris.hypergame.ui
 
 import kakkoiichris.hypergame.Game
@@ -31,7 +38,7 @@ class Test(view: View) : UIScene(view) {
     private var n = 0
 
     private fun createModule(text: String) =
-        kakkoiichris.hypergame.ui.form.CheckBox(text).apply {
+        kakkoiichris.hypergame.ui.input.CheckBox(text).apply {
             margin = 10u
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)

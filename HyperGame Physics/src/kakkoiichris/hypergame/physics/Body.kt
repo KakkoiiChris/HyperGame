@@ -1,3 +1,10 @@
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
 package kakkoiichris.hypergame.physics
 
 import kakkoiichris.hypergame.media.Renderer

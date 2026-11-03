@@ -1,13 +1,10 @@
-/***************************************************************************
- *   ___ ___                                ________                       *
- *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
- * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
- * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
- *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
- *        \/  \/     |__|        \/               \/     \/      \/     \/ *
- *                    Kotlin 2D Game Development Library                   *
- *                     Copyright (C) 2021, KakkoiiChris                    *
- ***************************************************************************/
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
 package kakkoiichris.hypergame.media
 
 import kakkoiichris.hypergame.util.math.Box
@@ -550,6 +547,93 @@ class Renderer(private val context: Graphics2D) {
 
     fun drawString(string: String, box: Box, align: Vector) =
         drawString(string, box, align.x, align.y)
+
+    fun drawStringLines(
+        string: String,
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        xAlign: Double = 0.5,
+        yAlign: Double = 0.5,
+    ) {
+        val lines = string.lines()
+
+        val linesHeight = lines.size * fontMetrics.height
+
+        var sy = y + (height - linesHeight) * yAlign + fontMetrics.ascent
+
+        for (line in lines) {
+            val sx = x + (width - fontMetrics.stringWidth(line)) * xAlign
+
+            context.drawString(line, sx.toInt(), sy.toInt())
+
+            sy += fontMetrics.height
+        }
+    }
+
+    fun drawStringLines(
+        string: String,
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        align: Vector,
+    ) = drawStringLines(string, x, y, width, height, align.x, align.y)
+
+    fun drawStringLines(string: String, box: Box, xAlign: Double = 0.5, yAlign: Double = 0.5) {
+        val lines = string.lines()
+
+        val linesHeight = lines.size * fontMetrics.height
+
+        var sy = box.y + (box.height - linesHeight) * yAlign + fontMetrics.ascent
+
+        for (line in lines) {
+            val sx = box.x + (box.width - fontMetrics.stringWidth(line)) * xAlign
+
+            context.drawString(line, sx.toInt(), sy.toInt())
+
+            sy += fontMetrics.height
+        }
+    }
+
+    fun drawStringLines(string: String, box: Box, align: Vector) =
+        drawStringLines(string, box, align.x, align.y)
+
+    /*fun drawString(text: Text, vector: Vector, xAlign: Double = 0.5, yAlign: Double = 0.5) {
+        // Set break width to width of Component.
+        val breakWidth = getSize().width as Float
+        var drawPosY = 0f
+
+        // Set position to the index of the first
+        // character in the paragraph.
+        lineMeasurer.setPosition(paragraphStart)
+
+        // Get lines from until the entire paragraph
+        // has been displayed.
+        while (lineMeasurer.getPosition() < paragraphEnd) {
+            val layout = lineMeasurer.nextLayout(breakWidth)
+
+            // Compute pen x position. If the paragraph
+            // is right-to-left we will align the
+            // TextLayouts to the right edge of the panel.
+            val drawPosX = if (layout.isLeftToRight())
+                0f
+            else
+                breakWidth - layout.getAdvance()
+
+            // Move y-coordinate by the ascent of the
+            // layout.
+            drawPosY += layout.getAscent()
+
+            // Draw the TextLayout at (drawPosX,drawPosY).
+            layout.draw(g2d, drawPosX, drawPosY)
+
+            // Move y-coordinate in preparation for next
+            // layout.
+            drawPosY += layout.getDescent() + layout.getLeading()
+        }
+    }*/
 
     fun getCharSize(char: Char): Vector {
         val width = fontMetrics.stringWidth(char.toString()).toDouble()

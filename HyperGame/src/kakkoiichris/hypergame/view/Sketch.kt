@@ -1,13 +1,10 @@
-/***************************************************************************
- *   ___ ___                                ________                       *
- *  /   |   \ ___.__.______   ___________  /  _____/_____    _____   ____  *
- * /    ~    <   |  |\____ \_/ __ \_  __ \/   \  ___\__  \  /     \_/ __ \ *
- * \    Y    /\___  ||  |_> >  ___/|  | \/\    \_\  \/ __ \|  Y Y  \  ___/ *
- *  \___|_  / / ____||   __/ \___  >__|    \______  (____  /__|_|  /\___  >*
- *        \/  \/     |__|        \/               \/     \/      \/     \/ *
- *                    Kotlin 2D Game Development Library                   *
- *                     Copyright (C) 2021, KakkoiiChris                    *
- ***************************************************************************/
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
 package kakkoiichris.hypergame.view
 
 import kakkoiichris.hypergame.Game
@@ -17,9 +14,9 @@ abstract class Sketch(width: Int, height: Int, title: String, frameRate: Double 
 
     init {
         val config = Config(
-            width = width,
-            height = height,
-            title = title,
+            width     = width,
+            height    = height,
+            title     = title,
             frameRate = frameRate
         )
 

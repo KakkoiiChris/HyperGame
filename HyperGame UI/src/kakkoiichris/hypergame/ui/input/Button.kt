@@ -1,11 +1,18 @@
-package kakkoiichris.hypergame.ui.form
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
+package kakkoiichris.hypergame.ui.input
 
 import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.ui.Module
-import kakkoiichris.hypergame.ui.UIEvent
+import kakkoiichris.hypergame.ui.event.UIEvent
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 import java.awt.Font
@@ -71,7 +78,7 @@ open class Button(var text: String = "") : Module() {
     }
 
     data class Event(
-        override val source: kakkoiichris.hypergame.ui.form.Button,
+        override val source: kakkoiichris.hypergame.ui.input.Button,
         override val time: Time,
-    ) : UIEvent<kakkoiichris.hypergame.ui.form.Button>
+    ) : UIEvent<kakkoiichris.hypergame.ui.input.Button>
 }

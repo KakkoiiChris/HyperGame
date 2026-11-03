@@ -1,7 +1,7 @@
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.ui.SuperMenu
-import kakkoiichris.hypergame.ui.form.Button
+import kakkoiichris.hypergame.ui.input.Button
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.Sketch
 import kakkoiichris.hypergame.view.View

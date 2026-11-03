@@ -1,7 +1,15 @@
-package kakkoiichris.hypergame.ui
+/**************************************************************
+ * ██  ██ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄   ▄████   ▄▄▄  ▄▄   ▄▄ ▄▄▄▄▄ *
+ * ██████ ▀███▀ ██▄█▀ ██▄▄  ██▄█▄ ██  ▄▄▄ ██▀██ ██▀▄▀██ ██▄▄  *
+ * ██  ██   █   ██    ██▄▄▄ ██ ██  ▀███▀  ██▀██ ██   ██ ██▄▄▄ *
+ *             Kotlin 2D Game Development Library             *
+ *              Copyright (C) 2021, KakkoiiChris              *
+ **************************************************************/
+package kakkoiichris.hypergame.ui.decor
 
 import kakkoiichris.hypergame.Game
 import kakkoiichris.hypergame.media.Renderer
+import kakkoiichris.hypergame.ui.Module
 import kakkoiichris.hypergame.view.View
 import java.awt.Font
 
